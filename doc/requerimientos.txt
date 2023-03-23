@@ -1,0 +1,8 @@
+Plataforma web con permiso de administrador para crear, editar y suspender profesores.
+Visualización de planificaciones por profesor con opción de editar y borrar.
+Los profesores pueden crear, editar o eliminar las planificaciones para cada alumno o cliente.
+Propuesta de valor en la página, con visualización de profesores ordenados por tipo de clase.
+Registro de nombre, apellido, teléfono y correo electrónico del alumno o cliente al crear la planificación.
+Alumnos pueden visualizar su planificación ingresando DNI o credencial, ordenada por fecha.
+Visualización adecuada en cualquier dispositivo, especialmente en teléfonos.
+Suspensión de alumnos por parte de los profesores y el usuario especial (administrador) en caso de atraso en los pagos.
