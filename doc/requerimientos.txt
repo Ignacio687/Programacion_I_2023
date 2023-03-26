@@ -6,3 +6,14 @@ Registro de nombre, apellido, teléfono y correo electrónico del alumno o clien
 Alumnos pueden visualizar su planificación ingresando DNI o credencial, ordenada por fecha.
 Visualización adecuada en cualquier dispositivo, especialmente en teléfonos.
 Suspensión de alumnos por parte de los profesores y el usuario especial (administrador) en caso de atraso en los pagos.
+
+Propuesta Igna (funciones backend):
+
+Capacidad de interacción y administración de una base de datos.
+Capacidad de interacción (envío y recepción de datos) con la página web.
+Administración de credenciales y validación de las mismas.
+Administración de tipos de usuarios y sus permisos en el sistema.
+Carga, descarga, eliminación e interpretación de archivos (excel principalmente).
+Capacidad de suspender el acceso al sistema de usuarios sin necesariamente eliminar sus credenciales e información.
+Capacidad de filtrado de datos y archivos.
+Capacidad de envío de e-mails automáticos a los usuarios.	
