@@ -1,19 +1,7 @@
-Plataforma web con permiso de administrador para crear, editar y suspender profesores.
-Visualización de planificaciones por profesor con opción de editar y borrar.
-Los profesores pueden crear, editar o eliminar las planificaciones para cada alumno o cliente.
-Propuesta de valor en la página, con visualización de profesores ordenados por tipo de clase.
-Registro de nombre, apellido, teléfono y correo electrónico del alumno o cliente al crear la planificación.
-Alumnos pueden visualizar su planificación ingresando DNI o credencial, ordenada por fecha.
-Visualización adecuada en cualquier dispositivo, especialmente en teléfonos.
-Suspensión de alumnos por parte de los profesores y el usuario especial (administrador) en caso de atraso en los pagos.
-
-Propuesta Igna (funciones backend):
-
-Capacidad de interacción y administración de una base de datos.
-Capacidad de interacción (envío y recepción de datos) con la página web.
-Administración de credenciales y validación de las mismas.
-Administración de tipos de usuarios y sus permisos en el sistema.
-Carga, descarga, eliminación e interpretación de archivos (excel principalmente).
+Requisitos Backend:
+Capacidad de interacción y administración de una base de datos y una pagina web.
+Administración y validación de usuarios, credenciales y sus permisos en el sistema.
+Carga, descarga, eliminación de interpretación de archivos (excel principalmente).
 Capacidad de suspender el acceso al sistema de usuarios sin necesariamente eliminar sus credenciales e información.
-Capacidad de filtrado de datos y archivos.
-Capacidad de envío de e-mails automáticos a los usuarios.	
+Filtrado de datos y archivos.
+Capacidad de envío de e-mails automáticos a los usuarios.
