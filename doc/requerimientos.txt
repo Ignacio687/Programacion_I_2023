@@ -1,0 +1,7 @@
+Requisitos Backend:
+Capacidad de interacción y administración de una base de datos y una pagina web.
+Administración y validación de usuarios, credenciales y sus permisos en el sistema.
+Carga, descarga, eliminación de interpretación de archivos (excel principalmente).
+Capacidad de suspender el acceso al sistema de usuarios sin necesariamente eliminar sus credenciales e información.
+Filtrado de datos y archivos.
+Capacidad de envío de e-mails automáticos a los usuarios.
