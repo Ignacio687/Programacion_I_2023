@@ -3,8 +3,8 @@ from flask import request
 
 #Datos de prueba en JSON
 LOGINS = {
-    1: {'usuario':'Alumno1', 'contraseña':'11598$3kkksd'},
-    2: {'usuario':'Alumno2', 'contraseña':'#$sdadwj4541'}
+    1: {'usuario': 'Alumno1', 'contraseña': '11598$3kkksd'},
+    2: {'usuario': 'Alumno2', 'contraseña': '#$sdadwj4541'}
 }
 
 class Login(Resource):

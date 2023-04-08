@@ -3,20 +3,21 @@ from flask import request
 
 #Datos de prueba en JSON
 PLANIFICACIONES = {
-    1: {'user':'Alumno1', 'payment_due_date': '20/06/23', 'condition':'paid'},
-    2: {'user':'Alumno2', 'payment_due_date': '20/07/23', 'condition': 'unpaid'}
+    1: {'Nombre': 'planificacion1', 'Profesor': 'Profesor1', 
+        'Alumno': 'Alumno1', 'Estado':'activa'},
+    2: {'Nombre': 'planificacion2', 'Profesor': 'Profesor2', 
+        'Alumno': 'Alumno2', 'Estado':'inactiva'}
 }
 
-class Payment(Resource):
-    def get(self,id):
-        if int(id) in PAYMENTS:
-            return PAYMENTS[int(id)]
+class PlanificacionAlumno(Resource):
+    def get(self, id):
+        if int(id) in PLANIFICACIONES:
+            return PLANIFICACIONES[int(id)]
         return '', 404
-    
-    def put(self, id):
-        if int(id) in PAYMENTS:
-            payment = PAYMENTS[int(id)]
-            data = request.get_json()
-            payment.update(data)
-            return '', 204
+
+""" REVISAR PlanificacionesProfesores """
+class PlanificacionesProfesores(Resource):
+    def get(self, id):
+        if int(id) in PLANIFICACIONES:
+            return PLANIFICACIONES[int(id)]
         return '', 404
