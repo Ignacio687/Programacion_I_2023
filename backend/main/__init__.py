@@ -14,8 +14,9 @@ def create_app():
 
     api.add_resource(resources.LoginResource, '/login')
 
-    api.add_resource(resources.PagoResource, '/pago/<dni>', 
-                     '/pago/<dni>/<dueDate>')
+    api.add_resource(resources.PagoResource, '/pago/<dni>', '/pago/<dni>/<dueDate>')
+
+    api.add_resource(resources.ProfesorClasesResource, '/prof_clases')
 
     api.add_resource(resources.UsersResource, '/users')
     api.add_resource(resources.UserResource, '/user/<id>')

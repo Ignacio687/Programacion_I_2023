@@ -29,8 +29,3 @@ class Pago(Resource):
 if __name__=='__main__':
     pago = Pago()
     print(pago.get(12548952))
-
-{
-    "DNI": 38774369, 
-    "contraseña": "#$sdadwj4541"
-}
