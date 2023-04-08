@@ -1,7 +1,9 @@
 # Cambiar el nombre en la importación para clarificar y evitar conflictos
 from .animal import Animal as AnimalResource
 from .animal import Animales as AnimalesResource
+from .login import Login as LoginResource
+from .pago import Pago as PagoResource
 from .profesor import Profesor as ProfesorResource
 from .profesor import Profesores as ProfesoresResource
-from .user import User as UserResource
-from .user import Users as UsersResource
+from .usuario import User as UserResource
+from .usuario import Users as UsersResource
