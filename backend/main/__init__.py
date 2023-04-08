@@ -18,6 +18,10 @@ def create_app():
 
     api.add_resource(resources.ProfesorClasesResource, '/prof_clases')
 
+    api.add_resource(resources.PlanificacionAlumnoResource, '/plan_alumno/<dni>')
+    api.add_resource(resources.PlanificacionesProfesoresResource, '/plans_profs/<dni>')
+    api.add_resource(resources.PlanificacionProfesorResource, '/plan_prof/<id>')
+
     api.add_resource(resources.UsersResource, '/users')
     api.add_resource(resources.UserResource, '/user/<id>')
 

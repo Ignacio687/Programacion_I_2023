@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "7acf0ae5-d951-4efd-8a3c-013350cc8ae2",
+		"name": "profesor_clases",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26654415"
+	},
+	"item": [
+		{
+			"name": "profesor_clases/get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:7000/prof_clases",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"prof_clases"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
