@@ -3,5 +3,5 @@ from .animal import Animal as AnimalResource
 from .animal import Animales as AnimalesResource
 from .profesor import Profesor as ProfesorResource
 from .profesor import Profesores as ProfesoresResource
-from .users import User as UserResource
-from .users import Users as UsersResource
+from .user import User as UserResource
+from .user import Users as UsersResource
