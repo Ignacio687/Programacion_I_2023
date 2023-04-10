@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/usuario/2",
+					"raw": "http://127.0.0.1:7500/usuario/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -44,7 +44,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/usuario/2",
+					"raw": "http://127.0.0.1:7500/usuario/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -67,7 +67,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/usuario/2",
+					"raw": "http://127.0.0.1:7500/usuario/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -90,7 +90,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/usuarios",
+					"raw": "http://127.0.0.1:7500/usuarios",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -121,7 +121,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/usuarios",
+					"raw": "http://127.0.0.1:7500/usuarios",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -143,7 +143,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/alumno/1",
+					"raw": "http://127.0.0.1:7500/alumno/1",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -175,7 +175,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/alumno/2",
+					"raw": "http://127.0.0.1:7500/alumno/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -198,7 +198,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/alumno/2",
+					"raw": "http://127.0.0.1:7500/alumno/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -221,7 +221,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/alumnos",
+					"raw": "http://127.0.0.1:7500/alumnos",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -252,7 +252,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/alumnos",
+					"raw": "http://127.0.0.1:7500/alumnos",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -274,7 +274,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/profe/4",
+					"raw": "http://127.0.0.1:7500/profe/4",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -306,7 +306,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/profe/4",
+					"raw": "http://127.0.0.1:7500/profe/4",
 					"protocol": "http",
 					"host": [
 						"127",

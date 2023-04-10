@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/plan_alumno/12548952",
+					"raw": "http://127.0.0.1:7500/plan_alumno/12548952",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -35,7 +35,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/plans_profs/84981773",
+					"raw": "http://127.0.0.1:7500/plans_profs/84981773",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -58,7 +58,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/plans_profs",
+					"raw": "http://127.0.0.1:7500/plans_profs",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -89,7 +89,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/plans_profs",
+					"raw": "http://127.0.0.1:7500/plans_profs",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -111,7 +111,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/plan_prof/2",
+					"raw": "http://127.0.0.1:7500/plan_prof/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -143,7 +143,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7000/plan_prof/2",
+					"raw": "http://127.0.0.1:7500/plan_prof/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -166,7 +166,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/plan_prof/2",
+					"raw": "http://127.0.0.1:7500/plan_prof/2",
 					"protocol": "http",
 					"host": [
 						"127",
