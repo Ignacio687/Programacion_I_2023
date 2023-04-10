@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:7000/prof_clases",
+					"raw": "http://127.0.0.1:7500/prof_clases",
 					"protocol": "http",
 					"host": [
 						"127",
