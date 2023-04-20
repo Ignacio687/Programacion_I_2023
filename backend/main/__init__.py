@@ -24,7 +24,11 @@ def create_app():
     api.add_resource(resources.UsuariosAlumnosResource, '/alumnos')
     api.add_resource(resources.UsuarioProfesorResource, '/profe/<id>')
     if not os.path.exists(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')):
-        os.mknod(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME'))
+        try:
+            os.mknod(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME'))
+        except PermissionError:  # Me da error en macos
+            os.system('touch ' + os.getenv('DATABASE_PATH') +
+                      os.getenv('DATABASE_NAME'))
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     #Url de configuración de base de datos
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////'+os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')
