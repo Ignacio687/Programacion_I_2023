@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import request
+from app.models import Planificacion
 
 # Datos de prueba en JSON
 PLANIFICACIONES = {
@@ -12,19 +13,17 @@ PLANIFICACIONES = {
 }
 
 
-class PlanificacionAlumno(Resource):
-    def get(self, dni):
-        planificaciones = {}
-        for planificacion in Planificacion.query.filter_by(alumno_DNI=dni).all():
-            planificaciones[planificacion.id] = {
-                'Nombre': planificacion.nombre,
-                'ProfDNI': planificacion.profesor_DNI,
-                'AlumnoDNI': planificacion.alumno_DNI,
-                'Estado': planificacion.estado
-            }
-        if len(planificaciones) != 0:
-            return planificaciones
-        return '', 404
+class PlanificacionAlumnoResource(Resource):
+    # ... otros métodos aquí ...
+
+    def get(self):
+        # Obtener la planificación por defecto
+        planificacion = Planificacion.query.first()
+        # Si no hay ninguna planificación en la base de datos, devolver un mensaje de error
+        if planificacion is None:
+            return {'error': 'No se encontró ninguna planificación'}, 404
+        # Devolver la planificación como JSON
+        return planificacion.to_json()
 
 
 class PlanificacionesProfesores(Resource):
