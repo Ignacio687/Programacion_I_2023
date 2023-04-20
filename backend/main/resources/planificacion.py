@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import request
+from .. import db
 
 #Datos de prueba en JSON
 PLANIFICACIONES = {
@@ -14,9 +15,13 @@ PLANIFICACIONES = {
 class PlanificacionAlumno(Resource):
     def get(self, dni):
         planificaciones = {}
-        for id in range(1, len(PLANIFICACIONES)+1):
-            if int(dni) == PLANIFICACIONES[id]['AlumnoDNI']:
-                planificaciones[id] = PLANIFICACIONES.get(id)
+        for planificacion in Planificacion.query.filter_by(alumno_DNI=dni).all():
+            planificaciones[planificacion.id] = {
+                'Nombre': planificacion.nombre,
+                'ProfDNI': planificacion.profesor_DNI,
+                'AlumnoDNI': planificacion.alumno_DNI,
+                'Estado': planificacion.estado
+            }
         if len(planificaciones) != 0:
             return planificaciones
         return '', 404
