@@ -20,12 +20,8 @@ class Usuario(Resource):
     def put(self, dni):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         data = request.get_json().items()
-        print(data)
         for key, value in data:
-            setattr(usuario, key, value)
-            print(value)
-            print(key)
-        print(usuario)
+            setattr(usuario, key.lower(), value)
         db.session.add(usuario)
         db.session.commit()
         return usuario.to_json() , 201        
@@ -90,7 +86,7 @@ class UsuarioProfesor(Resource):
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
         data = request.get_json().items()
         for key, value in data:
-            setattr(profesor, key, value)
+            setattr(profesor, key.lower(), value)
         db.session.add(profesor)
         db.session.commit()
         return profesor.to_json() , 201
