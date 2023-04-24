@@ -21,7 +21,7 @@ class Usuarios(db.Model):
             "Apelidos": str(self.apellidos),
             "Telefono": str(self.telefono),
             "Email": str(self.email),
-            "Estado": bool(self.estado),
+            "Estado": bool(self.estado)
         }
         return usuario_json
 

@@ -20,14 +20,18 @@ class Usuario(Resource):
     def put(self, dni):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         data = request.get_json().items()
+        print(data)
         for key, value in data:
             setattr(usuario, key, value)
+            print(value)
+            print(key)
+        print(usuario)
         db.session.add(usuario)
         db.session.commit()
         return usuario.to_json() , 201        
 
-    def delete(self, id):
-        usuario = db.session.query(UsuariosModel).get_or_404(id)
+    def delete(self, dni):
+        usuario = db.session.query(UsuariosModel).get_or_404(dni)
         db.session.delete(usuario)
         db.session.commit()
         return '', 204
