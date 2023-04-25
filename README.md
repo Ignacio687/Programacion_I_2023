@@ -1,2 +1,3 @@
 # Programacion I 2023
-# IMPORTANTE: agregar el diagrama de la base de datos (tablas relacionales)
+## Base de datos del proyecto
+![imagen_bd](https://github.com/Ignacio687/Programacion_I_2023/blob/main/backend/Grupo_A_ModeloDB.png?raw=true)
