@@ -7,13 +7,14 @@ from flask_sqlalchemy import SQLAlchemy
 api = Api()
 db = SQLAlchemy()
 
+
 def create_app():
     app = Flask(__name__)
     app.config['JSON_SORT_KEYS'] = False
+
     load_dotenv()
 
     import main.resources as resources
-
     api.add_resource(resources.LoginResource, '/login')
     api.add_resource(resources.PagoResource, '/pago/<dni>', '/pago/<dni>/<dueDate>')
     api.add_resource(resources.ProfesorClasesResource, '/prof_clases')
@@ -31,11 +32,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     #Url de configuración de base de datos
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////'+os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')
-
     db.init_app(app)
     api.init_app(app)
-
     with app.app_context():
         db.create_all()
-
     return app
