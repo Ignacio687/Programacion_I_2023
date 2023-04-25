@@ -1,43 +1,35 @@
 from .. import db
 
 class Clase(db.Model):
-    claseID = db.Column(db.Integer, primary_key=True)
+    clase_id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
     tipo = db.Column(db.String(50), nullable=False)
-    dia = db.Column(db.DateTime, nullable=False)
-    horario = db.Column(db.DateTime, nullable=False)
+    dia = db.Column(db.String(20), nullable=False)
+    horario = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
-        return '<Clase: %r >' % (self.nombre)
+        return (f'<Clase_id: {self.clase_id}, Nombre: {self.nombre}, '+ 
+        f'Tipo: {self.tipo}, Dia: {self.dia}, Horario: {self.horario}>')
+
     
     def to_json(self):
         clase_json = {
-            'claseID': self.claseID,
-            'nombre': self.nombre,
-            'tipo': self.tipo,
-            'dia': self.dia,
-            'horario': self.horario
+            'Clase_id': self.clase_id,
+            'Nombre': self.nombre,
+            'Tipo': self.tipo,
+            'Dia': self.dia,
+            'Horario': self.horario
         }
         return clase_json
     
-    def to_json_short(self):
-        clase_json = {
-            'claseID': self.claseID,
-            'nombre': self.nombre,
-            'tipo': self.tipo,
-            'dia' : self.dia,
-            'horario' : self.horario
-        }
-        return clase_json
-    
-    def from_json(json):
-        claseID = json.get('claseID')
-        nombre = json.get('nombre')
-        tipo = json.get('tipo')
-        dia = json.get('dia')
-        horario = json.get('horario')
+    def from_json(clase_json):
+        clase_id = clase_json.get('Clase_id')
+        nombre = clase_json.get('Nombre')
+        tipo = clase_json.get('Tipo')
+        dia = clase_json.get('Dia')
+        horario = clase_json.get('Horario')
         
-        return Clase(claseID=claseID,
+        return Clase(clase_id=clase_id,
                     nombre=nombre, 
                     tipo=tipo,
                     dia=dia,

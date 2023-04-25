@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request, jsonify
 from .. import db
-from main.models import UsuariosModel, ProfesorModel
+from main.models import UsuariosModel, ProfesorModel, AlumnoModel
 
 # Datos de prueba en JSON
 USUARIOS = {
@@ -24,7 +24,7 @@ class Usuario(Resource):
             setattr(usuario, key.lower(), value)
         db.session.add(usuario)
         db.session.commit()
-        return usuario.to_json() , 201        
+        return usuario.to_json(), 201        
 
     def delete(self, dni):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
@@ -44,38 +44,35 @@ class Usuarios(Resource):
         return usuario.to_json(), 201
     
 class UsuarioAlumno(Resource):
-    def get(self, id):
-        if int(id) in USUARIOS and USUARIOS[int(id)]['Rol'] == 'alumno':
-            return USUARIOS[int(id)]
-        return '', 404
+    def get(self, dni):
+        alumno = db.session.query(AlumnoModel).get_or_404(dni)
+        return alumno.to_json()
 
-    def put(self, id):
-        if int(id) in USUARIOS and USUARIOS[int(id)]['Rol'] == 'alumno':
-            user = USUARIOS[int(id)]
-            data = request.get_json()
-            user.update(data)
-            return '', 201
-        return '', 404
+    def put(self, dni):
+        alumno = db.session.query(AlumnoModel).get_or_404(dni)
+        data = request.get_json().items()
+        for key, value in data:
+            setattr(alumno, key.lower(), value)
+        db.session.add(alumno)
+        db.session.commit()
+        return alumno.to_json(), 201
     
-    def delete(self, id):
-        if int(id) in USUARIOS and USUARIOS[int(id)]['Rol'] == 'alumno':
-            del USUARIOS[int(id)]
-            return '', 204
-        return '', 404
+    def delete(self, dni):
+        alumno = db.session.query(AlumnoModel).get_or_404(dni)
+        db.session.delete(alumno)
+        db.session.commit()
+        return '', 204
     
 class UsuariosAlumnos(Resource):
     def get(self):
-        alumnos = {}
-        for id in USUARIOS.keys():
-            if USUARIOS[id]['Rol'] == 'alumno':
-                alumnos[id] = USUARIOS.get(id)
-        return alumnos
+        alumnos = db.session.query(AlumnoModel).all()
+        return jsonify([alumno.to_json() for alumno in alumnos])
 
     def post(self):
-        user = request.get_json()
-        id = int(max(USUARIOS.keys()))+1
-        USUARIOS[id] = user
-        return USUARIOS[id], 201
+        alumno = AlumnoModel.from_json(request.get_json())
+        db.session.add(alumno)
+        db.session.commit()
+        return alumno.to_json(), 201
 
 class UsuarioProfesor(Resource):
     def get(self, dni):
