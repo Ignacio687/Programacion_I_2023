@@ -17,7 +17,7 @@ class Detalle_dia(db.Model):
     @staticmethod
     # Convertir JSON a objeto
     def from_json(detalle_json):
-        return Planificacion(
+        return Detalle_dia(
             dia=detalle_json["dia"],
             detalle=detalle_json["detalle"],
         )

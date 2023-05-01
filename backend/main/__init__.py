@@ -1,4 +1,4 @@
-import os
+import os, sqlalchemy, sqlalchemy.orm
 from flask import Flask
 from dotenv import load_dotenv
 from flask_restful import Api
@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 api = Api()
 db = SQLAlchemy()
+sa = sqlalchemy
+sao = sqlalchemy.orm
 
 
 def create_app():
