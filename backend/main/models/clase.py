@@ -1,11 +1,11 @@
-from .. import db
+from .. import db, sa
 
 class Clase(db.Model):
-    clase_id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(50), nullable=False)
-    tipo = db.Column(db.String(50), nullable=False)
-    dia = db.Column(db.String(20), nullable=False)
-    horario = db.Column(db.String(20), nullable=False)
+    clase_id = sa.Column(sa.Integer, primary_key=True)
+    nombre = sa.Column(sa.String(50), nullable=False)
+    tipo = sa.Column(sa.String(50), nullable=False)
+    dia = sa.Column(sa.String(20), nullable=False)
+    horario = sa.Column(sa.String(20), nullable=False)
 
     def __repr__(self):
         return (f'<Clase_id: {self.clase_id}, Nombre: {self.nombre}, '+ 
