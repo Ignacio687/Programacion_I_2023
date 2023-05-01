@@ -1,9 +1,12 @@
-from .. import db
+from .. import db, sa, sao
+from . import UsuariosModel
 
 class Alumno(db.Model):
-    dni = db.Column(db.Integer, primary_key=True)
-    edad = db.Column(db.Integer, nullable=False)
-    sexo = db.Column(db.Boolean, nullable=False)
+    dni = sa.Column(sa.Integer, sa.ForeignKey(UsuariosModel.dni), primary_key=True)
+    edad = sa.Column(sa.Integer, nullable=False)
+    sexo = sa.Column(sa.Boolean, nullable=False)
+    usuario = db.relationship("Usuarios", uselist = False, back_populates = "alumno", 
+                              cascade = "all, delete-orphan", single_parent = True)
 
     def __repr__(self):
         return f'<DNI: {self.dni}, Edad: {self.edad}, Sexo: {self.sexo}>'
@@ -12,7 +15,8 @@ class Alumno(db.Model):
         alumno_json = {
             'DNI': self.dni,
             'Edad': self.edad,
-            'Sexo': self.sexo
+            'Sexo': self.sexo,
+            'usuario': self.usuario.to_json()
         }
         return alumno_json
 
