@@ -1,4 +1,4 @@
-from .. import db, sa, sao
+from .. import db, sa
 from . import UsuariosModel
 
 class Alumno(db.Model):
