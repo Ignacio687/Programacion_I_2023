@@ -9,7 +9,6 @@ db = SQLAlchemy()
 sa = sqlalchemy
 sao = sqlalchemy.orm
 
-
 def create_app():
     app = Flask(__name__)
     app.config['JSON_SORT_KEYS'] = False

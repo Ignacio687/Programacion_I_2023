@@ -1,4 +1,4 @@
-from .. import db, sa, sao
+from .. import db, sa
 
 class Clase(db.Model):
     clase_id = sa.Column(sa.Integer, primary_key=True)

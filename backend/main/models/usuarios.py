@@ -1,4 +1,4 @@
-from .. import db, sa, sao
+from .. import db, sa
 
 class Usuarios(db.Model):
     dni = sa.Column(sa.Integer, primary_key=True)
@@ -9,6 +9,8 @@ class Usuarios(db.Model):
     estado = sa.Column(sa.Boolean, nullable=False)
     profesor = db.relationship("Profesor", uselist=False, back_populates= "usuarios",
                                cascade="all, delete-orphan", single_parent=True)
+    alumno = db.relationship("Alumno", uselist = False, back_populates = "usuario", 
+                              cascade = "all, delete-orphan", single_parent = True)
 
     def __repr__(self):
         return (
@@ -24,6 +26,18 @@ class Usuarios(db.Model):
             "Telefono": str(self.telefono),
             "Email": str(self.email),
             "Estado": bool(self.estado)
+        }
+        return usuario_json
+    
+    def to_json_complete(self):
+        usuario_json = {
+            "DNI": int(self.dni),
+            "Nombre": str(self.nombre),
+            "Apelidos": str(self.apellidos),
+            "Telefono": str(self.telefono),
+            "Email": str(self.email),
+            "Estado": bool(self.estado),
+            "alumno" if self.alumno != None else "profesor": self.alumno if self.alumno != None else self.profesor  
         }
         return usuario_json
 
