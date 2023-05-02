@@ -1,9 +1,12 @@
-from .. import db
+from .. import db, sa, sao
+from . import UsuariosModel
 
 class Profesor(db.Model):
-    dni = db.Column(db.Integer, primary_key=True)
-    especialidad = db.Column(db.String(100), nullable=False)
-    inicio_actividad = db.Column(db.Date, nullable=False)
+    dni = sa.Column(sa.Integer, sa.ForeignKey(UsuariosModel.dni), primary_key=True)
+    especialidad = sa.Column(sa.String(100), nullable=False)
+    inicio_actividad = sa.Column(sa.Date, nullable=False)
+    usuarios = db.relationship("Usuarios", uselist=False, back_populates= "profesor",
+                               cascade= "all, delete-orphan", single_parent=True)
 
     def __repr__(self):
         return (
@@ -11,10 +14,12 @@ class Profesor(db.Model):
         )
 
     def to_json(self):
+        self.usuarios = sao.session.query(UsuariosModel).get_or_404(self.dni)
         profesor_json = {
             "DNI": int(self.dni),
             "Especialidad": str(self.especialidad),
-            "Inicio_actividad": str(self.inicio_actividad)
+            "Inicio_actividad": str(self.inicio_actividad),
+            "Usuario": self.usuarios.to_json()
         }
         return profesor_json
 

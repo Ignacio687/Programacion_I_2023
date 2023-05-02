@@ -7,6 +7,8 @@ class Usuarios(db.Model):
     telefono = sa.Column(sa.Integer, nullable=False)
     email = sa.Column(sa.String(100), nullable=False)
     estado = sa.Column(sa.Boolean, nullable=False)
+    profesor = db.relationship("Profesor", uselist=False, back_populates= "usuarios",
+                               cascade="all, delete-orphan", single_parent=True)
     alumno = db.relationship("Alumno", uselist = False, back_populates = "usuario", 
                               cascade = "all, delete-orphan", single_parent = True)
 
