@@ -35,7 +35,7 @@ class Usuario(Resource):
 class Usuarios(Resource):
     def get(self):
         usuarios = db.session.query(UsuariosModel).all()
-        return jsonify([usuario.to_json() for usuario in usuarios])
+        return jsonify([usuario.to_json_complete() for usuario in usuarios])
 
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())

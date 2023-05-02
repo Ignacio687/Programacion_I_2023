@@ -18,6 +18,7 @@ class Alumno(db.Model):
             'Sexo': self.sexo,
             'usuario': self.usuario.to_json()
         }
+        print(self.usuario.to_json())
         return alumno_json
 
     @staticmethod

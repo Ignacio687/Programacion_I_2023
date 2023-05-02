@@ -1,4 +1,4 @@
-from .. import db, sa, sao
+from .. import db, sa
 from . import ProfesorModel, ClaseModel
 
 profesor_clases = db.Table(

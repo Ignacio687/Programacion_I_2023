@@ -14,13 +14,7 @@ class PlanificacionAlumno(Resource):
         ).all()
         return jsonify([plan.to_json() for plan in planificacion])
 
-    def delete(self, dni):
-        plan = db.session.query(PlanificacionModel).get_or_404(dni)
-        db.session.delete(plan)
-        db.session.commit()
-        return '', 204
-
-class Planificaciones(Resource):
+class PlanificacionesProfesores(Resource):
     def get(self):
         planificacion = db.session.query(PlanificacionModel).all()
         response = jsonify([plan.to_json() for plan in planificacion])
@@ -41,12 +35,6 @@ class PlanificacionProfesor(Resource):
         ).all()
         return jsonify([plan.to_json() for plan in planificacion])
 
-    def delete(self, dni):
-        plan = db.session.query(PlanificacionModel).get_or_404(dni)
-        db.session.delete(plan)
-        db.session.commit()
-        return '', 204
-
     def put(self, dni):
         plan = db.session.query(PlanificacionModel).filter(PlanificacionModel.profesor_DNI == dni).first()
         data = request.get_json().items()
@@ -56,3 +44,8 @@ class PlanificacionProfesor(Resource):
         db.session.commit()
         return plan.to_json() , 201 
 
+    def delete(self, dni):
+        plan = db.session.query(PlanificacionModel).get_or_404(dni)
+        db.session.delete(plan)
+        db.session.commit()
+        return '', 204

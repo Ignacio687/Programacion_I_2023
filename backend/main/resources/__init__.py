@@ -3,7 +3,7 @@ from .login import Login as LoginResource
 from .pago import Pago as PagoResource
 from .profesor_clases import ProfesorClases as ProfesorClasesResource
 from .planificacion import PlanificacionAlumno as PlanificacionAlumnoResource
-from .planificacion import Planificaciones as PlanificacionesProfesoresResource
+from .planificacion import PlanificacionesProfesores as PlanificacionesProfesoresResource
 from .planificacion import PlanificacionProfesor as PlanificacionProfesorResource
 from .usuario import Usuario as UsuarioResource
 from .usuario import Usuarios as UsuariosResource

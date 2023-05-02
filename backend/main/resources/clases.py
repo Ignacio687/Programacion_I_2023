@@ -1,5 +1,7 @@
 from flask_restful import Resource
-from flask import request
+from flask import request, jsonify
+from .. import db, sa, sao
+#from main.models import 
 
 #Datos de prueba en JSON
 CLASES_POR_PROFESOR = {
