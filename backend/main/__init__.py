@@ -18,7 +18,8 @@ def create_app():
     import main.resources as resources
     api.add_resource(resources.LoginResource, '/login')
     api.add_resource(resources.PagoResource, '/pago/<dni>', '/pago/<dni>/<dueDate>')
-    api.add_resource(resources.ProfesorClasesResource, '/prof_clases')
+    api.add_resource(resources.ClaseResource, '/clase/<id>')
+    api.add_resource(resources.ClasesResource, '/clases')
     api.add_resource(resources.PlanificacionAlumnoResource, '/plan_alumno/<dni>')
     api.add_resource(resources.PlanificacionesProfesoresResource, '/plans_profs')
     api.add_resource(resources.PlanificacionProfesorResource, '/plan_prof/<dni>')
