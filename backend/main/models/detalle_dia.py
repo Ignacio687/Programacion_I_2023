@@ -20,7 +20,6 @@ class Detalle_dia(db.Model):
     
     def to_json_complete(self):
         detalle_json = {
-            "planificacion_id":self.planificacion_id,
             "dia":self.dia,
             "planificacion": self.detalle,
             "Planificacion": self.planificacion

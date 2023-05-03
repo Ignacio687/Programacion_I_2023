@@ -27,8 +27,6 @@ class Planificacion(db.Model):
     def to_json_complete(self):
         plan_json = {
             "planificacion_id": self.planificacion_id,
-            "profesor_DNI": self.profesor_DNI,
-            "alumno_DNI": self.alumno_DNI,
             "estado": self.estado,
             "creation_date": str(self.creation_date.strftime("%d/%m/%Y")),
             "Profesor": self.profesor,

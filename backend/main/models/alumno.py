@@ -22,9 +22,9 @@ class Alumno(db.Model):
     
     def to_json_complete(self):
         alumno_json = {
-            "DNI": self.dni,
             "Edad": self.edad,
             "Sexo": self.sexo,
+            "Usuario": self.usuario,
             "Clases": [clase.to_json() for clase in self.clases],
             "Planificaciones" : [planificacion.to_json() for planificacion in self.planificaciones]
         }
