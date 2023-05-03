@@ -16,7 +16,6 @@ class Alumno(db.Model):
             'DNI': self.dni,
             'Edad': self.edad,
             'Sexo': self.sexo,
-            'usuario': self.usuario.to_json()
         }
         print(self.usuario.to_json())
         return alumno_json
