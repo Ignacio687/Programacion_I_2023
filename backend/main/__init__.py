@@ -3,11 +3,12 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 api = Api()
 db = SQLAlchemy()
+migrate = Migrate()
 sa = sqlalchemy
-sao = sqlalchemy.orm
 
 def create_app():
     app = Flask(__name__)
@@ -16,9 +17,9 @@ def create_app():
     load_dotenv()
 
     import main.resources as resources
+    
     api.add_resource(resources.LoginResource, '/login')
     api.add_resource(resources.PagoResource, '/pago/<dni>', '/pago/<dni>/<dueDate>')
-    #api.add_resource(resources.ProfesorClasesResource, '/prof_clases')
     api.add_resource(resources.ClaseResource, '/clase/<id>')
     api.add_resource(resources.ClasesResource, '/clases')
     api.add_resource(resources.ClasesAlumnosResource, '/alum_clas/<id>/<dni>')
@@ -33,13 +34,16 @@ def create_app():
     api.add_resource(resources.UsuariosAlumnosResource, '/alumnos')
     api.add_resource(resources.UsuarioProfesorResource, '/profe/<dni>')
     api.add_resource(resources.UsuarioProfesoresResource, '/profs')
+    
     if not os.path.exists(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')):
         open(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME'), 'w').close()
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    #Url de configuración de base de datos
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////'+os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')
+
     db.init_app(app)
     api.init_app(app)
+    migrate.init_app(app,db)
+
     with app.app_context():
         db.create_all()
     return app

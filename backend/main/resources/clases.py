@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request, jsonify
-from .. import db, sa, sao
+from .. import db, sa
 from main.models import ClaseModel, AlumnoModel
 from datetime import datetime
 import regex

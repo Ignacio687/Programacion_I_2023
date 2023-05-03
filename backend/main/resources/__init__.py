@@ -1,4 +1,3 @@
-# Cambiar el nombre en la importación para clarificar y evitar conflictos
 from .login import Login as LoginResource
 from .pago import Pago as PagoResource
 from .clases import Clase as ClaseResource

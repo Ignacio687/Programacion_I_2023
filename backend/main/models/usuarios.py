@@ -41,8 +41,6 @@ class Usuarios(db.Model):
             "Estado": bool(self.estado),
             roltxt: roljson
         }
-        print(self.profesor)
-        print(self.alumno)
         return usuario_json
 
     @staticmethod
