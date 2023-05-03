@@ -9,3 +9,4 @@ pyvenv.cfg
 share/
 .vscode/*
 launch.json
+migrations

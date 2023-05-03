@@ -24,7 +24,7 @@ class Alumno(db.Model):
         alumno_json = {
             "Edad": self.edad,
             "Sexo": self.sexo,
-            "Usuario": self.usuario,
+            "Usuario": self.usuario.to_json() if self.usuario != None else "",
             "Clases": [clase.to_json() for clase in self.clases],
             "Planificaciones" : [planificacion.to_json() for planificacion in self.planificaciones]
         }

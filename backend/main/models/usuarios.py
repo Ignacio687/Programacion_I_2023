@@ -30,8 +30,13 @@ class Usuarios(db.Model):
         return usuario_json
     
     def to_json_complete(self):
-        roltxt = "alumno" if self.alumno != None else "profesor"
-        roljson = self.alumno.to_json() if self.alumno != None else self.profesor.to_json()
+        if self.alumno != None:
+            roltxt = "Alumno"
+            roljson = self.alumno.to_json()
+        elif self.profesor != None:
+            roltxt = "Profesor"
+            roljson = self.profesor.to_json()
+        else: roltxt, roljson = "", ""
         usuario_json = {
             "DNI": int(self.dni),
             "Nombre": str(self.nombre),

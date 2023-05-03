@@ -3,6 +3,7 @@ from .pago import Pago as PagoResource
 from .clases import Clase as ClaseResource
 from .clases import Clases as ClasesResource
 from .clases import ClasesAlumnos as ClasesAlumnosResource
+from .clases import ClasesProfesores as ClasesProfesoresResource
 from .planificacion import PlanificacionAlumno as PlanificacionAlumnoResource
 from .planificacion import PlanificacionesProfesores as PlanificacionesProfesoresResource
 from .planificacion import PlanificacionProfesor as PlanificacionProfesorResource

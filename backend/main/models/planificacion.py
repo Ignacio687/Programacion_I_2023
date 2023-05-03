@@ -4,8 +4,8 @@ from datetime import datetime
 
 class Planificacion(db.Model):
     planificacion_id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    profesor_DNI = sa.Column(sa.Integer, sa.ForeignKey(ProfesorModel.dni), nullable=False)
-    alumno_DNI = sa.Column(sa.Integer, sa.ForeignKey(AlumnoModel.dni), nullable=False)
+    profesor_dni = sa.Column(sa.Integer, sa.ForeignKey(ProfesorModel.dni), nullable=False)
+    alumno_dni = sa.Column(sa.Integer, sa.ForeignKey(AlumnoModel.dni), nullable=False)
     estado = sa.Column(sa.Boolean, default=True)
     creation_date = sa.Column(sa.DateTime, nullable=False)
     profesor = db.relationship("Profesor", back_populates="planificaciones", uselist = False, single_parent = True)
@@ -30,8 +30,8 @@ class Planificacion(db.Model):
             "planificacion_id": self.planificacion_id,
             "estado": self.estado,
             "creation_date": str(self.creation_date.strftime("%d/%m/%Y")),
-            "Profesor": self.profesor,
-            "Alumno": self.alumno,
+            "Profesor": self.profesor.to_json() if self.profesor != None else "",
+            "Alumno": self.alumno.to_json() if self.alumno != None else "",
             "detalles_dia": ([detalle.to_json() for detalle in self.detalles_dia])
         }
         return plan_json

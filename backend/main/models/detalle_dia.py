@@ -14,15 +14,16 @@ class Detalle_dia(db.Model):
         detalle_json = {
             "planificacion_id":self.planificacion_id,
             "dia":self.dia,
-            "planificacion": self.detalle
+            "detalle": self.detalle
             }
         return detalle_json
     
     def to_json_complete(self):
         detalle_json = {
+            "planificacion_id":self.planificacion_id,
             "dia":self.dia,
-            "planificacion": self.detalle,
-            "Planificacion": self.planificacion
+            "detalle": self.detalle,
+            "planificacion": self.planificacion.to_json() if self.planificacion != None else ""
             }
         return detalle_json
 

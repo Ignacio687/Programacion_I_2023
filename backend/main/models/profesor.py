@@ -27,7 +27,7 @@ class Profesor(db.Model):
         profesor_json = {
             "Especialidad": str(self.especialidad),
             "Inicio_actividad": str(self.inicio_actividad.strftime("%d/%M/%Y")),
-            "Usuario": self.usuario,
+            "Usuario": self.usuario.to_json() if self.usuario != None else "",
             "Clases": [clase.to_json() for clase in self.clases],
             "Planificaciones": [planificacion.to_json() for planificacion in self.planificaciones]
         }
