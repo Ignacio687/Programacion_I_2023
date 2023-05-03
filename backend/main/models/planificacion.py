@@ -1,6 +1,7 @@
 from .. import db, sa
 from . import ProfesorModel, AlumnoModel
 from datetime import datetime
+
 class Planificacion(db.Model):
     planificacion_id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     profesor_DNI = sa.Column(sa.Integer, sa.ForeignKey(ProfesorModel.dni), nullable=False)
