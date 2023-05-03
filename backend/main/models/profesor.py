@@ -1,4 +1,5 @@
 from .. import db, sa, sao
+from datetime import datetime
 from . import UsuariosModel
 
 class Profesor(db.Model):
@@ -14,12 +15,10 @@ class Profesor(db.Model):
         )
 
     def to_json(self):
-        self.usuarios = sao.session.query(UsuariosModel).get_or_404(self.dni)
         profesor_json = {
             "DNI": int(self.dni),
             "Especialidad": str(self.especialidad),
-            "Inicio_actividad": str(self.inicio_actividad),
-            "Usuario": self.usuarios.to_json()
+            "Inicio_actividad": str(self.inicio_actividad.strftime("%d/%M/%Y")),
         }
         return profesor_json
 
@@ -27,7 +26,7 @@ class Profesor(db.Model):
     def from_json(usuario_json):
         dni = usuario_json.get("DNI")
         especialidad = usuario_json.get("Especialidad")
-        inicio_actividad = usuario_json.get("Inicio_actividad")
+        inicio_actividad = datetime.strptime(usuario_json.get("Inicio_actividad"), "%d/%M/%Y")
         return Profesor(
             dni = dni,
             especialidad = especialidad,
