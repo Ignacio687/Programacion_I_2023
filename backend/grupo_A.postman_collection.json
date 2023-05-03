@@ -8,640 +8,959 @@
 	},
 	"item": [
 		{
-			"name": "login/post",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 38774369, \r\n    \"contraseña\": \"#$sdadwj4541\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Login",
+			"item": [
+				{
+					"name": "login/post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DNI\": 38774369, \r\n    \"contraseña\": \"#$sdadwj4541\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"login"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/login",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"login"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "pago/get/<dni>",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/pago/12548952",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"pago",
-						"12548952"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "pago/get/<dni>/<dueDate>",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/pago/12548952/03-2023",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"pago",
-						"12548952",
-						"03-2023"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "pago/put/<dni>",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 12548952, \r\n    \"nombre\": \"Juan\", \r\n    \"mes-año\": \"04-2023\", \r\n    \"condicion\": \"pago\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Pago",
+			"item": [
+				{
+					"name": "pago/get/<dni>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/pago/12548952",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"pago",
+								"12548952"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/pago/12548952",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"pago",
-						"12548952"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "pago/put/<dni>/<dueDate>",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 49137856, \r\n    \"nombre\": \"Pedro\", \r\n    \"mes-año\": \"03-2023\", \r\n    \"condicion\": \"pago\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "pago/get/<dni>/<dueDate>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/pago/12548952/03-2023",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"pago",
+								"12548952",
+								"03-2023"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/pago/49137856/03-2023",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"pago",
-						"49137856",
-						"03-2023"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "plan_alumno/get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/plan_alumno/12548952",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"plan_alumno",
-						"12548952"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "plans_profs/get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/plans_profs",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"plans_profs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "plans_profs/post",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"profesor_DNI\": 99787,\r\n    \"alumno_DNI\": 675746,\r\n    \"estado\": false,\r\n    \"creation_date\": \"2013-07-10\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "pago/put/<dni>",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DNI\": 12548952, \r\n    \"nombre\": \"Juan\", \r\n    \"mes-año\": \"04-2023\", \r\n    \"condicion\": \"pago\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/pago/12548952",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"pago",
+								"12548952"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/plans_profs",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"plans_profs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "plan_prof/get/<dni>",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/plan_prof/7654",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"plan_prof",
-						"7654"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "plan_prof/put/<dni>",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"profesor_DNI\": 1234,\r\n    \"alumno_DNI\": 1987,\r\n    \"estado\": true,\r\n    \"creation_date\": \"2012-09-23\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "pago/put/<dni>/<dueDate>",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DNI\": 49137856, \r\n    \"nombre\": \"Pedro\", \r\n    \"mes-año\": \"03-2023\", \r\n    \"condicion\": \"pago\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/pago/49137856/03-2023",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"pago",
+								"49137856",
+								"03-2023"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/plan_prof/7654",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"plan_prof",
-						"7654"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "plan_prof/delete/<id>",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/plan_prof/3",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"plan_prof",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "profesor_clases/get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/prof_clases",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"prof_clases"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "usuario/get/<dni>",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/usuario/75003462",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"usuario",
-						"75003462"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "usuario/put/<dni>",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 75003462,\r\n    \"Nombre\": \"Lucas\",\r\n    \"Apelidos\": \"Gonzales\",\r\n    \"Telefono\": \"2614379044\",\r\n    \"Email\": \"lucaselcapo@gmail.com\",\r\n    \"Estado\": true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Planificacion",
+			"item": [
+				{
+					"name": "Detalles",
+					"item": [
+						{
+							"name": "planificacion/get/id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/plan/1/Martes",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"plan",
+										"1",
+										"Martes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "planificacion/id/dia",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"detalle_id\": 1 ,\n    \"dia\": \"Martes\",\n    \"detalle\": \"A levantarse minitas en la aristides\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:7500/plan",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"plan"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "planificacion/id/dia",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"detalle_id\": 1 ,\n    \"dia\": \"Martes\",\n    \"detalle\": \"A levantarse minitas en la aristides con ayuda del lillo\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:7500/plan/1/Martes",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"plan",
+										"1",
+										"Martes"
+									]
+								}
+							},
+							"response": []
 						}
-					}
+					]
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/usuario/75003462",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"usuario",
-						"75003462"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "usuario/delete/<dni>",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/usuario/75003462",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"usuario",
-						"75003462"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "usuarios/get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/usuarios",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"usuarios"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "usuarios/post",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 75003462,\r\n    \"Nombre\": \"Lucas\",\r\n    \"Apelidos\": \"Gonzales\",\r\n    \"Telefono\": \"2614374022\",\r\n    \"Email\": \"lucas20122@gmail.com\",\r\n    \"Estado\": false\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "plan_alumno/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/plan_alumno/12548952",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"plan_alumno",
+								"12548952"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/usuarios",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"usuarios"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "alumno/get/<dni>",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/alumno/93850274",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"alumno",
-						"93850274"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "alumno/put/<dni>",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 93850274,\r\n    \"Edad\": 26,\r\n    \"Sexo\": false\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "plans_profs/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/plans_profs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"plans_profs"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/alumno/93850274",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"alumno",
-						"93850274"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "alumno/delete/<dni>",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/alumno/93850274",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"alumno",
-						"93850274"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "alumnos/get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/alumnos",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"alumnos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "alumnos/post",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 93850274,\r\n    \"Edad\": 24,\r\n    \"Sexo\": false\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "plans_profs/post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profesor_DNI\": 99787,\r\n    \"alumno_DNI\": 675746,\r\n    \"estado\": false,\r\n    \"creation_date\": \"2013-07-10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/plans_profs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"plans_profs"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/alumnos",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"alumnos"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "profe/get/<dni>",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://127.0.0.1:7500/profe/4",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"profe",
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "profe/put/<dni>",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"DNI\": 34814697,\r\n    \"Nombre\": \"Pepe\",\r\n    \"Rol\": \"profesor\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "plan_prof/get/<dni>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/plan_prof/7654",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"plan_prof",
+								"7654"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://127.0.0.1:7500/profe/4",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "7500",
-					"path": [
-						"profe",
-						"4"
-					]
+				{
+					"name": "plan_prof/put/<dni>",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profesor_DNI\": 1234,\r\n    \"alumno_DNI\": 1987,\r\n    \"estado\": true,\r\n    \"creation_date\": \"2012-09-23\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/plan_prof/7654",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"plan_prof",
+								"7654"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "plan_prof/delete/<id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/plan_prof/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"plan_prof",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Alumno",
+					"item": [
+						{
+							"name": "alumno/get/<dni>",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/alumno/93850274",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"alumno",
+										"93850274"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "alumno/put/<dni>",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"DNI\": 75003462,\r\n    \"Edad\": 60,\r\n    \"Sexo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:7500/alumno/75003462",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"alumno",
+										"75003462"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "alumno/delete/<dni>",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/alumno/93850274",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"alumno",
+										"93850274"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "alumnos/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/alumnos",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"alumnos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "alumnos/post",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"DNI\": 49782164,\r\n    \"Edad\": 48,\r\n    \"Sexo\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:7500/alumnos",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"alumnos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Profesor",
+					"item": [
+						{
+							"name": "profe/get/<dni>",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/profe/4",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"profe",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "profe/put/<dni>",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"DNI\": 34814697,\r\n    \"Nombre\": \"Pepe\",\r\n    \"Rol\": \"profesor\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:7500/profe/4",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"profe",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "profs/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/profs",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"profs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "profs/post",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"DNI\": 75003463,\n    \"Especialidad\": \"crossfit\",\n    \"Inicio_actividad\": \"27/02/2021\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:7500/profs",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"profs"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "usuario/get/<dni>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/usuario/75003462",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"usuario",
+								"75003462"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usuario/put/<dni>",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DNI\": 75003462,\r\n    \"Nombre\": \"Lucas\",\r\n    \"Apelidos\": \"Gonzales\",\r\n    \"Telefono\": \"2614379044\",\r\n    \"Email\": \"lucaselcapo@gmail.com\",\r\n    \"Estado\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/usuario/75003462",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"usuario",
+								"75003462"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usuario/delete/<dni>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/usuario/75003462",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"usuario",
+								"75003462"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usuarios/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/usuarios",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usuarios/post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DNI\": 49782164,\r\n    \"Nombre\": \"Pepe\",\r\n    \"Apelidos\": \"Boldrini\",\r\n    \"Telefono\": \"2614315497\",\r\n    \"Email\": \"pepeBoldirini@gmail.com\",\r\n    \"Estado\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/usuarios",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clase",
+			"item": [
+				{
+					"name": "ClasesAlumnos",
+					"item": [
+						{
+							"name": "alum_clas/post/<id>/<dni>>",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:7500/alum_clas/1/49782164",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "7500",
+									"path": [
+										"alum_clas",
+										"1",
+										"49782164"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "clase/get/<id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/clase/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clase",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clase/put/<id>",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Nombre\": \"Boxeo\",\r\n    \"Tipo\": \"Cardio\",\r\n    \"Dia\": \"Monday\",\r\n    \"Horario\": \"15:30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/clase/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clase",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clase/delete/<id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/clase/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clase",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clases/post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Nombre\": \"boxeo\",\r\n    \"Tipo\": \"Cardio\",\r\n    \"Dia\": \"Monday\",\r\n    \"Horario\": \"10:30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7500/clases",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clases/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/clases",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clases"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
