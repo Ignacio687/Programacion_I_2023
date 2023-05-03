@@ -22,6 +22,8 @@ def create_app():
     api.add_resource(resources.PlanificacionAlumnoResource, '/plan_alumno/<dni>')
     api.add_resource(resources.PlanificacionesProfesoresResource, '/plans_profs')
     api.add_resource(resources.PlanificacionProfesorResource, '/plan_prof/<dni>')
+    api.add_resource(resources.PlanificacionDetallesResource, '/plan')
+    api.add_resource(resources.PlanificacionDetalleResource, '/plan/<id>/<dia>')
     api.add_resource(resources.UsuarioResource, '/usuario/<dni>')
     api.add_resource(resources.UsuariosResource, '/usuarios')
     api.add_resource(resources.UsuarioAlumnoResource, '/alumno/<dni>')

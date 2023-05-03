@@ -4,6 +4,8 @@ from .pago import Pago as PagoResource
 from .planificacion import PlanificacionAlumno as PlanificacionAlumnoResource
 from .planificacion import PlanificacionesProfesores as PlanificacionesProfesoresResource
 from .planificacion import PlanificacionProfesor as PlanificacionProfesorResource
+from .planificacion import PlanificacionDetalles as PlanificacionDetallesResource
+from .planificacion import PlanificacionDetalle as PlanificacionDetalleResource
 from .usuario import Usuario as UsuarioResource
 from .usuario import Usuarios as UsuariosResource
 from .usuario import UsuarioAlumno as UsuarioAlumnoResource
