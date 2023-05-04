@@ -33,7 +33,10 @@ class Clases(Resource):
         return jsonify([clase.to_json() for clase in clases])
 
     def post(self):
-        clase = ClaseModel.from_json(request.get_json())
+        try:
+            clase = ClaseModel.from_json(request.get_json())
+        except:
+            return 'Formato no correcto', 400
         db.session.add(clase)
         db.session.commit()
         return clase.to_json(), 201

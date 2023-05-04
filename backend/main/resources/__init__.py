@@ -4,8 +4,9 @@ from .clases import Clase as ClaseResource
 from .clases import Clases as ClasesResource
 from .clases import ClasesAlumnos as ClasesAlumnosResource
 from .clases import ClasesProfesores as ClasesProfesoresResource
+from .planificacion import Planificacion as PlanificacionResource
+from .planificacion import Planificaciones as PlanificacionesResource
 from .planificacion import PlanificacionAlumno as PlanificacionAlumnoResource
-from .planificacion import PlanificacionesProfesores as PlanificacionesProfesoresResource
 from .planificacion import PlanificacionProfesor as PlanificacionProfesorResource
 from .planificacion import PlanificacionDetalles as PlanificacionDetallesResource
 from .planificacion import PlanificacionDetalle as PlanificacionDetalleResource

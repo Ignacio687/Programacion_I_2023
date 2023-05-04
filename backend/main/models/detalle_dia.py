@@ -30,7 +30,7 @@ class Detalle_dia(db.Model):
     @staticmethod
     def from_json(detalle_json):
         return Detalle_dia(
-            detalle_id = detalle_json.get("planificacion_id"),
+            planificacion_id = detalle_json.get("planificacion_id"),
             dia = detalle_json.get("dia"),
             detalle = detalle_json.get("detalle"),
         )

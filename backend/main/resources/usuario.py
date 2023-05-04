@@ -32,8 +32,11 @@ class Usuarios(Resource):
 
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
-        db.session.add(usuario)
-        db.session.commit()
+        try:
+            db.session.add(usuario)
+            db.session.commit()
+        except:
+            return 'Formato no correcto', 400
         return usuario.to_json(), 201
     
 class UsuarioAlumno(Resource):
@@ -58,8 +61,11 @@ class UsuariosAlumnos(Resource):
     def post(self):
         alumno = AlumnoModel.from_json(request.get_json())
         exist = db.session.query(UsuariosModel).get_or_404(alumno.dni)
-        db.session.add(alumno)
-        db.session.commit()
+        try:
+            db.session.add(alumno)
+            db.session.commit()
+        except:
+            return 'Formato no correcto', 400
         return alumno.to_json(), 201
 
 class UsuarioProfesor(Resource):
@@ -84,7 +90,10 @@ class UsuarioProfesores(Resource):
         return jsonify([profesor.to_json() for profesor in profesores])
 
     def post(self):
-        profesor = ProfesorModel.from_json(request.get_json())
+        try:
+            profesor = ProfesorModel.from_json(request.get_json())
+        except:
+            return 'Formato no correcto', 400
         exist = db.session.query(UsuariosModel).get_or_404(profesor.dni)
         db.session.add(profesor)
         db.session.commit()

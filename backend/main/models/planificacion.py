@@ -18,8 +18,8 @@ class Planificacion(db.Model):
     def to_json(self):
         plan_json = {
             "planificacion_id": self.planificacion_id,
-            "profesor_DNI": self.profesor_DNI,
-            "alumno_DNI": self.alumno_DNI,
+            "profesor_DNI": self.profesor_dni,
+            "alumno_DNI": self.alumno_dni,
             "estado": self.estado,
             "creation_date": str(self.creation_date.strftime("%d/%m/%Y")),
         }
@@ -39,8 +39,8 @@ class Planificacion(db.Model):
     @staticmethod
     def from_json(plan_json):
         return Planificacion(
-            profesor_DNI = plan_json.get("profesor_DNI"),
-            alumno_DNI = plan_json.get("alumno_DNI"),
+            profesor_dni = plan_json.get("profesor_DNI"),
+            alumno_dni = plan_json.get("alumno_DNI"),
             estado = plan_json.get("estado"),
             creation_date = datetime.strptime(plan_json.get("creation_date"), "%d/%m/%Y")
         )
