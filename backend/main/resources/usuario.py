@@ -5,19 +5,10 @@ from main.models import UsuariosModel, ProfesorModel, AlumnoModel
 import regex
 from datetime import datetime
 
-# Datos de prueba en JSON
-USUARIOS = {
-    1: {'DNI': 77854625, 'Nombre': 'Alumno1', 'Rol': 'alumno'},
-    2: {'DNI': 84981773, 'Nombre': 'Alumno2', 'Rol': 'alumno'},
-    3: {'DNI': 12548952, 'Nombre': 'Profe1', 'Rol': 'profesor'},
-    4: {'DNI': 49137856, 'Nombre': 'Profe2', 'Rol': 'profesor'}
-}
-
-
 class Usuario(Resource):
     def get(self, dni):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
-        return usuario.to_json()
+        return usuario.to_json_complete()
 
     def put(self, dni):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
@@ -41,14 +32,17 @@ class Usuarios(Resource):
 
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
-        db.session.add(usuario)
-        db.session.commit()
+        try:
+            db.session.add(usuario)
+            db.session.commit()
+        except:
+            return 'Formato no correcto', 400
         return usuario.to_json(), 201
     
 class UsuarioAlumno(Resource):
     def get(self, dni):
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
-        return alumno.to_json()
+        return alumno.to_json_complete()
 
     def put(self, dni):
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
@@ -59,12 +53,6 @@ class UsuarioAlumno(Resource):
         db.session.commit()
         return alumno.to_json(), 201
     
-    def delete(self, dni):
-        alumno = db.session.query(AlumnoModel).get_or_404(dni)
-        db.session.delete(alumno)
-        db.session.commit()
-        return '', 204
-    
 class UsuariosAlumnos(Resource):
     def get(self):
         alumnos = db.session.query(AlumnoModel).all()
@@ -72,14 +60,18 @@ class UsuariosAlumnos(Resource):
 
     def post(self):
         alumno = AlumnoModel.from_json(request.get_json())
-        db.session.add(alumno)
-        db.session.commit()
+        exist = db.session.query(UsuariosModel).get_or_404(alumno.dni)
+        try:
+            db.session.add(alumno)
+            db.session.commit()
+        except:
+            return 'Formato no correcto', 400
         return alumno.to_json(), 201
 
 class UsuarioProfesor(Resource):
     def get(self, dni):
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
-        return profesor.to_json()
+        return profesor.to_json_complete()
 
     def put(self, dni):
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
@@ -98,7 +90,11 @@ class UsuarioProfesores(Resource):
         return jsonify([profesor.to_json() for profesor in profesores])
 
     def post(self):
-        profesor = ProfesorModel.from_json(request.get_json())
+        try:
+            profesor = ProfesorModel.from_json(request.get_json())
+        except:
+            return 'Formato no correcto', 400
+        exist = db.session.query(UsuariosModel).get_or_404(profesor.dni)
         db.session.add(profesor)
         db.session.commit()
         return profesor.to_json(), 201

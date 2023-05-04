@@ -6,9 +6,9 @@ class Usuarios(db.Model):
     apellidos = sa.Column(sa.String(100), nullable=False)
     telefono = sa.Column(sa.Integer, nullable=False)
     email = sa.Column(sa.String(100), nullable=False)
-    estado = sa.Column(sa.Boolean, nullable=False)
-    profesor = db.relationship("Profesor", uselist=False, back_populates= "usuarios",
-                               cascade="all, delete-orphan", single_parent=True)
+    estado = sa.Column(sa.Boolean, nullable=False, default=True)
+    profesor = db.relationship("Profesor", uselist = False, back_populates= "usuario",
+                               cascade="all, delete-orphan", single_parent = True)
     alumno = db.relationship("Alumno", uselist = False, back_populates = "usuario", 
                               cascade = "all, delete-orphan", single_parent = True)
 
@@ -30,10 +30,14 @@ class Usuarios(db.Model):
         return usuario_json
     
     def to_json_complete(self):
-        roltxt = "alumno" if self.alumno != None else "profesor"
-        roljson = self.alumno.to_json() if self.alumno != None else self.profesor.to_json()
+        if self.alumno != None:
+            roltxt = "Alumno"
+            roljson = self.alumno.to_json()
+        elif self.profesor != None:
+            roltxt = "Profesor"
+            roljson = self.profesor.to_json()
+        else: roltxt, roljson = "", ""
         usuario_json = {
-            "DNI": int(self.dni),
             "Nombre": str(self.nombre),
             "Apelidos": str(self.apellidos),
             "Telefono": str(self.telefono),
@@ -41,23 +45,15 @@ class Usuarios(db.Model):
             "Estado": bool(self.estado),
             roltxt: roljson
         }
-        print(self.profesor)
-        print(self.alumno)
         return usuario_json
 
     @staticmethod
     def from_json(usuario_json):
-        dni = usuario_json.get("DNI")
-        nombre = usuario_json.get("Nombre")
-        apellidos = usuario_json.get("Apelidos")
-        telefono = usuario_json.get("Telefono")
-        email = usuario_json.get("Email")
-        estado = usuario_json.get("Estado")
         return Usuarios(
-            dni=dni,
-            nombre=nombre,
-            apellidos=apellidos,
-            telefono=telefono,
-            email=email,
-            estado=estado,
+            dni = usuario_json.get("DNI"),
+            nombre = usuario_json.get("Nombre"),
+            apellidos = usuario_json.get("Apelidos"),
+            telefono = usuario_json.get("Telefono"),
+            email = usuario_json.get("Email"),
+            estado = usuario_json.get("Estado"),
         )
