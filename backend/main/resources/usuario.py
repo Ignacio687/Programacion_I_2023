@@ -27,8 +27,27 @@ class Usuario(Resource):
 
 class Usuarios(Resource):
     def get(self):
-        usuarios = db.session.query(UsuariosModel).all()
-        return jsonify([usuario.to_json_complete() for usuario in usuarios])
+        page=1
+        per_page=2
+        usuarios = db.session.query(UsuariosModel)
+
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+        
+        if request.args.get('status'):
+            #usuarios = usuarios.filter(UsuariosModel.estado.like("true"))
+            pass
+        
+        usuarios = usuarios.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify({
+            "usuarios":[usuario.to_json_complete() for usuario in usuarios],
+            "total": usuarios.total,
+            "pages": usuarios.pages,
+            "page": usuarios.page
+            })
+
 
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
@@ -55,8 +74,23 @@ class UsuarioAlumno(Resource):
     
 class UsuariosAlumnos(Resource):
     def get(self):
-        alumnos = db.session.query(AlumnoModel).all()
-        return jsonify([alumno.to_json() for alumno in alumnos])
+        page=1
+        per_page=1
+        alumnos = db.session.query(AlumnoModel)
+
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+        
+        
+        alumnos = alumnos.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify({
+            "usuarios":[alumnos.to_json_complete() for alumnos in alumnos],
+            "total": alumnos.total,
+            "pages": alumnos.pages,
+            "page": alumnos.page
+            })
 
     def post(self):
         alumno = AlumnoModel.from_json(request.get_json())
@@ -86,9 +120,24 @@ class UsuarioProfesor(Resource):
 
 class UsuarioProfesores(Resource):
     def get(self):
-        profesores = db.session.query(ProfesorModel).all()
-        return jsonify([profesor.to_json() for profesor in profesores])
+        page=1
+        per_page=1
+        profesor = db.session.query(ProfesorModel)
 
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+        
+        
+        profesor = profesor.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify({
+            "usuarios":[profesor.to_json_complete() for profesor in profesor],
+            "total": profesor.total,
+            "pages": profesor.pages,
+            "page": profesor.page
+            })
+    
     def post(self):
         try:
             profesor = ProfesorModel.from_json(request.get_json())
