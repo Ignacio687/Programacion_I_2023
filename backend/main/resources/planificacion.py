@@ -4,6 +4,7 @@ from main.models import PlanificacionModel, DetalleModel
 from .. import db
 import regex
 from datetime import datetime
+from sqlalchemy import func, desc
 
 class Planificacion(Resource):
     def get(self, id):
@@ -45,6 +46,10 @@ class Planificaciones(Resource):
             estado = request.args.get("estado")
             estado_bool = estado.lower() == "true"
             plan = plan.filter(PlanificacionModel.estado == estado_bool)
+        #if request.args.get('order_by') == 'date':
+        # Ordenar por fecha siempre
+        plan=plan.order_by(desc(PlanificacionModel.creation_date))
+
         plan = plan.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify(
             {"Planificaciones": [plan.to_json() for plan in plan],
