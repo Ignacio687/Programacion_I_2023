@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request, jsonify
-from .. import db
+from .. import db, sa
 from main.models import ClaseModel, AlumnoModel, ProfesorModel
 from datetime import datetime
 import regex
@@ -29,8 +29,26 @@ class Clase(Resource):
     
 class Clases(Resource):
     def get(self):
-        clases = db.session.query(ClaseModel).all()
-        return jsonify([clase.to_json() for clase in clases])
+        page, per_page = 1, 10
+        if request.args.get("page"):
+            page = int(request.args.get("page"))
+        if request.args.get("per_page"):
+            per_page = int(request.args.get("per_page"))
+        clases = db.session.query(ClaseModel)
+        ##filtros
+        if request.args.get("tipo"):
+            clases = clases.filter(ClaseModel.tipo.like(request.args.get("tipo")))
+        if request.args.get("dia"):
+            clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
+        if request.args.get("horario"):
+            clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("horario"), "%H:%M")))
+        ##
+        clases = clases.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify(
+            {"Clases": [clase.to_json() for clase in clases],
+            "total": clases.total,
+            "pages": clases.pages,
+            "page": page})
 
     def post(self):
         try:
