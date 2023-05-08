@@ -31,20 +31,16 @@ class Usuarios(Resource):
         page=1
         per_page=10
         usuarios = db.session.query(UsuariosModel)
-
         if request.args.get('page'):
             page=int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
-        
         if request.args.get('status'):
             usuarios = usuarios.filter(UsuariosModel.estado == request.args.get('status').lower())
-        if request.args.get('by_lastname') == "":
+        if 'by_lastname' in request.args.keys():
             usuarios = usuarios.order_by(asc(UsuariosModel.apellidos))
-        if request.args.get('by_dni') == "":
+        if 'by_dni' in request.args.keys():
             usuarios = usuarios.order_by(desc(UsuariosModel.dni))
-
-
         usuarios = usuarios.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
             "usuarios":[usuario.to_json_complete() for usuario in usuarios],
@@ -81,19 +77,16 @@ class UsuariosAlumnos(Resource):
         page=1
         per_page=10
         alumnos = db.session.query(AlumnoModel)
-
         if request.args.get('page'):
             page=int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
-        
         if request.args.get('status'):
             alumnos = alumnos.filter(AlumnoModel.estado == request.args.get('status').lower())
-        if request.args.get('by_lastname') == "":
+        if 'by_edad' in request.args.keys():
             alumnos = alumnos.order_by(asc(AlumnoModel.edad))
-        if request.args.get('by_lastname') == "":
-            alumnos = alumnos.order_by(desc(AlumnoModel.dni))     
-        
+        if 'by_dni' in request.args.keys():
+            alumnos = alumnos.order_by(desc(AlumnoModel.dni))
         alumnos = alumnos.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
             "alumnos":[alumnos.to_json_complete() for alumnos in alumnos],
@@ -133,19 +126,16 @@ class UsuarioProfesores(Resource):
         page=1
         per_page=10
         profesor = db.session.query(ProfesorModel)
-
         if request.args.get('page'):
             page=int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
-        
         if request.args.get('status'):
             profesor = profesor.filter(ProfesorModel.estado == request.args.get('status').lower())
-        if request.args.get('by_lastname') == "":
+        if 'by_especialidad' in request.args.keys():
             profesor = profesor.order_by(asc(ProfesorModel.especialidad))
-        if request.args.get('by_lastname') == "":
+        if 'by_dni' in request.args.keys():
             profesor = profesor.order_by(desc(ProfesorModel.dni))
-
         profesor = profesor.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
             "profesores":[profesor.to_json_complete() for profesor in profesor],
