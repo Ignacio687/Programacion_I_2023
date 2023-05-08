@@ -4,7 +4,7 @@ from .. import db
 from main.models import UsuariosModel, ProfesorModel, AlumnoModel
 import regex
 from datetime import datetime
-from sqlalchemy import func, asc, asc
+from sqlalchemy import func, desc, asc
 
 class Usuario(Resource):
     def get(self, dni):
@@ -41,8 +41,9 @@ class Usuarios(Resource):
             usuarios = usuarios.filter(UsuariosModel.estado == request.args.get('status').lower())
         if request.args.get('by_lastname') == "":
             usuarios = usuarios.order_by(asc(UsuariosModel.apellidos))
-        
-        print(request.args.get('by_lastname'))
+        if request.args.get('by_dni') == "":
+            usuarios = usuarios.order_by(desc(UsuariosModel.dni))
+
 
         usuarios = usuarios.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
@@ -51,7 +52,6 @@ class Usuarios(Resource):
             "pages": usuarios.pages,
             "page": usuarios.page
             })
-
 
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
@@ -79,7 +79,7 @@ class UsuarioAlumno(Resource):
 class UsuariosAlumnos(Resource):
     def get(self):
         page=1
-        per_page=1
+        per_page=10
         alumnos = db.session.query(AlumnoModel)
 
         if request.args.get('page'):
@@ -90,13 +90,13 @@ class UsuariosAlumnos(Resource):
         if request.args.get('status'):
             alumnos = alumnos.filter(AlumnoModel.estado == request.args.get('status').lower())
         if request.args.get('by_lastname') == "":
-            alumnos = alumnos.order_by(asc(AlumnoModel.apellidos))
-        if request.args.get('by_age') == "":
-            alumnos = alumnos.order_by(asc(AlumnoModel.edad))    
+            alumnos = alumnos.order_by(asc(AlumnoModel.edad))
+        if request.args.get('by_lastname') == "":
+            alumnos = alumnos.order_by(desc(AlumnoModel.dni))     
         
         alumnos = alumnos.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
-            "usuarios":[alumnos.to_json_complete() for alumnos in alumnos],
+            "alumnos":[alumnos.to_json_complete() for alumnos in alumnos],
             "total": alumnos.total,
             "pages": alumnos.pages,
             "page": alumnos.page
@@ -131,7 +131,7 @@ class UsuarioProfesor(Resource):
 class UsuarioProfesores(Resource):
     def get(self):
         page=1
-        per_page=1
+        per_page=10
         profesor = db.session.query(ProfesorModel)
 
         if request.args.get('page'):
@@ -142,13 +142,13 @@ class UsuarioProfesores(Resource):
         if request.args.get('status'):
             profesor = profesor.filter(ProfesorModel.estado == request.args.get('status').lower())
         if request.args.get('by_lastname') == "":
-            profesor = profesor.order_by(asc(ProfesorModel.apellidos))
-        if request.args.get('by_spec') == "":
             profesor = profesor.order_by(asc(ProfesorModel.especialidad))
+        if request.args.get('by_lastname') == "":
+            profesor = profesor.order_by(desc(ProfesorModel.dni))
 
         profesor = profesor.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
-            "usuarios":[profesor.to_json_complete() for profesor in profesor],
+            "profesores":[profesor.to_json_complete() for profesor in profesor],
             "total": profesor.total,
             "pages": profesor.pages,
             "page": profesor.page
