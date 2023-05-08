@@ -44,10 +44,7 @@ class Planificaciones(Resource):
             plan = plan.filter(PlanificacionModel.profesor_dni.like(request.args.get("profesor_dni")))
 
         if request.args.get("estado"):
-            # En el json, el true y false estan en minusculas, no los toma como boolean
-            estado = request.args.get("estado")
-            estado_bool = estado.lower() == "true"
-            plan = plan.filter(PlanificacionModel.estado == estado_bool)
+            plan = plan.filter(PlanificacionModel.estado == request.args.get("estado"))
 
         if request.args.get('order_by_date') == 'asc':
             plan=plan.order_by(asc(PlanificacionModel.creation_date))
