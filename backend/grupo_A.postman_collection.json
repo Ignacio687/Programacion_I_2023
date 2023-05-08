@@ -3,8 +3,8 @@
 		"_postman_id": "3a2b3a3e-c392-4d43-a832-211b045dc33d",
 		"name": "grupo_A",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26654415",
-		"_collection_link": "https://gold-meadow-277833.postman.co/workspace/Programacion_I~e5a8bcb4-0d38-4909-bee1-89b6b3d05ca6/collection/26654350-3a2b3a3e-c392-4d43-a832-211b045dc33d?action=share&creator=26654415&source=collection_link"
+		"_exporter_id": "26654350",
+		"_collection_link": "https://gold-meadow-277833.postman.co/workspace/Programacion_I~e5a8bcb4-0d38-4909-bee1-89b6b3d05ca6/collection/26654350-3a2b3a3e-c392-4d43-a832-211b045dc33d?action=share&creator=26654350&source=collection_link"
 	},
 	"item": [
 		{
@@ -308,7 +308,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:7500/plans",
+							"raw": "http://127.0.0.1:7500/plans?estado=1&order_by_date=desc",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -319,6 +319,36 @@
 							"port": "7500",
 							"path": [
 								"plans"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "1"
+								},
+								{
+									"key": "alumno_dni",
+									"value": "84931657",
+									"disabled": true
+								},
+								{
+									"key": "profesor_dni",
+									"value": "48791548",
+									"disabled": true
+								},
+								{
+									"key": "order_by_date",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "order_by_date",
+									"value": "desc"
+								}
 							]
 						}
 					},
@@ -361,7 +391,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:7500/plan/1",
+							"raw": "http://127.0.0.1:7500/plan/3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -372,7 +402,7 @@
 							"port": "7500",
 							"path": [
 								"plan",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -513,6 +543,28 @@
 									"port": "7500",
 									"path": [
 										"alumnos"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "by_dni",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "by_edad",
+											"value": "",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -525,7 +577,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"DNI\": 84931657,\r\n    \"Edad\": 20,\r\n    \"Sexo\": false\r\n}",
+									"raw": "{\r\n    \"DNI\": 43752446,\r\n    \"Edad\": 26,\r\n    \"Sexo\": false\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -615,7 +667,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:7500/profs",
+									"raw": "http://127.0.0.1:7500/profs?by_dni",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -626,6 +678,27 @@
 									"port": "7500",
 									"path": [
 										"profs"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "by_especialidad",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "by_dni",
+											"value": null
+										}
 									]
 								}
 							},
@@ -748,7 +821,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:7500/usuarios",
+							"raw": "http://127.0.0.1:7500/usuarios?status=1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -759,6 +832,32 @@
 							"port": "7500",
 							"path": [
 								"usuarios"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "1"
+								},
+								{
+									"key": "by_lastname",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "by_dni",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -771,7 +870,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"DNI\": 84931657,\r\n    \"Nombre\": \"Tomi\",\r\n    \"Apelidos\": \"Sales\",\r\n    \"Telefono\": \"2614348791\",\r\n    \"Email\": \"tomisales@gmail.com\",\r\n    \"Estado\": true\r\n}",
+							"raw": "{\r\n    \"DNI\": 43752446,\r\n    \"Nombre\": \"Sofi\",\r\n    \"Apelidos\": \"Sales\",\r\n    \"Telefono\": \"2614348641\",\r\n    \"Email\": \"fufisales@gmail.com\",\r\n    \"Estado\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -817,6 +916,43 @@
 							"port": "7500",
 							"path": [
 								"clases"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": "cardio",
+									"disabled": true
+								},
+								{
+									"key": "dia",
+									"value": "Lunes",
+									"disabled": true
+								},
+								{
+									"key": "hora",
+									"value": "12:30",
+									"disabled": true
+								},
+								{
+									"key": "orby_hora",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nr_alumnos",
+									"value": "3",
+									"disabled": true
+								}
 							]
 						}
 					},

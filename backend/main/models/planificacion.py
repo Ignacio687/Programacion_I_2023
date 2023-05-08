@@ -6,7 +6,7 @@ class Planificacion(db.Model):
     planificacion_id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     profesor_dni = sa.Column(sa.Integer, sa.ForeignKey(ProfesorModel.dni), nullable=False)
     alumno_dni = sa.Column(sa.Integer, sa.ForeignKey(AlumnoModel.dni), nullable=False)
-    estado = sa.Column(sa.Boolean, default=True)
+    estado = sa.Column(sa.Boolean, nullable=False,default=True)
     creation_date = sa.Column(sa.DateTime, nullable=False)
     profesor = db.relationship("Profesor", back_populates="planificaciones", uselist = False, single_parent = True)
     alumno = db.relationship("Alumno", back_populates="planificaciones", uselist = False, single_parent = True)
