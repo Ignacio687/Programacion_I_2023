@@ -36,7 +36,7 @@ class Usuarios(Resource):
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
         if request.args.get('status'):
-            usuarios = usuarios.filter(UsuariosModel.estado == request.args.get('status').lower())
+            usuarios = usuarios.filter(UsuariosModel.estado == request.args.get('status'))
         if 'by_lastname' in request.args.keys():
             usuarios = usuarios.order_by(asc(UsuariosModel.apellidos))
         if 'by_dni' in request.args.keys():
@@ -82,7 +82,7 @@ class UsuariosAlumnos(Resource):
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
         if request.args.get('status'):
-            alumnos = alumnos.filter(AlumnoModel.estado == request.args.get('status').lower())
+            alumnos = alumnos.filter(AlumnoModel.estado == request.args.get('status'))
         if 'by_edad' in request.args.keys():
             alumnos = alumnos.order_by(asc(AlumnoModel.edad))
         if 'by_dni' in request.args.keys():
@@ -131,7 +131,7 @@ class UsuarioProfesores(Resource):
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
         if request.args.get('status'):
-            profesor = profesor.filter(ProfesorModel.estado == request.args.get('status').lower())
+            profesor = profesor.filter(ProfesorModel.estado == request.args.get('status'))
         if 'by_especialidad' in request.args.keys():
             profesor = profesor.order_by(asc(ProfesorModel.especialidad))
         if 'by_dni' in request.args.keys():
