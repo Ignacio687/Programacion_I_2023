@@ -44,7 +44,6 @@ class Planificaciones(Resource):
             # En el json, el true y false estan en minusculas, no los toma como boolean
             estado = request.args.get("estado")
             estado_bool = estado.lower() == "true"
-
             plan = plan.filter(PlanificacionModel.estado == estado_bool)
         plan = plan.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify(
