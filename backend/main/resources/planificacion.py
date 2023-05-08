@@ -29,8 +29,29 @@ class Planificacion(Resource):
     
 class Planificaciones(Resource):
     def get(self):
-        plan = db.session.query(PlanificacionModel).all()
-        return jsonify([clase.to_json() for clase in plan])
+        page, per_page = 1, 10
+        if request.args.get("page"):
+            page = int(request.args.get("page"))
+        if request.args.get("per_page"):
+            per_page = int(request.args.get("per_page"))
+        plan = db.session.query(PlanificacionModel)
+
+        if request.args.get("alumno_dni"):
+            plan = plan.filter(PlanificacionModel.alumno_dni.like(request.args.get("alumno_dni")))
+        if request.args.get("profesor_dni"):
+            plan = plan.filter(PlanificacionModel.profesor_dni.like(request.args.get("profesor_dni")))
+        if request.args.get("estado"):
+            # En el json, el true y false estan en minusculas, no los toma como boolean
+            estado = request.args.get("estado")
+            estado_bool = estado.lower() == "true"
+
+            plan = plan.filter(PlanificacionModel.estado == estado_bool)
+        plan = plan.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify(
+            {"Planificaciones": [plan.to_json() for plan in plan],
+            "total": plan.total,
+            "pages": plan.pages,
+            "page": page})
 
     def post(self):
         try:
