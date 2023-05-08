@@ -4,7 +4,7 @@ from main.models import PlanificacionModel, DetalleModel
 from .. import db
 import regex
 from datetime import datetime
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, asc
 
 class Planificacion(Resource):
     def get(self, id):
@@ -39,16 +39,21 @@ class Planificaciones(Resource):
 
         if request.args.get("alumno_dni"):
             plan = plan.filter(PlanificacionModel.alumno_dni.like(request.args.get("alumno_dni")))
+
         if request.args.get("profesor_dni"):
             plan = plan.filter(PlanificacionModel.profesor_dni.like(request.args.get("profesor_dni")))
+
         if request.args.get("estado"):
             # En el json, el true y false estan en minusculas, no los toma como boolean
             estado = request.args.get("estado")
             estado_bool = estado.lower() == "true"
             plan = plan.filter(PlanificacionModel.estado == estado_bool)
-        #if request.args.get('order_by') == 'date':
-        # Ordenar por fecha siempre
-        plan=plan.order_by(desc(PlanificacionModel.creation_date))
+
+        if request.args.get('order_by_date') == 'asc':
+            plan=plan.order_by(asc(PlanificacionModel.creation_date))
+            
+        if request.args.get('order_by_date') == 'desc':
+            plan=plan.order_by(desc(PlanificacionModel.creation_date))
 
         plan = plan.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify(
