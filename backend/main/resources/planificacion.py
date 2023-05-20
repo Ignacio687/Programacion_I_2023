@@ -63,7 +63,7 @@ class Planificaciones(Resource):
         try:
             plan = PlanificacionModel.from_json(request.get_json())
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
@@ -110,7 +110,7 @@ class PlanificacionDetalles(Resource):
         try:
             plan = DetalleModel.from_json(request.get_json())
         except:
-             return 'Formato no correcto', 400
+             return 'Formato incorrecto', 400
         exist = db.session.query(PlanificacionModel).get_or_404(plan.planificacion_id)
         db.session.add(plan)
         db.session.commit()

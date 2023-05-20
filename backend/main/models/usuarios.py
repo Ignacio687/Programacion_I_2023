@@ -1,21 +1,33 @@
 from .. import db, sa
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Usuarios(db.Model):
-    dni = sa.Column(sa.Integer, primary_key=True)
+    dni = sa.Column(sa.Integer, primary_key=True, unique=True)
     nombre = sa.Column(sa.String(100), nullable=False)
     apellidos = sa.Column(sa.String(100), nullable=False)
     telefono = sa.Column(sa.Integer, nullable=False)
-    email = sa.Column(sa.String(100), nullable=False)
-    estado = sa.Column(sa.Boolean, nullable=False, default=True)
+    email = sa.Column(sa.String(100), nullable=False, unique=True)
+    password = sa.Column(sa.String(16), nullable=False)
+    rol = sa.Column(sa.String(10), nullable=False)
     profesor = db.relationship("Profesor", uselist = False, back_populates= "usuario",
                                cascade="all, delete-orphan", single_parent = True)
     alumno = db.relationship("Alumno", uselist = False, back_populates = "usuario", 
                               cascade = "all, delete-orphan", single_parent = True)
 
+    @property
+    def plain_password(self):
+        raise AttributeError("Password can not be read")
+    
+    @plain_password.setter
+    def plain_password(self, password):
+        self.password = generate_password_hash(password)
+    
+    def validate_password(self, password):
+        return check_password_hash(self.password, password)
+
     def __repr__(self):
         return (
-            f"<DNI: {self.dni}, Nombre: {self.nombre}, Apellidos: {self.apellidos}, "
-            + f"Telefono: {self.telefono}, Email: {self.email}, Estado: {self.estado}>"
+            f"<DNI: {self.dni}, Email: {self.email}, Rol: {self.rol}>"
         )
 
     def to_json(self):
@@ -25,7 +37,7 @@ class Usuarios(db.Model):
             "Apelidos": str(self.apellidos),
             "Telefono": str(self.telefono),
             "Email": str(self.email),
-            "Estado": bool(self.estado)
+            "Rol": str(self.rol),
         }
         return usuario_json
     
@@ -42,7 +54,7 @@ class Usuarios(db.Model):
             "Apelidos": str(self.apellidos),
             "Telefono": str(self.telefono),
             "Email": str(self.email),
-            "Estado": bool(self.estado),
+            "Rol": str(self.rol),
             roltxt: roljson
         }
         return usuario_json
@@ -55,5 +67,6 @@ class Usuarios(db.Model):
             apellidos = usuario_json.get("Apelidos"),
             telefono = usuario_json.get("Telefono"),
             email = usuario_json.get("Email"),
-            estado = usuario_json.get("Estado"),
+            plain_password = usuario_json.get("Password"),
+            rol = usuario_json.get("Rol")
         )

@@ -58,7 +58,7 @@ class Clases(Resource):
         try:
             clase = ClaseModel.from_json(request.get_json())
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         db.session.add(clase)
         db.session.commit()
         return clase.to_json(), 201
