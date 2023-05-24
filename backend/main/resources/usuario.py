@@ -5,13 +5,13 @@ from main.models import UsuariosModel, ProfesorModel, AlumnoModel
 import regex
 from datetime import datetime
 from sqlalchemy import func, desc, asc
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from ..auth.decorators import role_required
 
 class Usuario(Resource):
     @jwt_required()
     def get(self, dni):
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if identity.get("rol") == "alumno":
             dni = identity.get("DNI")
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
@@ -19,7 +19,7 @@ class Usuario(Resource):
 
     @jwt_required()
     def put(self, dni):
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if identity.get("rol") == "alumno":
             dni = identity.get("DNI")
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
@@ -61,7 +61,7 @@ class Usuarios(Resource):
             "page": usuarios.page
             })
 
-    #@role_required(roles = ["admin"])
+    @role_required(roles = ["admin"])
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
         try:
@@ -74,7 +74,7 @@ class Usuarios(Resource):
 class UsuarioAlumno(Resource):
     @jwt_required()
     def get(self, dni):
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if identity.get("rol") == "alumno":
             dni = identity.get("DNI")
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
@@ -82,7 +82,7 @@ class UsuarioAlumno(Resource):
 
     @jwt_required()
     def put(self, dni):
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if identity.get("rol") == "alumno":
             dni = identity.get("DNI")
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
@@ -129,7 +129,7 @@ class UsuariosAlumnos(Resource):
 class UsuarioProfesor(Resource):
     @role_required(roles = ["admin", "profesor"])
     def get(self, dni):
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if identity.get("rol") == "profesor":
             dni = identity.get("DNI")
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
@@ -137,7 +137,7 @@ class UsuarioProfesor(Resource):
 
     @role_required(roles = ["admin", "profesor"])
     def put(self, dni):
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if identity.get("rol") == "profesor":
             dni = identity.get("DNI")
         profesor = db.session.query(ProfesorModel).get_or_404(dni)

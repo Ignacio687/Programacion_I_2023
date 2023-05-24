@@ -1,7 +1,7 @@
 from flask import request, Blueprint
 from .. import db
 from main.models import UsuariosModel
-from flask_jwt_extended import create_access_token, get_jwt_identity
+from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt
 from main.auth.decorators import role_required
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -24,11 +24,11 @@ def login():
 #para luego poder ser comprobado y aceptado por un admin o prof cambiando el estado, pero mientras este 
 #el estado en False no pueda a acceder a ningun recurso que requiera jwt
 
-@role_required(roles = ["admin","profesor"])
 @auth.route('/register', methods=['POST'])
+@role_required(roles = ["admin","profesor"])
 def register():
     usuario = UsuariosModel.from_json(request.get_json())
-    if "admin" not in get_jwt_identity.get("rol") and usuario.rol != "alumno":
+    if "admin" not in get_jwt().get("rol") and usuario.rol != "alumno":
         return f'Solo administradores pueden registrar profesores o administradores', 403
     exists = db.session.query(UsuariosModel).filter(UsuariosModel.email == usuario.email).scalar() is not None
     if exists:

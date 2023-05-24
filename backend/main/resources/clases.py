@@ -5,13 +5,14 @@ from main.models import ClaseModel, AlumnoModel, ProfesorModel
 from datetime import datetime
 import regex
 from sqlalchemy import desc, func
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from ..auth.decorators import role_required
+
 class Clase(Resource):
     @jwt_required(optional=True)
     def get(self, id):
         clase = db.session.query(ClaseModel).get_or_404(id)
-        identity = get_jwt_identity()
+        identity = get_jwt()
         if not identity or identity.get('rol') == 'alumno':
             return clase.to_json() 
         return clase.to_json_complete() 
@@ -75,7 +76,6 @@ class Clases(Resource):
 class ClasesAlumnos(Resource):
     @jwt_required()
     def post(self, id, dni):
-        identity = get_jwt_identity()
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
         clase = db.session.query(ClaseModel).get_or_404(id)
         alumno.clases.append(clase)

@@ -50,6 +50,7 @@ class Usuarios(db.Model):
             roljson = self.profesor.to_json()
         else: roltxt, roljson = "", ""
         usuario_json = {
+            "DNI": self.dni,
             "Nombre": str(self.nombre),
             "Apelidos": str(self.apellidos),
             "Telefono": str(self.telefono),

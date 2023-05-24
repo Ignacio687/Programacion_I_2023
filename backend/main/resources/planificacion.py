@@ -37,7 +37,6 @@ class Planificaciones(Resource):
     @role_required(roles = ["admin", "profesor"])
     def get(self):
         page, per_page = 1, 10
-        identity = get_jwt_identity()
         if request.args.get("page"):
             page = int(request.args.get("page"))
         if request.args.get("per_page"):
@@ -46,9 +45,6 @@ class Planificaciones(Resource):
 
         if request.args.get("alumno_dni"):
             plan = plan.filter(PlanificacionModel.alumno_dni.like(request.args.get("alumno_dni")))
-
-        if identity.get("rol") == "alumno":
-            plan = plan.filter(PlanificacionModel.alumno_dni.like(identity.get("DNI")))
 
         if request.args.get("profesor_dni"):
             plan = plan.filter(PlanificacionModel.profesor_dni.like(request.args.get("profesor_dni")))
