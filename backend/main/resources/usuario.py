@@ -5,13 +5,23 @@ from main.models import UsuariosModel, ProfesorModel, AlumnoModel
 import regex
 from datetime import datetime
 from sqlalchemy import func, desc, asc
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from ..auth.decorators import role_required
 
 class Usuario(Resource):
+    @jwt_required()
     def get(self, dni):
+        identity = get_jwt()
+        if identity.get("rol") == "alumno":
+            dni = identity.get("DNI")
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         return usuario.to_json_complete()
 
+    @jwt_required()
     def put(self, dni):
+        identity = get_jwt()
+        if identity.get("rol") == "alumno":
+            dni = identity.get("DNI")
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         data = request.get_json().items()
         for key, value in data:
@@ -20,6 +30,7 @@ class Usuario(Resource):
         db.session.commit()
         return usuario.to_json(), 201        
 
+    @role_required(roles = ["admin"])
     def delete(self, dni):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         db.session.delete(usuario)
@@ -27,6 +38,7 @@ class Usuario(Resource):
         return '', 204
 
 class Usuarios(Resource):
+    @role_required(roles = ["admin", "profesor"])
     def get(self):
         page=1
         per_page=10
@@ -49,21 +61,30 @@ class Usuarios(Resource):
             "page": usuarios.page
             })
 
+    @role_required(roles = ["admin"])
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
         try:
             db.session.add(usuario)
             db.session.commit()
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         return usuario.to_json(), 201
     
 class UsuarioAlumno(Resource):
+    @jwt_required()
     def get(self, dni):
+        identity = get_jwt()
+        if identity.get("rol") == "alumno":
+            dni = identity.get("DNI")
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
         return alumno.to_json_complete()
 
+    @jwt_required()
     def put(self, dni):
+        identity = get_jwt()
+        if identity.get("rol") == "alumno":
+            dni = identity.get("DNI")
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
         data = request.get_json().items()
         for key, value in data:
@@ -73,6 +94,7 @@ class UsuarioAlumno(Resource):
         return alumno.to_json(), 201
     
 class UsuariosAlumnos(Resource):
+    @role_required(roles = ["admin", "profesor"])
     def get(self):
         page=1
         per_page=10
@@ -93,6 +115,7 @@ class UsuariosAlumnos(Resource):
             "page": alumnos.page
             })
 
+    @role_required(roles = ["admin", "profesor"])
     def post(self):
         alumno = AlumnoModel.from_json(request.get_json())
         exist = db.session.query(UsuariosModel).get_or_404(alumno.dni)
@@ -100,15 +123,23 @@ class UsuariosAlumnos(Resource):
             db.session.add(alumno)
             db.session.commit()
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         return alumno.to_json(), 201
 
 class UsuarioProfesor(Resource):
+    @role_required(roles = ["admin", "profesor"])
     def get(self, dni):
+        identity = get_jwt()
+        if identity.get("rol") == "profesor":
+            dni = identity.get("DNI")
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
         return profesor.to_json_complete()
 
+    @role_required(roles = ["admin", "profesor"])
     def put(self, dni):
+        identity = get_jwt()
+        if identity.get("rol") == "profesor":
+            dni = identity.get("DNI")
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
         data = request.get_json().items()
         for key, value in data:
@@ -120,6 +151,7 @@ class UsuarioProfesor(Resource):
         return profesor.to_json() , 201
 
 class UsuarioProfesores(Resource):
+    @role_required(roles = ["admin"])
     def get(self):
         page=1
         per_page=10
@@ -140,11 +172,12 @@ class UsuarioProfesores(Resource):
             "page": profesor.page
             })
     
+    @role_required(roles = ["admin"])
     def post(self):
         try:
             profesor = ProfesorModel.from_json(request.get_json())
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         exist = db.session.query(UsuariosModel).get_or_404(profesor.dni)
         db.session.add(profesor)
         db.session.commit()

@@ -5,12 +5,19 @@ from main.models import ClaseModel, AlumnoModel, ProfesorModel
 from datetime import datetime
 import regex
 from sqlalchemy import desc, func
-    
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from ..auth.decorators import role_required
+
 class Clase(Resource):
+    @jwt_required(optional=True)
     def get(self, id):
         clase = db.session.query(ClaseModel).get_or_404(id)
-        return clase.to_json_complete()
+        identity = get_jwt()
+        if not identity or identity.get('rol') == 'alumno':
+            return clase.to_json() 
+        return clase.to_json_complete() 
 
+    @role_required(roles = ["admin"])
     def put(self, id):
         clase = db.session.query(ClaseModel).get_or_404(id)
         data = request.get_json().items()
@@ -22,6 +29,7 @@ class Clase(Resource):
         db.session.commit()
         return clase.to_json(), 201        
 
+    @role_required(roles = ["admin"])
     def delete(self, id):
         clase = db.session.query(ClaseModel).get_or_404(id)
         db.session.delete(clase)
@@ -29,6 +37,7 @@ class Clase(Resource):
         return '', 204
     
 class Clases(Resource):
+    @jwt_required(optional=True)
     def get(self):
         page, per_page = 1, 10
         if request.args.get("page"):
@@ -54,16 +63,18 @@ class Clases(Resource):
             "pages": clases.pages,
             "page": page})
 
+    @role_required(roles = ["admin"])
     def post(self):
         try:
             clase = ClaseModel.from_json(request.get_json())
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         db.session.add(clase)
         db.session.commit()
         return clase.to_json(), 201
     
 class ClasesAlumnos(Resource):
+    @jwt_required()
     def post(self, id, dni):
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
         clase = db.session.query(ClaseModel).get_or_404(id)
@@ -71,6 +82,7 @@ class ClasesAlumnos(Resource):
         db.session.commit()
         return alumno.to_json_complete(), 201
     
+    @jwt_required()
     def delete(self, id, dni):
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
         clase = db.session.query(ClaseModel).get_or_404(id)
@@ -79,6 +91,7 @@ class ClasesAlumnos(Resource):
         return '', 204
 
 class ClasesProfesores(Resource):
+    @role_required(roles = ["admin"])
     def post(self, id, dni):
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
         clase = db.session.query(ClaseModel).get_or_404(id)
@@ -86,6 +99,7 @@ class ClasesProfesores(Resource):
         db.session.commit()
         return profesor.to_json_complete(), 201
 
+    @role_required(roles = ["admin"])
     def delete(self, id, dni):
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
         clase = db.session.query(ClaseModel).get_or_404(id)

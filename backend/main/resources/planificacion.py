@@ -5,12 +5,16 @@ from .. import db
 import regex
 from datetime import datetime
 from sqlalchemy import func, desc, asc
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from ..auth.decorators import role_required
 
 class Planificacion(Resource):
+    @jwt_required()
     def get(self, id):
         plan = db.session.query(PlanificacionModel).get_or_404(id)
         return plan.to_json_complete()
 
+    @role_required(roles = ["admin", "profesor"])
     def put(self, id):
         plan = db.session.query(PlanificacionModel).get_or_404(id)
         data = request.get_json().items()
@@ -22,6 +26,7 @@ class Planificacion(Resource):
         db.session.commit()
         return plan.to_json(), 201        
 
+    @role_required(roles = ["admin", "profesor"])
     def delete(self, id):
         plan = db.session.query(PlanificacionModel).get_or_404(id)
         db.session.delete(plan)
@@ -29,6 +34,7 @@ class Planificacion(Resource):
         return '', 204
     
 class Planificaciones(Resource):
+    @role_required(roles = ["admin", "profesor"])
     def get(self):
         page, per_page = 1, 10
         if request.args.get("page"):
@@ -59,28 +65,32 @@ class Planificaciones(Resource):
             "pages": plan.pages,
             "page": page})
 
+    @role_required(roles = ["admin", "profesor"])
     def post(self):
         try:
             plan = PlanificacionModel.from_json(request.get_json())
         except:
-            return 'Formato no correcto', 400
+            return 'Formato incorrecto', 400
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
 
 class PlanificacionAlumno(Resource):
+    @jwt_required()
     def get(self, dni):
         planificacion = (
             db.session.query(PlanificacionModel).filter(PlanificacionModel.alumno_dni == dni)).all()
         return jsonify([plan.to_json() for plan in planificacion])
 
 class PlanificacionProfesor(Resource):
+    @role_required(roles = ["admin", "profesor"])
     def get(self, dni):
         planificacion = (
             db.session.query(PlanificacionModel).filter(PlanificacionModel.profesor_dni == dni)).all()
         return jsonify([plan.to_json() for plan in planificacion])
 
 class PlanificacionDetalle(Resource):
+    @jwt_required()
     def get(self, id, dia):
         plan = db.session.query(DetalleModel).filter(
                 DetalleModel.planificacion_id == int(id), 
@@ -90,6 +100,7 @@ class PlanificacionDetalle(Resource):
             return plan.to_json()
         else: return '', 404
 
+    @role_required(roles = ["admin", "profesor"])
     def put(self, id, dia):
         plan = db.session.query(DetalleModel).filter(
             DetalleModel.planificacion_id == int(id), 
@@ -104,15 +115,14 @@ class PlanificacionDetalle(Resource):
             return plan.to_json() , 201
         else: return '', 404
 
-        
 class PlanificacionDetalles(Resource):
+    @role_required(roles = ["admin", "profesor"])
     def post(self):
         try:
             plan = DetalleModel.from_json(request.get_json())
         except:
-             return 'Formato no correcto', 400
+             return 'Formato incorrecto', 400
         exist = db.session.query(PlanificacionModel).get_or_404(plan.planificacion_id)
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
-
