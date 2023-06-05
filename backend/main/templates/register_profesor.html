@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+      <meta charset="UTF-8">
+  </head>
+  <style>
+      .main{
+        border:1px solid black;
+        padding:30px;
+        background-color:white;
+        margin:20px;
+      }
+      body{
+        background-color: lightgray;
+      }
+      .services{
+        background-color:#94beff;
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        padding:10px;
+        border:1px solid black;
+        width:250px;
+      }
+      h1{
+        font-weight: bold;
+        font-size:25px;
+        color:#001d62;
+      }
+
+      .button {
+        background-color:#3680f2;
+      	border-radius:2px;
+      	border:1px solid black;
+      	display:inline-block;
+      	color:#ffffff;
+      	font-size:13px;
+      	padding:6px 24px;
+      	text-decoration:none;
+        margin-right:3px;
+
+      }
+
+  </style>
+  <body style="background-color: lightgray;">
+  <br/>
+  <div class="main" style="border: 1px solid black;padding: 30px;background-color: white;margin: 50px;">
+    <h1 style="font-weight: bold;font-size: 25px;color: #001d62;">Bienvenido {{usuario.nombre}} {{usuario.apellidos}}! </h1>
+    <p>Bienvenido al equipo, estamos anciosos por trabajar contigo.</p>
+    <div class="services" style="background-color: #94beff;box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);padding: 10px;border: 1px solid black;width: 350px;">
+      <p>Ingresa a nuestra página web y podras:</p>
+        <ul>
+            <li><a>Ver y modificar tus datos.</a></li>
+            <li><a>Ver tus clases.</a></li>
+            <li><a>Ver, crear y modificar las planificaciones de tus alumnos.</a></li>
+            <li><a>Ayudar a clientes con sus cuentas, datos e inscripciones.</a></li>
+            <li><a>¡Y mucho más!</a></li>
+        </ul>
+    </div>
+    <br>
+  
+</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+Bienvenido {{usuario.nombre}} {{usuario.apellidos}}!
+
+Bienvenido al equipo, estamos anciosos por trabajar contigo.
+
+Ingresa a nuestra página web y podras:
+
+- Ver y modificar tus datos.
+- Ver tus clases.
+- Ver, crear y modificar las planificaciones de tus alumnos.
+- ¡Y mucho más!

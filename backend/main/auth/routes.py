@@ -3,6 +3,7 @@ from .. import db
 from main.models import UsuariosModel
 from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt
 from main.auth.decorators import role_required
+from main.mail.functions import sendMail
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -37,6 +38,9 @@ def register():
         try:
             db.session.add(usuario)
             db.session.commit()
+            register = "register_alumno" if usuario.rol == "alumno" else "register_profesor"
+            if usuario.rol != "admin":
+                sent = sendMail([usuario.email], "Welcome!", register, usuario = usuario)
         except Exception as error:
             db.session.rollback()
             return str(error), 409

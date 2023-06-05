@@ -1,0 +1,10 @@
+Bienvenido {{usuario.nombre}} {{usuario.apellidos}}!
+
+Gracias por registrarte en nuestro gimnasio.
+
+Ingresa a nuestra página web y podras:
+
+- Ver y modificar tus datos.
+- Ver las clases en las que estás registrado e inscribirte a otras clases que el gimnasio ofrece.
+- Ver todas tus planificaciones.
+- ¡Y mucho más!
