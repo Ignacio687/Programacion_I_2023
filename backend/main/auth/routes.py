@@ -31,9 +31,12 @@ def register():
     usuario = UsuariosModel.from_json(request.get_json())
     if "admin" not in get_jwt().get("rol") and usuario.rol != "alumno":
         return f'Solo administradores pueden registrar profesores o administradores', 403
-    exists = db.session.query(UsuariosModel).filter(UsuariosModel.email == usuario.email).scalar() is not None
-    if exists:
+    existsMail = db.session.query(UsuariosModel).filter(UsuariosModel.email == usuario.email).scalar() is not None
+    existsDNI = db.session.query(UsuariosModel).filter(UsuariosModel.dni == usuario.dni).scalar() is not None
+    if existsMail:
         return 'Duplicated mail', 409
+    elif existsDNI:
+        return 'Duplicated DNI', 409
     else:
         try:
             db.session.add(usuario)
