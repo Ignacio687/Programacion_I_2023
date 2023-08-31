@@ -1,0 +1,45 @@
+body{
+  background-color: #131B26;
+}
+h1{
+  color: #D0FD3E;
+  text-align: center; 
+  margin-top: 80px;
+
+}
+h2{
+	color: white;
+	text-align: center; 
+	margin: 30px 0px 30px 0px;
+}
+.h2-special{
+	background: linear-gradient(128deg, rgba(208, 253, 62, 0.87) 0%, rgba(16, 187, 224, 0.63) 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+	display: none;
+}
+.navbar-toggler[aria-expanded="false"] .navbar{
+	display: none;
+}
+.background-image {
+    background-image: url("css/BackGroundImage.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+.navbar {
+	position: fixed; /* Fija la barra de navegación en la pantalla */
+	top: 0; /* Coloca la barra en la parte superior */
+	width: 100%; /* Opcional: ocupará todo el ancho de la pantalla */
+	z-index: 1000; /* Asegura que la barra se superponga a otros elementos */
+	padding: ;
+}
+.navbar-toggler{
+	border: 0;
+}
+.navbar-toggler-icon{
+}

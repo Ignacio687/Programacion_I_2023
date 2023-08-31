@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Iniciar sesión</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+	<style>
+		.form-control::placeholder {
+			/* Chrome, Firefox, Opera, Safari 10.1+ */
+			color: white;
+			opacity: 1;
+			/* Firefox */
+		}
+
+		input {
+			border: 0;
+			outline: 0;
+			background: transparent;
+			border-bottom: 1px solid white;
+		}
+	</style>
+</head>
+
+<body style="background-color: #131B26;">
+	<div class="container mt-5"> <!-- Agregamos un contenedor principal y margen superior -->
+		<h1 class="text-white">VLAN GYM</h1>
+
+		<form class="p-5 rounded"> <!-- Aplicamos estilos al formulario -->
+			<div class="mb-3 mx-4 ">
+				<label class="form-label" for="exampleInputEmail1" style="color: #D0FD3E;">Email</label>
+				<input type="email" class="form-control bg-transparent border-start-0 border-end-0 border-top-0 text-white"
+					style="border-radius: 0%;" id="exampleInputEmail1" aria-describedby="emailHelp"
+					placeholder="Ingresa tu dirección de correo">
+			</div>
+			<div class="mb-1 mx-4 ">
+				<label class="form-label" for="exampleInputPassword1" style="color: #D0FD3E;">Contraseña</label>
+				<input type="password"
+					class="form-control bg-transparent border-start-0 border-end-0 border-top-0 text-white"
+					style="border-radius: 0%;" id="exampleInputPassword1" placeholder="Ingresa tu contraseña">
+			</div>
+			<div class="mb-5 mx-4 text-end">
+				<a href="#" style="color: #D0FD3E;">Olvidaste tu contraseña?</a>
+				<div class="d-grid gap-2 col-6 mx-auto mb-3 mt-5 mx-4 text-center">
+					<button type="submit" class="btn btn-primary text-black  "
+						style="background-color: #D0FD3E; border-radius: 30px;">Iniciar sesión</button>
+				</div>
+
+				<div class="mb-3 mx-4 text-center text-white ">
+					<p>Aun no tienes una cuenta? <a href="register.html">Registrate</a></p>
+				</div>
+		</form>
+
+	</div> <!-- Cierre del contenedor principal -->
+
+</body>
+
+</html>
