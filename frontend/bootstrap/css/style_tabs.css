@@ -1,0 +1,159 @@
+:root {
+  --background-color-focus: #d0fd3e;
+  --background-color-inactive: #1b232e;
+  --border-radius: 6px;
+  --text-color-inactive: #8076b0;
+}
+
+.nav-link.active {
+  background-color: #d0fd3e !important;
+  color: black !important;
+  border-radius: var(--border-radius);
+}
+.nav-link {
+  background-color: var(--background-color-inactive);
+  color: var(--text-color-inactive);
+  border-radius: var(--border-radius);
+  font-family: "Ubuntu", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.nav.nav-pills {
+  background-color: var(--background-color-inactive);
+  border-radius: var(--border-radius);
+}
+.nav-pills .nav-link:hover {
+  color: var(--text-color-inactive) !important;
+}
+.nav-pills .nav-link.active:hover {
+  color: black !important;
+}
+.card .card-body:hover{
+  background: rgb(213, 255, 78);
+  background: linear-gradient(
+    90deg,
+    rgba(213, 255, 78, 1) 40%,
+    rgba(15, 162, 182, 1) 120%
+  );
+  color: black;
+  opacity: 0.9;
+  transform: scale(1.02); /* Desplazar hacia arriba al hacer hover */
+}
+.card .card-body{
+  background-color: var(--background-color-inactive);
+  border-radius: 10px;
+  color: white;
+  transition: background 2s ease, opacity 2s step-start;
+  transform: scale(1); /* Estado inicial (sin hover) */
+  transition: transform 0.5s ease;
+}
+.card {
+  background-color: var(--background-color-inactive);
+  border-radius: 10px;
+}
+
+.form-control,
+.form-control:focus {
+  background-color: var(--background-color-inactive);
+  color: #d2d2d2;
+  border: none;
+  height: 40px;
+}
+.form-control::placeholder {
+  color: gray;
+}
+.d-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.input-group {
+  flex-grow: 1;
+}
+.btn {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+}
+.dropdown-menu {
+  background-color: rgba(94, 109, 131, 0.7);
+  backdrop-filter: blur(5px);
+  min-width: auto;
+}
+.dropdown-item:hover {
+  background-color: #d0fd3e;
+  color: black;
+}
+.card-title {
+  font-family: "Ubuntu";
+  font-weight: 700;
+}
+.card-text {
+  font-family: "Ubuntu";
+  font-weight: 300;
+}
+.profesor-card {
+  width: 60px; /* Cambia el tamaño según tus necesidades */
+  height: 60px; /* Cambia el tamaño según tus necesidades */
+  border-radius: 50%; /* Esto hace que la imagen sea redonda */
+}
+
+.profesor-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover; /* Ajusta la imagen al contenedor */
+}
+
+.card-text {
+  display: flex; /* Utiliza flexbox para alinear verticalmente los elementos */
+  align-items: center;
+}
+.fav {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 3%;
+  right: inherit;
+  border-radius: 50px;
+  width: 60px;
+  height: 60px;
+}
+.activity-text {
+  font-size: medium;
+  font-family: "Ubuntu";
+}
+.form-label {
+  font-family: "Ubuntu";
+  color: #d2d2d2;
+}
+.standard-button, .standard-button:hover{
+  background-color: var(--background-color-focus);
+  color: black;
+  border-radius: 30px;
+  font-family: "Ubuntu";
+  font-weight: 700;
+  border: none;
+  height: 40px;
+  width: 45%;
+}
+.page-title{
+  font-family: "Ubuntu";
+  font-weight: 400;
+  color: #d2d2d2;
+}
+.back-button{
+  background-color: var(--background-color-inactive);
+  border-radius: 30px;
+  height: 40px;
+  width: 40px;
+  color: white;
+}
+.back-button:hover{
+  background-color: var(--background-color-inactive);
+  border-radius: 30px;
+  border: 1px solid var(--background-color-focus);
+  color: var(--background-color-focus);
+}
