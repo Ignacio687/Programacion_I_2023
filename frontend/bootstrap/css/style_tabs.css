@@ -15,7 +15,10 @@
   color: var(--text-color-inactive);
   border-radius: var(--border-radius);
   font-family: "Ubuntu", sans-serif;
-  font-size: smaller;
+  font-size: 13px;
+  font-weight: 700;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 .nav.nav-pills {
   background-color: var(--background-color-inactive);
@@ -50,11 +53,13 @@
   background-color: var(--background-color-inactive);
   border-radius: 10px;
 }
+
 .form-control,
 .form-control:focus {
   background-color: var(--background-color-inactive);
   color: white;
   border: none;
+  height: 40px;
 }
 .form-control::placeholder {
   color: gray;
@@ -84,6 +89,11 @@
 }
 .card-title{
     font-family: 'Ubuntu';
+    font-weight: 700;
+}
+.card-text{
+    font-family: 'Ubuntu';
+    font-weight: 300;
 }
 .profesor-card {
     width: 60px; /* Cambia el tamaño según tus necesidades */
@@ -111,4 +121,7 @@
   width: 60px;
   height: 60px;
 }
-
+.activity-text{
+  font-size: medium;
+  font-family: 'Ubuntu';
+}

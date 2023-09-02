@@ -9,10 +9,12 @@
 		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/style_tabs.css" />
 	<!-- <!-- FUENTES  -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+	<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap" rel="stylesheet">
 	<!-- Iconos -->
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link rel="stylesheet"
@@ -31,11 +33,11 @@
 </head>
 
 <body style="background-color: #131b26">
-	<div class="container mt-5" style="max-width: 850px">
+	<div class="container mt-5 px-4" style="max-width: 850px">
 		<!-- Agregamos un contenedor principal y margen superior -->
-		<h1 class="text-white">CLASES</h1>
+		<h2 class="text-white mb-3">Bienvenido, Matias</h2>
 
-		<ul class="nav nav-pills mb-4 nav-fill" id="pills-tab" role="tablist">
+		<ul class="nav nav-pills mb-4 nav-fill nav-justified" id="pills-tab" role="tablist">
 			<li class="nav-item" role="presentation">
 				<button class="nav-link active col-6" id="pills-home-tab" data-bs-toggle="pill"
 					data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
@@ -44,10 +46,17 @@
 				</button>
 			</li>
 			<li class="nav-item" role="presentation">
-				<button class="nav-link col-6" id="pills-profile-tab" data-bs-toggle="pill"
+				<button class="nav-link col-6" id="pills-disponibles-tab" data-bs-toggle="pill"
 					data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
 					aria-selected="false">
 					DISPONIBLES
+				</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link col-6" id="pills-planification-tab" data-bs-toggle="pill"
+					data-bs-target="#pills-planification" type="button" role="tab" aria-controls="pills-planification"
+					aria-selected="false">
+					PLANIFICACIONES
 				</button>
 			</li>
 		</ul>
@@ -58,8 +67,7 @@
 			</div>
 
 			<div class="dropdown">
-				<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-					aria-expanded="false">
+				<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					<span class="material-symbols-outlined">
 						filter_list
 					</span>
@@ -78,51 +86,214 @@
 			<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 				<div class="card-deck">
 					<div class="card border-0 mt-4">
-						<div class="card-body">
-							<h5 class="card-title">Zumba</h5>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-								additional content. This content is a little bit longer.</p>
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Zumba</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-clock me-2" viewBox="0 0 16 16">
+										<path
+											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+										<path
+											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+									</svg>
+									16:00-18:00
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Crossfit
+								</span>
+							</div>
 						</div>
 					</div>
 					<div class="card border-0 mt-4">
-						<div class="card-body ">
-							<h5 class="card-title">Ip Training</h5>
-							<p class="card-text">This card has supporting text below as a natural lead-in to additional
-								content.</p>
-						</div>
-					</div>
-					<div class="card border-0 mt-4">
-						<div class="card-body">
-							<h5 class="card-title">Medios Fisicos</h5>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-								additional content. This card has even longer content than the first to show that equal
-								height action.</p>
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Vlan Training</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-clock me-2" viewBox="0 0 16 16">
+										<path
+											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+										<path
+											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+									</svg>
+									08:00-10:00
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Crossfit
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+			<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-disponibles-tab">
 				<div class="card-deck">
 					<div class="card border-0 mt-4">
-						<div class="card-body">
-							<h5 class="card-title">Zumba</h5>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-								additional content. This content is a little bit longer.</p>
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Bicicleta</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-clock me-2" viewBox="0 0 16 16">
+										<path
+											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+										<path
+											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+									</svg>
+									16:00-18:00
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Cardio
+								</span>
+							</div>
 						</div>
 					</div>
 					<div class="card border-0 mt-4">
-						<div class="card-body ">
-							<h5 class="card-title">IP Training</h5>
-							<p class="card-text">This card has supporting text below as a natural lead-in to additional
-								content.</p>
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Natación</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-clock me-2" viewBox="0 0 16 16">
+										<path
+											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+										<path
+											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+									</svg>
+									20:00-22:00
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Cardio
+								</span>
+							</div>
 						</div>
 					</div>
 					<div class="card border-0 mt-4">
-						<div class="card-body">
-							<h5 class="card-title">Medios Fisicos</h5>
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-								additional content. This card has even longer content than the first to show that equal
-								height action.</p>
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Running</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-clock me-2" viewBox="0 0 16 16">
+										<path
+											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+										<path
+											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+									</svg>
+									09:00-11:00
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Cardio
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="pills-planification" role="tabpanel"
+				aria-labelledby="pills-planification-tab">
+				<div class="card-deck">
+					<div class="card border-0 mt-4">
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Prof. Gomez</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-calendar me-2" viewBox="0 0 16 16">
+										<path
+											d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+									</svg>
+									2023/09/03
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Crossfit
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="card border-0 mt-4">
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Prof. Lillo</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-calendar me-2" viewBox="0 0 16 16">
+										<path
+											d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+									</svg>
+									2022/08/28
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Crossfit
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="card border-0 mt-4">
+						<div class="d-flex align-items-center card-body">
+							<div class="d-flex flex-column ms-2">
+								<h5 class="card-title">Prof. Quinteros</h5>
+								<p class="card-text">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-calendar me-2" viewBox="0 0 16 16">
+										<path
+											d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+									</svg>
+									2022/06/10
+								</p>
+							</div>
+							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
+								<span class="activity-text align-bottom">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-lightning-charge" viewBox="0 0 16 16">
+										<path
+											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+									</svg> Crossfit
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
