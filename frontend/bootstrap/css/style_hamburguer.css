@@ -1,0 +1,41 @@
+:root {
+    --background-color-focus: #d0fd3e;
+    --background-color-inactive: #1b232e;
+    --border-radius: 6px;
+    --text-color-inactive: #8076b0;
+    --background-default: #1b232e;
+  }
+  body{
+    background-color: var(--background-default)
+  }
+  .top-nav-bar{
+    background-color: var(--background-default)
+  }
+/* .nav-link.active {
+    background-color: var(--background-color-focus) !important;
+    color: black !important;
+    border-radius: var(--border-radius);
+} */
+.spetial_button:hover{
+    background: rgb(213, 255, 78);
+    background: linear-gradient(
+      90deg,
+      rgba(213, 255, 78, 1) 40%,
+      rgba(15, 162, 182, 1) 120%
+    );
+    color: black;
+    opacity: 0.9;
+    transform: scale(1.02); /
+}
+.spetial_button{
+    background-color: var(--background-color-inactive);
+    color: white;
+    border-radius: 100px;
+    transition: background 0.3s ease, opacity 0.3s step-start;
+    transform: scale(1); /* Estado inicial (sin hover) */
+    transition: transform 0.5s ease;
+  }
+  .nav-link.spetial_button{
+    font-family: 'Ubuntu';
+    font-weight: 300;
+  }
