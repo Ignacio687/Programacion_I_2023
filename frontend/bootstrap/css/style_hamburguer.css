@@ -8,9 +8,7 @@
 body {
   background-color: var(--background-default);
 }
-.top-nav-bar {
-  /* background-color: var(--background-color-inactive) !important; */
-}
+
 /* .nav-link.active {
     background-color: var(--background-color-focus) !important;
     color: black !important;
