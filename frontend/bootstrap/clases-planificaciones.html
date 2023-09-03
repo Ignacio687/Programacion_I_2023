@@ -1,6 +1,6 @@
+<!-- Vista de profesor -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -66,10 +66,10 @@
 								<path
 									d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
 							</svg>
-							Home</a>
+							Inicio</a>
 					</li>
 					<li class="nav-item mb-1 spetial_button">
-						<a class="nav-link active spetial_button" href="alumnos-clases.html">
+						<a class="nav-link spetial_button" href="alumnos-clases.html">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 								class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 								<path
@@ -78,7 +78,7 @@
 							Clases</a>
 					</li>
 					<li class="nav-item mb-1 spetial_button">
-						<a class="nav-link spetial_button" href="clases-planificaciones.html">
+						<a class="nav-link active spetial_button" href="#">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 								class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 								<path
@@ -113,20 +113,13 @@
 	<!-- Barra lateral -->
 	<div class="container mt-5 px-4" style="max-width: 850px">
 		<!-- Agregamos un contenedor principal y margen superior -->
-		<h2 class="text-white mb-3">Clases</h2>
+		<h2 class="text-white mb-3">Bienvenido, Profesor X!</h2>
 
 		<ul class="nav nav-pills mb-4 nav-fill nav-justified" id="pills-tab" role="tablist">
 			<li class="nav-item" role="presentation">
-				<button class="nav-link active col-6" id="pills-home-tab" data-bs-toggle="pill"
-					data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-					aria-selected="true">
-					INSCRIPTO
-				</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link col-6" id="pills-disponibles-tab" data-bs-toggle="pill"
+				<button class="nav-link active col-6" id="pills-disponibles-tab" data-bs-toggle="pill"
 					data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-					aria-selected="false">
+					aria-selected="true">
 					DISPONIBLES
 				</button>
 			</li>
@@ -161,63 +154,7 @@
 		</div>
 		<!-- tab pages -->
 		<div class="tab-content" id="pills-tabContent">
-			<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-				<div class="card-deck">
-					<div class="card border-0 mt-4">
-						<div class="d-flex align-items-center card-body">
-							<div class="d-flex flex-column ms-2">
-								<h5 class="card-title">Zumba</h5>
-								<p class="card-text">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-										class="bi bi-clock me-2" viewBox="0 0 16 16">
-										<path
-											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
-										<path
-											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
-									</svg>
-									16:00-18:00
-								</p>
-							</div>
-							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
-								<span class="activity-text align-bottom">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-										class="bi bi-lightning-charge" viewBox="0 0 16 16">
-										<path
-											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
-									</svg> Crossfit
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="card border-0 mt-4">
-						<div class="d-flex align-items-center card-body">
-							<div class="d-flex flex-column ms-2">
-								<h5 class="card-title">Vlan Training</h5>
-								<p class="card-text">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-										class="bi bi-clock me-2" viewBox="0 0 16 16">
-										<path
-											d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
-										<path
-											d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
-									</svg>
-									08:00-10:00
-								</p>
-							</div>
-							<div class="flex-grow-1 text-end" style="margin-right: 10%;">
-								<span class="activity-text align-bottom">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-										class="bi bi-lightning-charge" viewBox="0 0 16 16">
-										<path
-											d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
-									</svg> Crossfit
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-disponibles-tab">
+			<div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-disponibles-tab">
 				<div class="card-deck">
 					<div class="card border-0 mt-4">
 						<div class="d-flex align-items-center card-body">
@@ -298,6 +235,15 @@
 						</div>
 					</div>
 				</div>
+                <div class="nav nav-fill justify-content-end fav-container">
+                    <a class="btn btn-primary fav" href="crear-clase.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                            class="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    </a>
+                </div>
 			</div>
 			<div class="tab-pane fade" id="pills-planification" role="tabpanel"
 				aria-labelledby="pills-planification-tab">
@@ -305,7 +251,7 @@
 					<div class="card border-0 mt-4">
 						<div class="d-flex align-items-center card-body">
 							<div class="d-flex flex-column ms-2">
-								<h5 class="card-title">Prof. Gomez</h5>
+								<h5 class="card-title">Pablo Gomez</h5>
 								<p class="card-text">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 										class="bi bi-calendar me-2" viewBox="0 0 16 16">
@@ -329,7 +275,7 @@
 					<div class="card border-0 mt-4">
 						<div class="d-flex align-items-center card-body">
 							<div class="d-flex flex-column ms-2">
-								<h5 class="card-title">Prof. Lillo</h5>
+								<h5 class="card-title">Daniel Lillo</h5>
 								<p class="card-text">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 										class="bi bi-calendar me-2" viewBox="0 0 16 16">
@@ -353,7 +299,7 @@
 					<div class="card border-0 mt-4">
 						<div class="d-flex align-items-center card-body">
 							<div class="d-flex flex-column ms-2">
-								<h5 class="card-title">Prof. Quinteros</h5>
+								<h5 class="card-title">Horacio Larreta </h5>
 								<p class="card-text">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 										class="bi bi-calendar me-2" viewBox="0 0 16 16">
@@ -375,6 +321,15 @@
 						</div>
 					</div>
 				</div>
+                <div class="nav nav-fill justify-content-end fav-container">
+                    <a class="btn btn-primary fav" onclick="window.location.href = 'crear-planificacion.html';">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                            class="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    </a>
+                </div>
 			</div>
 		</div>
 	</div>
