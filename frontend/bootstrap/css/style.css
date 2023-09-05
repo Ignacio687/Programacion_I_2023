@@ -1,45 +1,98 @@
-body{
-  background-color: #131B26;
-}
-h1{
-  color: #D0FD3E;
-  text-align: center; 
-  margin-top: 80px;
-
-}
-h2{
-	color: white;
-	text-align: center; 
-	margin: 30px 0px 30px 0px;
-}
-.h2-special{
-	background: linear-gradient(128deg, rgba(208, 253, 62, 0.87) 0%, rgba(16, 187, 224, 0.63) 100%);
+.bottomTimeText{
+	text-align: center;
+	font-family: Open Sans;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 800;
+	line-height: 45.5px; /* 142.188% */
+	letter-spacing: 0.32px;
+	background: linear-gradient(180deg, #A9FD3E 0%, rgba(62, 253, 230, 0.65) 100%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-	display: none;
+.basicMainCont{
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
-.navbar-toggler[aria-expanded="false"] .navbar{
-	display: none;
+h1{
+	color: var(--background-color-focus);
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
 }
-.background-image {
-    background-image: url("css/BackGroundImage.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
+p{
+	color: white;
 }
-.navbar {
-	position: fixed; /* Fija la barra de navegación en la pantalla */
-	top: 0; /* Coloca la barra en la parte superior */
-	width: 100%; /* Opcional: ocupará todo el ancho de la pantalla */
-	z-index: 1000; /* Asegura que la barra se superponga a otros elementos */
-	padding: ;
+.form-control::placeholder {
+	/* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: white;
+	opacity: 0.5;
+	/* Firefox */
 }
-.navbar-toggler{
+input {
 	border: 0;
+	outline: 0;
+	background: transparent;
+	border-bottom: 1px solid white;
 }
-.navbar-toggler-icon{
+.material-symbols-outlined {
+	color: gray;
+	height: 100%;
+	font-variation-settings:
+		'FILL' 0,
+		'wght' 400,
+		'GRAD' 0,
+		'opsz' 24
+}
+.standard-button,
+.standard-button:hover{
+  background-color: var(--background-color-focus);
+  color: black;
+  border-radius: 30px;
+  font-family: "Ubuntu";
+  font-weight: 700;
+  border: none;
+  height: 40px;
+  width: 45%;
+}
+.btn {
+	justify-content: center; /* Centrar horizontalmente */
+	align-items: center; /* Centrar verticalmente */
+}
+:root {
+	--background-color-focus: #d0fd3e;
+	--background-color-inactive: #1b232e;
+	--border-radius: 6px;
+	--text-color-inactive: #8076b0;
+}
+.banner-container {
+	background-image: url("banner.png");
+	height: 200px;
+	background-size: cover;
+	position: relative;
+	z-index: -1;
+}
+.banner-container2 {
+	background-image: url("pesasBanner.webp");
+	height: 200px;
+	background-size: cover;
+	position: relative;
+	z-index: -1;
+}
+.overlay {
+	background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(27, 35, 46, 1));
+    z-index: -1;
 }

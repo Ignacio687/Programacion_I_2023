@@ -168,3 +168,15 @@ body {
   border: 1px solid var(--background-color-focus);
   color: var(--background-color-focus);
 }
+.special-button {
+  background-color: var(--background-color-inactive);
+  width: 140px; 
+  height: 140px; 
+  border-radius: 9999px
+}
+.special-button:hover {
+	background-color: var(--background-color-focus);
+	width: 140px; 
+	height: 140px; 
+	border-radius: 9999px
+}
