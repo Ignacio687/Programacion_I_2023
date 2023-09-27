@@ -254,10 +254,6 @@ input {
   height: 40px;
   width: 45%;
 }
-.btn {
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
-}
 :root {
   --background-color-focus: #d0fd3e;
   --background-color-inactive: #1b232e;

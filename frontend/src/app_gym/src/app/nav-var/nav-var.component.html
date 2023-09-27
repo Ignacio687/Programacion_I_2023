@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark fixed-top top-nav-bar">
+<nav  class="navbar navbar-dark fixed-top top-nav-bar">
 	<div class="container-fluid top-nav-bar">
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
 			data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
@@ -27,7 +27,7 @@
 			<hr class="mt-1 mb-3">
 			<ul class="navbar-nav justify-content-start flex-grow-1 px-2" style="background-color: #1b232e;">
 				<li class="nav-item mb-1 spetial_button">
-					<a class="nav-link active spetial_button" aria-current="page" routerLink="/home" data-bs-toggle="offcanvas">
+					<a [routerLinkActive]="['active']" class="nav-link spetial_button" aria-current="page" routerLink="/home" data-bs-toggle="offcanvas">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 							<path
@@ -36,7 +36,7 @@
 						Inicio</a>
 				</li>
 				<li class="nav-item mb-1 spetial_button">
-					<a class="nav-link spetial_button" routerLink="/alum-clases" data-bs-toggle="offcanvas">
+					<a [routerLinkActive]="['active']" class="nav-link spetial_button" routerLink="/alum-clases" data-bs-toggle="offcanvas">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 							<path
@@ -45,7 +45,7 @@
 						Clases</a>
 				</li>
 				<li class="nav-item mb-1 spetial_button">
-					<a class="nav-link spetial_button" routerLink="/clases-plan" data-bs-toggle="offcanvas">
+					<a [routerLinkActive]="['active']" class="nav-link spetial_button" routerLink="/clases-plan" data-bs-toggle="offcanvas">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 							<path
@@ -54,7 +54,7 @@
 						Clases y planificaciones (profesor)</a>
 				</li>
 				<li class="nav-item mb-1 spetial_button">
-					<a class="nav-link spetial_button" routerLink="/horarios" data-bs-toggle="offcanvas">
+					<a [routerLinkActive]="['active']" class="nav-link spetial_button" routerLink="/horarios" data-bs-toggle="offcanvas">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 							<path
@@ -63,7 +63,7 @@
 						Horarios y dirección</a>
 				</li>
 				<li class="nav-item mb-1 spetial_button">
-					<a class="nav-link spetial_button" routerLink="/admin-page" data-bs-toggle="offcanvas">
+					<a [routerLinkActive]="['active']" class="nav-link spetial_button" routerLink="/admin-page" data-bs-toggle="offcanvas">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-house ms-3 me-2" viewBox="0 0 16 16">
 							<path

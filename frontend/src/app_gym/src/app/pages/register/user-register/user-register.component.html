@@ -32,46 +32,23 @@
             <div class="btn-group dropend mx-2">
                 <button class="btn dropdown-toggle" style="color: #D0FD3E;" id="dropdownMenuButton" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    Selecciona una opción
+                    {{ selectedOption }}
                 </button>
                 <ul class="dropdown-menu" id="dropdownMenuOptions">
-                    <li><a class="dropdown-item" routerLink="/#" id="optionMasculino">Masculino</a></li>
-                    <li><a class="dropdown-item" routerLink="/#" id="optionFemenino">Femenino</a></li>
-                    <li><a class="dropdown-item" routerLink="/#" id="optionOtro">Otro</a></li>
+                    <li><a class="dropdown-item" id="optionMasculino" (click)="selectedOption = 'Masculino'">Masculino</a></li>
+                    <li><a class="dropdown-item" id="optionFemenino" (click)="selectedOption = 'Femenino'" >Femenino</a></li>
                 </ul>
             </div>
         </div>
-
         <div class="container-sm text-center" style="margin: 30px 0px 20px 0px">
-            <div class="row">
+            <div class="row-cols-1">
                 <div class="col">
-                    <button type="submit" class="btn standard-button">Registrarse</button>
+                    <button type="submit" class="standard-button">Registrarse</button>
                 </div>
             </div>
-        </div>
+		</div>
         <div class="mb-3 mx-4 text-center text-white">
             <p>Aun no tienes una cuenta? <a routerLink="/login">Iniciar Sesión</a></p>
         </div>
     </form>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var dropdownButton = document.getElementById('dropdownMenuButton');
-        var optionMasculino = document.getElementById('optionMasculino');
-        var optionFemenino = document.getElementById('optionFemenino');
-        var optionOtro = document.getElementById('optionOtro');
-
-        optionMasculino.addEventListener('click', function () {
-            dropdownButton.textContent = 'Masculino';
-        });
-
-        optionFemenino.addEventListener('click', function () {
-            dropdownButton.textContent = 'Femenino';
-        });
-
-        optionOtro.addEventListener('click', function () {
-            dropdownButton.textContent = 'Otro';
-        });
-    });
-</script>

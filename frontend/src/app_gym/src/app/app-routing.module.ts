@@ -28,8 +28,9 @@ const routes: Routes = [
   { path: 'plan-form', component: PlanFormComponent},
   { path: 'register-form', component: RegisterFormComponent},
   { path: 'register', component: UserRegisterComponent},
+  { path: 'error404', component: PageNotFoundComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full'},
-  { path: '**', component: PageNotFoundComponent},
+  { path: '**', redirectTo: '/error404', pathMatch: 'full'},
 ];
 
 @NgModule({

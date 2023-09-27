@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-register.component.css']
 })
 export class UserRegisterComponent {
-
+  selectedOption: string = 'Selecciona una opción'; // Valor inicial'
 }
