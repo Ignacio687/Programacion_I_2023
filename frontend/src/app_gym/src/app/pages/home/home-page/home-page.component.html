@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center align-items-end banner-container text-center">
+	<div class="overlay"></div>
+	<h1 class="position-relative m-3">VLAN GYM</h1>
+	<div class="background-gradient"></div>
+</div>
+<h5 class="text-center mt-5 mb-5">Nuestros Profesores</h5>
+<hr>
+<hr>
+<div class="container" style="max-width: 850px;">
+	<div class="row row-cols-1 row-cols-md-3 g-4 lign-self-center">
+		<div *ngFor="let prof of arrayProfesores">
+			<div class="col ">
+				<div class="card h-100 img-container mx-auto">
+					<img src="{{prof.img}}" class="card-img-top" alt="..." style="max-height: 290px;">
+					<div class="card-body card-class">
+						<h5 class="card-title">{{prof.title}}</h5>
+						<ul>
+							<div *ngFor="let desc of prof.description">
+								<li>{{desc}}</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

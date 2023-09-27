@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center align-items-end banner-container2 text-center">
+    <div class="overlay"></div>
+    <h1 class="position-relative m-3">Bienvenido de nuevo!</h1>
+    <div class="background-gradient"></div>
+</div>
+<div class="container mt-5" style="max-width: 850px;">
+    <form class="p-5 rounded" action="/home">
+        <div class="mb-3 mx-4">
+            <label class="form-label" for="exampleInputEmail1" style="color: #D0FD3E;">Email</label>
+            <input type="email"
+                class="form-control bg-transparent border-start-0 border-end-0 border-top-0 text-white"
+                style="border-radius: 0%;" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Ingresa tu dirección de correo">
+        </div>
+        <hr>
+        <div class="mb-1 mx-4 ">
+            <label class="form-label" for="exampleInputPassword1" style="color: #D0FD3E;">Contraseña</label>
+            <input type="password"
+                class="form-control bg-transparent border-start-0 border-end-0 border-top-0 text-white"
+                style="border-radius: 0%;" id="exampleInputPassword1" placeholder="Ingresa tu contraseña">
+        </div>
+        <hr>
+        <div class="mx-4 text-end">
+            <a routerLink="/recover-pass" style="color: #D0FD3E; text-decoration: none">Olvidaste tu contraseña?</a>
+        </div>
+        <div class="container-sm text-center" style="margin: 30px 0px 20px 0px">
+            <div class="row-cols-1">
+                <div class="col">
+                    <button type="submit" class="standard-button">Iniciar sesión</button>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 mx-4 text-center text-white">
+            <p>Aun no tienes una cuenta? <a routerLink="/register">Registrate</a></p>
+        </div>
+    </form>
+</div>
