@@ -22,13 +22,16 @@ export class TabContentComponent {
         "Tipo": "Cardio",
         "Dia": "Martes",
         "Horario": "20:30"
-    },
+    }
+  ];
+  // "clasesDisponibles" se va a obtener desde el back cuando lo conectemos
+  clasesDisponibles = [
     {
-        "Clase_id": 3,
-        "Nombre": "Functional",
-        "Tipo": "Estiramiento",
-        "Dia": "Jueves",
-        "Horario": "12:15"
+      "Clase_id": 3,
+      "Nombre": "Functional",
+      "Tipo": "Estiramiento",
+      "Dia": "Jueves",
+      "Horario": "12:15"
     }
   ];
   // "planificaciones" se va a obtener desde el back cuando lo conectemos
@@ -40,15 +43,23 @@ export class TabContentComponent {
       "estado": true,
       "creation_date": "20/05/2019"
     }
-  ]
+  ];
 
   @Input() parentPageTitles: string[];
 
   constructor() { 
-    this.parentPageTitles = []
+    this.parentPageTitles = [];
+    
   }
 
   getClases() {
     return this.clases;
   }
+  getClasesDisponibles() {
+    return this.clasesDisponibles;
+  }
+  getPlanificaciones() {
+    return this.planificaciones;
+  }
+
 }

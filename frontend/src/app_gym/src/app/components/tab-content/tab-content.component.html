@@ -2,29 +2,31 @@
     <ng-template ngFor let-page [ngForOf]="parentPageTitles" let-isFirst="first">
         <div [ngClass]="{'active': isFirst} "class="tab-pane fade show" id="pills-{{page}}" role="tabpanel" [attr.aria-labelledby]="'pills-'+page+'-tab'">
             <div class="card-deck">
-                <div *ngFor="let clase of clases" class="card border-0 mt-4">
-                    <div class="d-flex align-items-center card-body">
-                        <div class="d-flex flex-column ms-2">
-                            <h5 class="card-title">{{clase.Nombre}}</h5>
-                            <p class="card-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-clock me-2" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
-                                    <path
-                                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
-                                </svg>
-                                {{clase.Horario}}
-                            </p>
-                        </div>
-                        <div class="flex-grow-1 text-end" style="margin-right: 10%;">
-                            <span class="activity-text align-bottom">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-lightning-charge" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
-                                </svg> {{clase.Tipo}}
-                            </span>
+                <div *ngFor="let pageCont of contentData">
+                    <div *ngFor="let pillData of pageCont" class="card border-0 mt-4">
+                        <div class="d-flex align-items-center card-body">
+                            <div class="d-flex flex-column ms-2">
+                                <h5 class="card-title">{{pillData.Nombre}}</h5>
+                                <p class="card-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-clock me-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                                        <path
+                                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                                    </svg>
+                                    {{pillData.Horario}}
+                                </p>
+                            </div>
+                            <div class="flex-grow-1 text-end" style="margin-right: 10%;">
+                                <span class="activity-text align-bottom">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-lightning-charge" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+                                    </svg> {{pillData.Tipo}}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -32,8 +34,8 @@
         </div>
     </ng-template>
 
-    <div class="tab-pane fade" id="pills-planification" role="tabpanel"
-        aria-labelledby="pills-planification-tab">
+    <div class="tab-pane fade" id="pills-planificaciones" role="tabpanel"
+        aria-labelledby="pills-planificaciones-tab">
         <div class="card-deck">
             <div class="card border-0 mt-4">
                 <div class="d-flex align-items-center card-body">
