@@ -2,9 +2,11 @@
     <ng-template ngFor let-page [ngForOf]="getCurrentPageTitles()" let-isFirst="first">
         <li class="nav-item" role="presentation">
             <button [ngClass]="{'active': isFirst}" class="nav-link col-6" id="pills-{{page}}-tab" data-bs-toggle="pill"
-                [attr.data-bs-target]="'#pills-' + page"  type="button" role="tab" [attr.aria-controls]="'pills-' + page" aria-selected="isFirst">
+                [attr.data-bs-target]="'#pills-' + page"  type="button" role="tab" [attr.aria-controls]="'pills-'+page" aria-selected="isFirst">
                 {{page}}
             </button>
         </li>
     </ng-template>
 </ul>
+<app-searchbox></app-searchbox>
+<app-tab-content [parentPageTitles]='getCurrentPageTitles()'></app-tab-content>
