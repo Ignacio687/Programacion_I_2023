@@ -11,11 +11,11 @@ export class TabContentComponent {
   // "clases" se va a obtener desde el back cuando lo conectemos
   clases = [
     {
-        "Clase_id": 1,
-        "Nombre": "Zumba",
-        "Tipo": "Cardio",
-        "Dia": "Lunes",
-        "Horario": "10:30"
+      "Clase_id": 1,
+      "Nombre": "Zumba",
+      "Tipo": "Cardio",
+      "Dia": "Lunes",
+      "Horario": "10:30"
     },
     {
       "Clase_id": 3,
@@ -117,18 +117,7 @@ export class TabContentComponent {
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
   }
-
-  conditionalRuoter(page: string) {
-    let gettersDict: { [page: string]: string} = {
-      "profesores": '/change-user-info',
-      "alumnos": '/change-user-info'
-    };
-    let pageRoute = gettersDict[page]
-    if (pageRoute) {
-      this.router.navigate([pageRoute])
-    }
-  }
-
+  
   definePageContent(page: string){
     let gettersDict: { [page: string]: any} = {
       "inscripto": this.getClases(),
@@ -171,5 +160,38 @@ export class TabContentComponent {
   }
   convertirSaltosDeLinea(texto: string): string {
     return texto.replace(/\n/g, '<br>');
+  }
+  conditionalAction(page: string, title: boolean, parameter_id: number=0) {
+    let optionsDict: { [key: string]: { [key: string]: string[]; }; } = {
+      "/alum-clases":
+      {
+        "inscripto": ['Desuscribirse', 'Desuscribirse'],
+        "disponibles": ['Inscribirse', 'Inscribirse'],
+      },
+      "/clases-plan":
+      {
+        "disponibles": ['Editar', 'clases-form/:'+String(parameter_id)+'/editar'],
+        "planificaciones": ['Editar', 'plan-form/:'+String(parameter_id)+'/editar']
+      },
+      "/admin-page":
+      {
+        "profesores": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar'],
+        "alumnos": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar']
+      }
+    };
+    if (title) {
+      return optionsDict[this.currentRoute][page][0]
+    }
+    else {
+      let action = optionsDict[this.currentRoute][page][1];
+      if (action === 'Desuscribirse') {
+        this.desuscribirse(parameter_id);
+      } else if ( action === 'Inscribirse') {
+        this.inscribirse(parameter_id);
+      } else {
+        this.router.navigate([action]);
+      }
+      return false;
+    }
   }
 }

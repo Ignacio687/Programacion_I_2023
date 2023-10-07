@@ -4,7 +4,7 @@
             <div class="card-deck">
                 <div *ngFor="let pillData of definePageContent(page); index as cardNumber">
                     <div  *ngFor="let detalle of (page === 'planificaciones' ? pillData.detalles_dia : [0,]); index as cardDetalleNumber" class="card border-0 mt-4">
-                        <button (click)="conditionalRuoter(page)" class="d-flex align-items-center card-body btn" type="button" [attr.data-bs-toggle]="(currentRoute !== '/admin-page') ? 'collapse': null" aria-expanded="false" [attr.data-bs-target]="(page === 'planificaciones')? '#planifiDetalleDesp_' + cardDetalleNumber: '#optionButton_' + cardNumber" [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'">
+                        <button class="d-flex align-items-center card-body btn" type="button" [attr.data-bs-toggle]="'collapse'" aria-expanded="false" [attr.data-bs-target]="(page === 'planificaciones')? '#planifiDetalleDesp_' + cardDetalleNumber: '#optionButton_' + cardNumber" [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'">
                             <div *ngIf="page === 'profesores'" class="profesor-card me-3">
                                 <img class="img-fluid" src="{{getProfesorProfileImg(pillData.profesor_DNI)}}" alt="">
                             </div>
@@ -75,31 +75,13 @@
                                 </ng-template>
                             </div>
                             <!-- Boton Desplegable -->
-                            <div *ngIf="((page !== 'planificaciones')&&(currentRoute === '/alum-clases'))">
-                                <div class="collapse" [id]="'optionButton_' + cardNumber">
-                                    <div class="card card-body">
-                                        <button class="btn" (click)="(page === 'inscripto')? inscribirse(pillData.Clase_id): desuscribirse(pillData.Clase_id)">
-                                            <div *ngIf="page !== 'inscripto'; else elseOptionButtonBlock">
-                                                <h5>Inscribirse</h5>
-                                            </div>
-                                            <ng-template #elseOptionButtonBlock>
-                                                <h5>Desuscribirse</h5>
-                                            </ng-template>
-                                        </button>
-                                    </div>
+                            <div *ngIf="!(page === 'planificaciones' && currentRoute == '/alum-clases')" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_' + cardDetalleNumber">
+                                <div class="card card-body">
+                                    <button class="btn" (click)="conditionalAction(page, false, pillData.Clase_id?pillData.Clase_id:detalle.planificacion_id?detalle.planificacion_id:pillData.Usuario.DNI?pillData.Usuario.DNI:0)">
+                                        <h5>{{conditionalAction(page, true)}}</h5>
+                                    </button>
                                 </div>
                             </div>
-                            <!-- Boton Desplegable -->
-                            <div *ngIf="(currentRoute === '/clases-plan')">
-                                <div class="collapse" [id]="'planifiDetalleDesp_' + cardDetalleNumber">
-                                    <div class="card card-body">
-                                        <button class="btn" routerLink="/plan-form/:{{detalle.planificacion_id}}">
-                                            <h5>Editar</h5>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
                         </button>
                         <!-- Detalle desplegable -->
                         <div *ngIf="page === 'planificaciones'">
