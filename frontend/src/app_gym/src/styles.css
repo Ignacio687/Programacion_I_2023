@@ -48,16 +48,23 @@
 .card:hover .card-body {
   background: rgb(213, 255, 78);
   background: linear-gradient(
-      90deg,
-      rgba(213, 255, 78, 1) 40%,
-      rgba(15, 162, 182, 1) 120%
-  );
-  color: black !important;
-  opacity: 0.9;
-  transform: scale(1.02); /* Desplazar hacia arriba al hacer hover */
-}
+    90deg,
+    rgba(213, 255, 78, 1) 40%,
+    rgba(15, 162, 182, 1) 120%
+    );
+    color: black !important;
+    opacity: 0.9;
+    transform: scale(1.02); /* Desplazar hacia arriba al hacer hover */
+  }
+
 .card:hover .card-title{
   color: black;
+}
+.card:hover .card-text{
+  color: black;
+}
+.card-text{
+  font-weight: 500 !important;
 }
 .card .card-body {
   background-color: var(--background-color-inactive);
@@ -102,8 +109,8 @@
   min-width: auto;
 }
 .dropdown-item:hover {
-  background-color: #d0fd3e;
-  color: black;
+  background-color: rgba(94, 109, 131, 0.7) !important;
+  color: white !important;
 }
 .card-title {
   font-family: "Ubuntu";
@@ -304,4 +311,7 @@ input {
 }
 .nav-link{
   text-transform: uppercase;
+}
+.card-container:hover{
+  color: black;
 }

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-pages',
-  template: '<app-tab-content [parentPageTitles]="getCurrentPageTitles()"></app-tab-content>',
   templateUrl: './tab-pages.component.html',
   styleUrls: ['./tab-pages.component.css']
 })

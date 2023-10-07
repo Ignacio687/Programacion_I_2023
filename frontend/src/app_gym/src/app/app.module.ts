@@ -20,7 +20,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { TabPagesComponent } from './components/tab-pages/tab-pages.component';
 import { TabContentComponent } from './components/tab-content/tab-content.component';
 import { SearchboxComponent } from './components/searchbox/searchbox.component';
-import { HttpClientModule } from '@angular/common/http'
+import { GenerateRegisterButtonComponent } from './components/generate-register-button/generate-register-button.component'
+import { HttpClientModule } from '@angular/common/http';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { HttpClientModule } from '@angular/common/http'
     TabPagesComponent,
     TabContentComponent,
     SearchboxComponent,
+    GenerateRegisterButtonComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
