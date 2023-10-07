@@ -47,12 +47,12 @@ export class TabContentComponent {
         {
             "planificacion_id": 1,
             "dia": "Martes",
-            "detalle": "Cardio y bicicleta"
+            "detalle": "Espalda y Bíceps\n\nDominadas o Pull-ups: 3-4 series de 6-8 repeticiones.\nPeso muerto: 3 series de 6-8 repeticiones.\nPull-ups en máquina asistida: 3 series de 8-10 repeticiones (si es necesario).\nCurl de bíceps con barra: 3-4 series de 6-8 repeticiones.\nCurl de martillo con mancuernas: 3 series de 8-10 repeticiones.\nCurl de bíceps en polea baja: 3 series de 10-12 repeticiones."
         },
         {
           "planificacion_id": 2,
           "dia": "Miercoles",
-          "detalle": "PushUp aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "detalle": " Pecho y Tríceps\n\nPress de banca: 3-4 series de 6-8 repeticiones\nPress de banca inclinado: 3 series de 8-10 repeticiones\nAperturas con mancuernas: 3 series de 10-12 repeticiones\nFondos en paralelas: 3 series de 8-10 repeticiones\nPress de tríceps con barra: 3-4 series de 6-8 repeticiones\nTríceps en polea alta: 3 series de 8-10 repeticiones."
       }
       ]
     }
@@ -164,7 +164,12 @@ export class TabContentComponent {
     return "assets/profe 22.png"
   }
   inscribirse(clase_id:number) {
+    console.log(clase_id)
   }
-  desinscribirse(clase_id:number) {
+  desuscribirse(clase_id:number) {
+    console.log(clase_id)
+  }
+  convertirSaltosDeLinea(texto: string): string {
+    return texto.replace(/\n/g, '<br>');
   }
 }
