@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { TabPagesComponent } from './components/tab-pages/tab-pages.component';
 import { TabContentComponent } from './components/tab-content/tab-content.component';
 import { SearchboxComponent } from './components/searchbox/searchbox.component';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SearchboxComponent } from './components/searchbox/searchbox.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
