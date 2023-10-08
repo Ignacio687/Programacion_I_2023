@@ -23,6 +23,7 @@ import { SearchboxComponent } from './components/searchbox/searchbox.component';
 import { GenerateRegisterButtonComponent } from './components/generate-register-button/generate-register-button.component'
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserCredentialsComponent } from './components/user-credentials/user-credentials.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TabContentComponent,
     SearchboxComponent,
     GenerateRegisterButtonComponent,
+    UserCredentialsComponent,
   ],
   imports: [
     BrowserModule,

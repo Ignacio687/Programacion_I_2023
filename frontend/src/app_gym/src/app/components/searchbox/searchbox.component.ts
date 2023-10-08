@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./searchbox.component.css']
 })
 export class SearchboxComponent {
-
 }
