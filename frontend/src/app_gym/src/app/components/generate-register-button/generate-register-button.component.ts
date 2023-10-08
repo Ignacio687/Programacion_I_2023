@@ -7,12 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./generate-register-button.component.css']
 })
 export class GenerateRegisterButtonComponent {
-  currentRoute: string;
-
   @Input() parentPage: string;
 
-  constructor(private router: Router) {
-    this.currentRoute = this.router.url;
+  constructor() {
     this.parentPage = '';
   }
 

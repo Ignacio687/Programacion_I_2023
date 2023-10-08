@@ -315,3 +315,10 @@ input {
 .card-container:hover{
   color: black;
 }
+.dropdown-button {
+  color: white;
+  margin: 0;
+}
+.card:hover .dropdown-button{
+  color: black;
+}

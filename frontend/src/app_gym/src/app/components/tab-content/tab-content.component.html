@@ -70,15 +70,15 @@
                                         <div>
                                             Telefono: {{pillData.Usuario.Telefono}}
                                         </div>
-                                        Email: {{pillData.Usuario.Email}}
+                                            Email: {{pillData.Usuario.Email}}
                                     </ng-template>
                                 </ng-template>
                             </div>
-                            <!-- Boton Desplegable -->
+                            <!-- Dropdown Button -->
                             <div *ngIf="!(page === 'planificaciones' && currentRoute == '/alum-clases')" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_' + cardDetalleNumber">
                                 <div class="card card-body">
-                                    <button class="btn" (click)="conditionalAction(page, false, pillData.Clase_id?pillData.Clase_id:detalle.planificacion_id?detalle.planificacion_id:pillData.Usuario.DNI?pillData.Usuario.DNI:0)">
-                                        <h5>{{conditionalAction(page, true)}}</h5>
+                                    <button class="btn dropdown-button" (click)="dropdownButtonConditionalAction(page, false, pillData.Clase_id?pillData.Clase_id:detalle.planificacion_id?detalle.planificacion_id:pillData.Usuario.DNI?pillData.Usuario.DNI:0)">
+                                        <h5>{{dropdownButtonConditionalAction(page, true)}}</h5>
                                     </button>
                                 </div>
                             </div>
@@ -92,7 +92,15 @@
                     </div>
                 </div>
             </div>
-            <app-generate-register-button [parentPage]="page"></app-generate-register-button>
+            <app-generate-register-button *ngIf="currentRoute !== '/alum-clases'" [parentPage]="page"></app-generate-register-button>
         </div>
     </ng-template>
 <div>
+<ngb-pagination
+	[collectionSize]="150"
+	[(page)]="page"
+	[maxSize]="5"
+	[rotate]="true"
+	[ellipses]="false"
+	[boundaryLinks]="true"
+></ngb-pagination>

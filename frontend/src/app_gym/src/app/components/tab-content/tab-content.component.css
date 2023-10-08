@@ -1,0 +1,10 @@
+ngb-pagination li {
+    &:first-child a {
+      span {
+        display: none;
+      }
+      &:before {
+            
+      }
+    }
+  }

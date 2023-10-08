@@ -22,7 +22,7 @@ import { TabContentComponent } from './components/tab-content/tab-content.compon
 import { SearchboxComponent } from './components/searchbox/searchbox.component';
 import { GenerateRegisterButtonComponent } from './components/generate-register-button/generate-register-button.component'
 import { HttpClientModule } from '@angular/common/http';
-import { PaginationComponent } from './components/pagination/pagination.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -45,12 +45,12 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     TabContentComponent,
     SearchboxComponent,
     GenerateRegisterButtonComponent,
-    PaginationComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
