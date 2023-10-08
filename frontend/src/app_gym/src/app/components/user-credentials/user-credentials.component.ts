@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {AuthService} from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-credentials',
@@ -13,16 +13,15 @@ export class UserCredentialsComponent {
   constructor(
     private authService: AuthService,
     private router: Router
-    ){}
+    ) {}
+
   login(dataLogin: any = {}){
-    dataLogin = {email: "a@a.com", password: "password"};
-    
+    dataLogin = {email: "matiasboldrini@gmail.com", password: "ujshu110945-"};
     console.log('Comprobando credenciales');
     this.authService.login(dataLogin).subscribe({
       next: (rta: any) => {
         console.log('Respuesta login: ', rta.access_token);
         localStorage.setItem('token', rta.access_token);
-        this.router.navigateByUrl('/home');
       },
       error: (error: any) => {
         console.log(error);
