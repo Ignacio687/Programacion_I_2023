@@ -15,9 +15,9 @@ class Alumno(db.Model):
 
     def to_json(self):
         alumno_json = {
-            "DNI": self.dni,
             "Edad": self.edad,
             "Sexo": self.sexo,
+            "Usuario": self.usuario.to_json() if self.usuario != None else "",
         }
         return alumno_json
 

@@ -17,9 +17,9 @@ class Profesor(db.Model):
 
     def to_json(self):
         profesor_json = {
-            "DNI": int(self.dni),
             "Especialidad": str(self.especialidad),
             "Inicio_actividad": str(self.inicio_actividad.strftime("%d/%M/%Y")),
+            "Usuario": self.usuario.to_json() if self.usuario != None else "",
         }
         return profesor_json
     

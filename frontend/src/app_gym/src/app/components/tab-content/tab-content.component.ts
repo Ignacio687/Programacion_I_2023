@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlumnoService } from 'src/app/services/user/alumno.service';
 
 @Component({
   selector: 'app-tab-content',
@@ -73,99 +74,125 @@ export class TabContentComponent {
 	}
   ];
   // "alumnos" se va a obtener desde el back cuando lo conectemos
-  alumnos = [
-	{
-	  "Edad": 30,
-	  "Sexo": false,
-	  "Usuario": {
-		  "DNI": 48978797,
-		  "Nombre": "Tomas",
-		  "Apellidos": "Bastias",
-		  "Telefono": "2614348546",
-		  "Email": "tomasbastias@gmail.com",
-		  "Rol": "alumno"
-	  },
-	},
-	{
-	  "Edad": 25,
-	  "Sexo": true,
-	  "Usuario": {
-		  "DNI": 48987025,
-		  "Nombre": "Franco",
-		  "Apellidos": "Sales",
-		  "Telefono": "2614349987",
-		  "Email": "francosales@gmail.com",
-		  "Rol": "alumno"
-	  },
-	},
-	{
-	  "Edad": 55,
-	  "Sexo": false,
-	  "Usuario": {
-		  "DNI": 489721048,
-		  "Nombre": "Lisan",
-		  "Apellidos": "Rivera",
-		  "Telefono": "2614348976",
-		  "Email": "riveralisan@gmail.com",
-		  "Rol": "alumno"
-	  },
-	}
-  ];
+//   alumnos = [
+// 	{
+// 	  "Edad": 30,
+// 	  "Sexo": false,
+// 	  "Usuario": {
+// 		  "DNI": 48978797,
+// 		  "Nombre": "Tomas",
+// 		  "Apellidos": "Bastias",
+// 		  "Telefono": "2614348546",
+// 		  "Email": "tomasbastias@gmail.com",
+// 		  "Rol": "alumno"
+// 	  },
+// 	},
+// 	{
+// 	  "Edad": 25,
+// 	  "Sexo": true,
+// 	  "Usuario": {
+// 		  "DNI": 48987025,
+// 		  "Nombre": "Franco",
+// 		  "Apellidos": "Sales",
+// 		  "Telefono": "2614349987",
+// 		  "Email": "francosales@gmail.com",
+// 		  "Rol": "alumno"
+// 	  },
+// 	},
+// 	{
+// 	  "Edad": 55,
+// 	  "Sexo": false,
+// 	  "Usuario": {
+// 		  "DNI": 489721048,
+// 		  "Nombre": "Lisan",
+// 		  "Apellidos": "Rivera",
+// 		  "Telefono": "2614348976",
+// 		  "Email": "riveralisan@gmail.com",
+// 		  "Rol": "alumno"
+// 	  },
+// 	}
+//   ];
   
   page=1;
-
   @Input() parentPageTitles: string[];
-
   currentRoute: string;
-  
-  constructor(private router: Router) {
+
+  alumnosObj: any;
+
+  constructor(
+	private router: Router,
+	private alumnoService: AlumnoService) {
 	this.parentPageTitles = [];
 	this.currentRoute = this.router.url;
   }
   
+  ngOnInit() {
+	this.getAlumnos()
+	console.log(this.alumnosObj)
+  }
+
   definePageContent(page: string){
 	let gettersDict: { [page: string]: any} = {
 	  "inscripto": this.getClases(),
 	  "disponibles": this.getClasesDisponibles(),
 	  "planificaciones": this.getPlanificaciones(),
 	  "profesores": this.getProfesores(),
-	  "alumnos": this.getAlumnos()
+	  "alumnos": this.alumnosObj,
 	};
 	return gettersDict[page]
   }
+
   getClases() {
 	return this.clases;
   }
+
   getClasesDisponibles() {
 	return this.clasesDisponibles;
   }
+
   getPlanificaciones() {
 	return this.planificaciones;
   }
+
   getProfesores() {
 	return this.profesores;
   }
-  getAlumnos() {  
-	return this.alumnos;
+
+  getAlumnos() {
+	this.alumnoService.getAlumnos().subscribe({
+		next: (data: any) => {
+			this.alumnosObj = data.alumnos;
+		},
+		error: (error: any) => {
+			console.log(error);
+		}
+	})
   }
+
   getProfesorByDni(dni: number) {
 	return "Lillo"
   }
+
   getAlumnoByDni(dni: number) {
 	return "Pablo Ruiz"
   }
+
   getProfesorProfileImg(dni: number) {
 	return "assets/profe 22.png"
   }
+
   inscribirse(clase_id:number) {
 	console.log(clase_id)
   }
+
   desuscribirse(clase_id:number) {
 	console.log(clase_id)
   }
+
   convertirSaltosDeLinea(texto: string): string {
 	return texto.replace(/\n/g, '<br>');
   }
+
   dropdownButtonConditionalAction(page: string, title: boolean, parameter_id: number=0) {
 	let optionsDict: { [key: string]: { [key: string]: string[]; }; } = {
 	  "/alum-clases":
@@ -199,4 +226,5 @@ export class TabContentComponent {
 	  return false;
 	}
   }
+
 }
