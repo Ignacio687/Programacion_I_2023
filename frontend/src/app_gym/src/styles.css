@@ -245,6 +245,13 @@ input {
   background: transparent;
   border-bottom: 1px solid white;
 }
+.login-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid white !important;
+  border-radius: 0%;
+}
   /* .material-symbols-outlined {
   color: gray;
   height: 100%;
@@ -321,4 +328,12 @@ input {
 }
 .card:hover .dropdown-button{
   color: black;
+}
+.form-container {
+  max-width: 750px;
+}
+.warning-text{
+  color: red;
+  padding-top: 10px;
+  font-size: medium;
 }

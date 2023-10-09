@@ -4,12 +4,12 @@ import jwt_decode from "jwt-decode";
 
 export const adminSessionGuard: CanActivateFn = (route, state) => {
   
-  let router: Router = inject(Router);
-  let token = localStorage.getItem('token')
+  const router: Router = inject(Router);
+  const token = localStorage.getItem('token')
+  const tokenRol = localStorage.getItem('token_rol')
 
-  if (token) {
-    let tokenPayload: any = jwt_decode(token)
-    if (tokenPayload.rol.includes('admin')) {
+  if (token && tokenRol) {
+    if (tokenRol.includes('admin')) {
       return true
     } else {
       router.navigateByUrl('/home')

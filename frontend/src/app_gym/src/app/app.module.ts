@@ -24,6 +24,7 @@ import { GenerateRegisterButtonComponent } from './components/generate-register-
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserCredentialsComponent } from './components/user-credentials/user-credentials.component';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -52,7 +53,9 @@ import { UserCredentialsComponent } from './components/user-credentials/user-cre
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
