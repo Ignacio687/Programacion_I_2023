@@ -13,20 +13,26 @@ import { PlanFormComponent } from './pages/profesor/plan-form/plan-form.componen
 import { RegisterFormComponent } from './pages/register/register-form/register-form.component';
 import { UserRegisterComponent } from './pages/register/user-register/user-register.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { authSessionGuard } from './guards/auth-session.guard'
+import { profesorSessionGuard } from './guards/profesor-session.guard';
+import { adminSessionGuard } from './guards/admin-session.guard';
 
 
 const routes: Routes = [
-  { path: 'admin-page', component: AlumProfAdmComponent},
+  { path: 'admin-page', component: AlumProfAdmComponent, canActivate:[adminSessionGuard]},
   { path: 'alum-clases', component: ClasesComponent},
-  { path: 'change-user-info', component: ChangeUserInfoComponent},
+  { path: 'change-user-info', component: ChangeUserInfoComponent, canActivate:[authSessionGuard]},
+  { path: 'change-user-info/:id/editar', component: ChangeUserInfoComponent, canActivate:[adminSessionGuard]},
   { path: 'home', component: HomePageComponent},
   { path: 'horarios', component: HorariosDireccionComponent},
   { path: 'recover-pass', component: RecoverPassComponent},
   { path: 'login', component: UserLoginComponent},
-  { path: 'clases-form', component: ClasesFormComponent},
-  { path: 'clases-plan', component: ClasesPlanComponent},
-  { path: 'plan-form', component: PlanFormComponent},
-  { path: 'register-form', component: RegisterFormComponent},
+  { path: 'clases-form', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
+  { path: 'clases-form/:id/editar', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
+  { path: 'clases-plan', component: ClasesPlanComponent, canActivate:[profesorSessionGuard]},
+  { path: 'plan-form', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
+  { path: 'plan-form/:id/editar', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
+  { path: 'register-form', component: RegisterFormComponent, },
   { path: 'register', component: UserRegisterComponent},
   { path: 'error404', component: PageNotFoundComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full'},

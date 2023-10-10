@@ -1,0 +1,106 @@
+<div class="tab-content" id="pills-tabContent">
+    <ng-template ngFor let-page [ngForOf]="parentPageTitles" let-isFirst="first">
+        <div [ngClass]="{'active': isFirst} "class="tab-pane fade show" id="pills-{{page}}" role="tabpanel" [attr.aria-labelledby]="'pills-'+page+'-tab'">
+            <div class="card-deck">
+                <div *ngFor="let pillData of definePageContent(page); index as cardNumber">
+                    <div  *ngFor="let detalle of (page === 'planificaciones' ? pillData.detalles_dia : [0,]); index as cardDetalleNumber" class="card border-0 mt-4">
+                        <button class="d-flex align-items-center card-body btn" type="button" [attr.data-bs-toggle]="'collapse'" aria-expanded="false" [attr.data-bs-target]="(page === 'planificaciones')? '#planifiDetalleDesp_' + cardDetalleNumber: '#optionButton_' + cardNumber" [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'">
+                            <div *ngIf="page === 'profesores'" class="profesor-card me-3">
+                                <img class="img-fluid" src="{{getProfesorProfileImg(pillData.profesor_DNI)}}" alt="">
+                            </div>
+                            <div class="d-flex flex-column ms-2">
+                                <h5 class="card-title">
+                                    <div *ngIf="page === 'planificaciones'; then thenBlock else elseBlock"></div>
+                                    <ng-template #thenBlock>
+                                        <div *ngIf="currentRoute === '/clases-plan'; else elseBlockPlan">
+                                            {{getAlumnoByDni(pillData.alumno_DNI)}}
+                                        </div>
+                                        <ng-template #elseBlockPlan>
+                                            Profesor {{getProfesorByDni(pillData.profesor_DNI)}}
+                                        </ng-template>
+                                    </ng-template>
+                                    <ng-template #elseBlock>{{pillData.Nombre}}</ng-template>
+                                    <div *ngIf="currentRoute === '/admin-page'">
+                                        {{pillData.Usuario.Nombre}} {{pillData.Usuario.Apellidos}}
+                                    </div>
+                                </h5>
+                                <p *ngIf="page !== 'planificaciones' && currentRoute !== '/admin-page'" class="card-text">
+                                    <svg class="clock-icon mx-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                                    </svg> 
+                                    {{ pillData.Horario }}
+                                </p>
+                                <div *ngIf="currentRoute === '/admin-page'" class="card-text">
+                                    <svg *ngIf="page === 'profesores'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightning-charge mx-1" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+                                    </svg>
+                                    <div *ngIf="page === 'profesores'; else elseAlumnoSexoBlock">
+                                        {{pillData.Especialidad}}
+                                    </div>
+                                    <ng-template #elseAlumnoSexoBlock>
+                                        {{pillData.Sexo ? 'Femenino': 'Masculino'}}
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 text-end" style="margin-right: 10%;">
+                                <span *ngIf="currentRoute !== '/admin-page'; else elseAdminInfoBlock" class="activity-text align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-calendar mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                    </svg>{{detalle.dia ? detalle.dia: pillData.Dia}}
+                                    <div *ngIf="page !== 'planificaciones'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-lightning-charge mx-1" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z" />
+                                        </svg>{{pillData.Tipo}}
+                                    </div>
+                                </span>
+                                <ng-template #elseAdminInfoBlock>
+                                    <div *ngIf="page === 'profesores'; else elseAlumnosInfoBlock">
+                                        Inicio de Actividad: {{pillData.Inicio_actividad}}
+                                    </div>
+                                    <ng-template #elseAlumnosInfoBlock>
+                                        <div>
+                                            DNI: {{pillData.Usuario.DNI}}
+                                        </div>
+                                        <div>
+                                            Telefono: {{pillData.Usuario.Telefono}}
+                                        </div>
+                                            Email: {{pillData.Usuario.Email}}
+                                    </ng-template>
+                                </ng-template>
+                            </div>
+                            <!-- Dropdown Button -->
+                            <div *ngIf="!(page === 'planificaciones' && currentRoute == '/alum-clases')" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_' + cardDetalleNumber">
+                                <div class="card card-body">
+                                    <button class="btn dropdown-button" (click)="dropdownButtonConditionalAction(page, false, pillData.Clase_id?pillData.Clase_id:detalle.planificacion_id?detalle.planificacion_id:pillData.Usuario.DNI?pillData.Usuario.DNI:0)">
+                                        <h5>{{dropdownButtonConditionalAction(page, true)}}</h5>
+                                    </button>
+                                </div>
+                            </div>
+                        </button>
+                        <!-- Detalle desplegable -->
+                        <div *ngIf="page === 'planificaciones'">
+                            <div class="collapse " [id]="'planifiDetalleDesp_' + cardDetalleNumber">
+                                <div class="card card-body" [innerHTML]="convertirSaltosDeLinea(detalle.detalle)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-generate-register-button *ngIf="currentRoute !== '/alum-clases'" [parentPage]="page"></app-generate-register-button>
+        </div>
+    </ng-template>
+<div>
+<ngb-pagination
+	[collectionSize]="150"
+	[(page)]="page"
+	[maxSize]="5"
+	[rotate]="true"
+	[ellipses]="false"
+	[boundaryLinks]="true"
+></ngb-pagination>

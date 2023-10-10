@@ -34,7 +34,7 @@ class Usuarios(db.Model):
         usuario_json = {
             "DNI": int(self.dni),
             "Nombre": str(self.nombre),
-            "Apelidos": str(self.apellidos),
+            "Apellidos": str(self.apellidos),
             "Telefono": str(self.telefono),
             "Email": str(self.email),
             "Rol": str(self.rol),
