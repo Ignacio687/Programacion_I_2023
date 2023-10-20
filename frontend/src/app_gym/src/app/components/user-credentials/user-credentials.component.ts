@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/auth/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -18,7 +18,8 @@ export class UserCredentialsComponent {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef
     ) {}
 
   ngOnInit() {

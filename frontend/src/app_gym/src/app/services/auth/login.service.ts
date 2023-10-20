@@ -17,6 +17,8 @@ export class LoginService {
   }
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('token_rol');
+    localStorage.removeItem('token_DNI');
     this.router.navigate(['/','home']);
   }
 }

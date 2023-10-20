@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app_gym';
+
+  ngOnInit() {
+    console.log(
+      {
+        Admin: {email: 'matiasboldrini@gmail.com', password: 'ujshu110945-'},
+        Profesor: {email: '', password: ''},
+        Alumno: {email: '', password: ''}
+      }
+    )
+  }
 }
