@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
+import { ClasesService } from 'src/app/services/clases/clases.service';
 
 @Component({
   selector: 'app-tab-content',
@@ -73,67 +74,42 @@ export class TabContentComponent {
 	  },
 	}
   ];
-  // "alumnos" se va a obtener desde el back cuando lo conectemos
-//   alumnos = [
-// 	{
-// 	  "Edad": 30,
-// 	  "Sexo": false,
-// 	  "Usuario": {
-// 		  "DNI": 48978797,
-// 		  "Nombre": "Tomas",
-// 		  "Apellidos": "Bastias",
-// 		  "Telefono": "2614348546",
-// 		  "Email": "tomasbastias@gmail.com",
-// 		  "Rol": "alumno"
-// 	  },
-// 	},
-// 	{
-// 	  "Edad": 25,
-// 	  "Sexo": true,
-// 	  "Usuario": {
-// 		  "DNI": 48987025,
-// 		  "Nombre": "Franco",
-// 		  "Apellidos": "Sales",
-// 		  "Telefono": "2614349987",
-// 		  "Email": "francosales@gmail.com",
-// 		  "Rol": "alumno"
-// 	  },
-// 	},
-// 	{
-// 	  "Edad": 55,
-// 	  "Sexo": false,
-// 	  "Usuario": {
-// 		  "DNI": 489721048,
-// 		  "Nombre": "Lisan",
-// 		  "Apellidos": "Rivera",
-// 		  "Telefono": "2614348976",
-// 		  "Email": "riveralisan@gmail.com",
-// 		  "Rol": "alumno"
-// 	  },
-// 	}
-//   ];
   
   page=1;
   @Input() parentPageTitles: string[];
   currentRoute: string;
 
-  alumnosObj: any;
+  alumnosObj!: any;
+  clasesObj!: any;
 
   constructor(
 	private router: Router,
-	private alumnoService: AlumnoService) {
+	private alumnoService: AlumnoService,
+	private clasesService: ClasesService) {
 	this.parentPageTitles = [];
 	this.currentRoute = this.router.url;
   }
+
+  get isToken() {
+    return localStorage.getItem('token');
+  }
+
+  get isTokenRol() {
+    return localStorage.getItem('token_rol');
+  }
   
   ngOnInit() {
-	this.getAlumnos()
-	console.log(this.alumnosObj)
+	if (this.isToken) {
+		this.getAlumnos()
+		console.log(this.alumnosObj)
+	} else {
+		this.getClases()
+	}
   }
 
   definePageContent(page: string){
 	let gettersDict: { [page: string]: any} = {
-	  "inscripto": this.getClases(),
+	  "inscripto": this.clasesObj,
 	  "disponibles": this.getClasesDisponibles(),
 	  "planificaciones": this.getPlanificaciones(),
 	  "profesores": this.getProfesores(),
@@ -143,8 +119,19 @@ export class TabContentComponent {
   }
 
   getClases() {
-	return this.clases;
-  }
+	this.clasesService.getClases().subscribe({
+		next: (data: any) => {
+			this.clasesObj = data.Clases;
+		},
+		error: (error: any) => {
+			console.log(error);
+		}
+	})
+}
+
+	getClasesInscripto() {
+		return this.clases
+	}
 
   getClasesDisponibles() {
 	return this.clasesDisponibles;

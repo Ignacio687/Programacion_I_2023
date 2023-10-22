@@ -61,7 +61,7 @@ class Usuarios(Resource):
             "page": usuarios.page
             })
 
-    @role_required(roles = ["admin"])
+    @jwt_required(optional=True)
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
         try:
@@ -115,7 +115,7 @@ class UsuariosAlumnos(Resource):
             "page": alumnos.page
             })
 
-    @role_required(roles = ["admin", "profesor"])
+    @jwt_required(optional=True)
     def post(self):
         alumno = AlumnoModel.from_json(request.get_json())
         exist = db.session.query(UsuariosModel).get_or_404(alumno.dni)

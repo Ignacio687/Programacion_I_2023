@@ -15,6 +15,10 @@ export class TabPagesComponent {
   
   currentRoute: string;
   
+  get isToken() {
+    return 
+  }
+
   constructor(private router: Router) {
     this.currentRoute = this.router.url;
   }

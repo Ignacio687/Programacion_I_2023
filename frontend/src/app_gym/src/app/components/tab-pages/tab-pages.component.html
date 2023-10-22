@@ -1,4 +1,4 @@
-<ul class="nav nav-pills mb-4 nav-fill nav-justified" id="pills-tab" role="tablist">
+<ul *ngIf="isToken" class="nav nav-pills mb-4 nav-fill nav-justified" id="pills-tab" role="tablist">
     <ng-template ngFor let-page [ngForOf]="getCurrentPageTitles()" let-isFirst="first">
         <li class="nav-item" role="presentation">
             <button [ngClass]="{'active': isFirst}" class="nav-link col-6" id="pills-{{page}}-tab" data-bs-toggle="pill"
