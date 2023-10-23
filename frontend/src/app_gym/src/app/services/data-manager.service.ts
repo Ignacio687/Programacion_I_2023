@@ -13,9 +13,13 @@ export class DataManagerService {
   }
 
   getUserCredentials() {
+    const email = this.email
+    const password = this.password
+    this.email = ""
+    this.password = ""
     return {
-      email: this.email,
-      password: this.password
+      email: email,
+      password: password
     }
   }
 }

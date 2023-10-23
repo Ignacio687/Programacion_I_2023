@@ -44,7 +44,6 @@ export class UserCredentialsComponent {
     console.log('Comprobando credenciales');
     this.loginService.login(dataLogin).subscribe({
       next: (rta: any) => {
-        console.log('Respuesta login: ', rta.access_token);
         localStorage.setItem('token', rta.access_token);
         let tokenPayload: any = jwt_decode(rta.access_token)
         localStorage.setItem('token_rol', tokenPayload.rol);
