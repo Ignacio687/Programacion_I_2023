@@ -99,15 +99,14 @@ export class RegisterFormComponent {
         "Password": credentials.password,
         "Rol": "alumno",
       }
+      let userSex = true
       if (this.selectedOption === "Masculino") {
-        let userSex = false
-      } else {
-        let userSex = true
+        userSex = false
       }
       let alumnoData = {
         "DNI": Number(this.registerForm.get("dni")?.value),
-        "edad": Number(this.registerForm.get("edad")?.value),
-        "sexo": userSex
+        "Edad": Number(this.registerForm.get("edad")?.value),
+        "Sexo": Boolean(userSex)
       }
       console.log(alumnoData)
       this.register(registerData, alumnoData);

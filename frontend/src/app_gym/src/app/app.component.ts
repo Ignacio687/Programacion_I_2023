@@ -13,7 +13,7 @@ export class AppComponent {
       {
         Admin: {email: 'matiasboldrini@gmail.com', password: 'ujshu110945-'},
         Profesor: {email: '', password: ''},
-        Alumno: {email: '', password: ''}
+        Alumno: {email: 'juangomez@gmail.com', password: 'adhwir6292.&@'}
       }
     )
   }
