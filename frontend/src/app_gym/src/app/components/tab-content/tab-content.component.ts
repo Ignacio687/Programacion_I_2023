@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
+import { NG_ASYNC_VALIDATORS } from '@angular/forms';
 
 @Component({
   selector: 'app-tab-content',
@@ -86,8 +87,8 @@ export class TabContentComponent {
 	private router: Router,
 	private alumnoService: AlumnoService,
 	private clasesService: ClasesService) {
-	this.parentPageTitles = [];
-	this.currentRoute = this.router.url;
+    this.parentPageTitles = [];
+    this.currentRoute = this.router.url;
   }
 
   get isToken() {
@@ -99,119 +100,146 @@ export class TabContentComponent {
   }
   
   ngOnInit() {
-	if (this.isToken) {
-		this.getAlumnos()
-		console.log(this.alumnosObj)
-	} else {
-		this.getClases()
-	}
+    if (this.isTokenRol === "admin") {
+      this.getAlumnos()
+      console.log(this.alumnosObj)
+    } else if (this.isTokenRol === "profesor") {
+
+    } else if (this.isTokenRol === "alumno") {
+      this.getClases()
+      this.getClasesInscripto();
+      this.getClasesDisponibles();
+      this.getPlanificaciones();
+    } else {
+      this.getClases()
+    }
   }
 
   definePageContent(page: string){
-	let gettersDict: { [page: string]: any} = {
-	  "inscripto": this.clasesObj,
-	  "disponibles": this.getClasesDisponibles(),
-	  "planificaciones": this.getPlanificaciones(),
-	  "profesores": this.getProfesores(),
-	  "alumnos": this.alumnosObj,
-	};
-	return gettersDict[page]
+    let gettersDict: { [page: string]: any} = {
+      "inscripto": this.clasesObj,
+      "disponibles": this.getClasesDisponibles(),
+      "planificaciones": this.getPlanificaciones(),
+      "profesores": this.getProfesores(),
+      "alumnos": this.alumnosObj,
+    };
+    return gettersDict[page]
+  }
+
+  getUserData() {
+    this.clasesService.getClases().subscribe({
+      next: (data: any) => {
+        this.clasesObj = data.Clases;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    })
   }
 
   getClases() {
-	this.clasesService.getClases().subscribe({
-		next: (data: any) => {
-			this.clasesObj = data.Clases;
-		},
-		error: (error: any) => {
-			console.log(error);
-		}
-	})
-}
+    this.clasesService.getClases().subscribe({
+      next: (data: any) => {
+        this.clasesObj = data.Clases;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    })
+  }
 
 	getClasesInscripto() {
-		return this.clases
+    this.clasesService.getClasesInscripto().subscribe({
+      next: (data: any) => {
+        this.clasesObj = data.Clases;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    })
 	}
 
   getClasesDisponibles() {
-	return this.clasesDisponibles;
+    for (let clase of this.clasesObj) {
+
+    }
   }
 
   getPlanificaciones() {
-	return this.planificaciones;
+	  return this.planificaciones;
   }
 
   getProfesores() {
-	return this.profesores;
+	  return this.profesores;
   }
 
   getAlumnos() {
-	this.alumnoService.getAlumnos().subscribe({
-		next: (data: any) => {
-			this.alumnosObj = data.alumnos;
-		},
-		error: (error: any) => {
-			console.log(error);
-		}
-	})
+    this.alumnoService.getAlumnos().subscribe({
+      next: (data: any) => {
+        this.alumnosObj = data.alumnos;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    })
   }
 
   getProfesorByDni(dni: number) {
-	return "Lillo"
+	  return "Lillo"
   }
 
   getAlumnoByDni(dni: number) {
-	return "Pablo Ruiz"
+	  return "Pablo Ruiz"
   }
 
   getProfesorProfileImg(dni: number) {
-	return "assets/profe 22.png"
+	  return "assets/profe 22.png"
   }
 
   inscribirse(clase_id:number) {
-	console.log(clase_id)
+	  console.log(clase_id)
   }
 
   desuscribirse(clase_id:number) {
-	console.log(clase_id)
+	  console.log(clase_id)
   }
 
   convertirSaltosDeLinea(texto: string): string {
-	return texto.replace(/\n/g, '<br>');
+	  return texto.replace(/\n/g, '<br>');
   }
 
   dropdownButtonConditionalAction(page: string, title: boolean, parameter_id: number=0) {
-	let optionsDict: { [key: string]: { [key: string]: string[]; }; } = {
-	  "/alum-clases":
-	  {
-		"inscripto": ['Desuscribirse', 'Desuscribirse'],
-		"disponibles": ['Inscribirse', 'Inscribirse'],
-	  },
-	  "/clases-plan":
-	  {
-		"disponibles": ['Editar', 'clases-form/:'+String(parameter_id)+'/editar'],
-		"planificaciones": ['Editar', 'plan-form/:'+String(parameter_id)+'/editar']
-	  },
-	  "/admin-page":
-	  {
-		"profesores": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar'],
-		"alumnos": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar']
-	  }
-	};
-	if (title) {
-	  return optionsDict[this.currentRoute][page][0]
-	}
-	else {
-	  let action = optionsDict[this.currentRoute][page][1];
-	  if (action === 'Desuscribirse') {
-		this.desuscribirse(parameter_id);
-	  } else if ( action === 'Inscribirse') {
-		this.inscribirse(parameter_id);
-	  } else {
-		this.router.navigate([action]);
-	  }
-	  return false;
-	}
+    let optionsDict: { [key: string]: { [key: string]: string[]; }; } = {
+      "/alum-clases":
+      {
+      "inscripto": ['Desuscribirse', 'Desuscribirse'],
+      "disponibles": ['Inscribirse', 'Inscribirse'],
+      },
+      "/clases-plan":
+      {
+      "disponibles": ['Editar', 'clases-form/:'+String(parameter_id)+'/editar'],
+      "planificaciones": ['Editar', 'plan-form/:'+String(parameter_id)+'/editar']
+      },
+      "/admin-page":
+      {
+      "profesores": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar'],
+      "alumnos": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar']
+      }
+    };
+    if (title) {
+      return optionsDict[this.currentRoute][page][0]
+    }
+    else {
+      let action = optionsDict[this.currentRoute][page][1];
+      if (action === 'Desuscribirse') {
+      this.desuscribirse(parameter_id);
+      } else if ( action === 'Inscribirse') {
+      this.inscribirse(parameter_id);
+      } else {
+      this.router.navigate([action]);
+      }
+      return false;
+    }
   }
 
 }

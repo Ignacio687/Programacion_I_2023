@@ -12,7 +12,7 @@ export class AppComponent {
     console.log(
       {
         Admin: {email: 'matiasboldrini@gmail.com', password: 'ujshu110945-'},
-        Profesor: {email: '', password: ''},
+        Profesor: {email: 'fedeRivera@gmail.com', password: '45skuqy^%#.5665s'},
         Alumno: {email: 'juangomez@gmail.com', password: 'adhwir6292.&@'}
       }
     )

@@ -106,7 +106,7 @@ export class RegisterFormComponent {
       let alumnoData = {
         "DNI": Number(this.registerForm.get("dni")?.value),
         "Edad": Number(this.registerForm.get("edad")?.value),
-        "Sexo": Boolean(userSex)
+        "Sexo": userSex
       }
       console.log(alumnoData)
       this.register(registerData, alumnoData);

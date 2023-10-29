@@ -16,7 +16,7 @@ export class TabPagesComponent {
   currentRoute: string;
   
   get isToken() {
-    return 
+    return localStorage.getItem('token');
   }
 
   constructor(private router: Router) {
