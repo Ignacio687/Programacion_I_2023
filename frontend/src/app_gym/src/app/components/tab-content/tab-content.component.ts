@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
-import { NG_ASYNC_VALIDATORS } from '@angular/forms';
+import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-tab-content',
@@ -11,56 +12,6 @@ import { NG_ASYNC_VALIDATORS } from '@angular/forms';
   styleUrls: ['./tab-content.component.css']
 })
 export class TabContentComponent {
-  // "clases" se va a obtener desde el back cuando lo conectemos
-  clases = [
-	{
-	  "Clase_id": 1,
-	  "Nombre": "Zumba",
-	  "Tipo": "Cardio",
-	  "Dia": "Lunes",
-	  "Horario": "10:30"
-	},
-	{
-	  "Clase_id": 3,
-	  "Nombre": "Functional",
-	  "Tipo": "Estiramiento",
-	  "Dia": "Jueves",
-	  "Horario": "12:15"
-	}
-  ];
-  // "clasesDisponibles" se va a obtener desde el back cuando lo conectemos
-  clasesDisponibles = [
-	{
-	  "Clase_id": 2,
-	  "Nombre": "Boxeo",
-	  "Tipo": "Cardio",
-	  "Dia": "Martes",
-	  "Horario": "20:30"
-	}
-  ];
-  // "planificaciones" se va a obtener desde el back cuando lo conectemos
-  planificaciones = [
-	{
-	  "planificacion_id": 1,
-	  "profesor_DNI": 48988794,
-	  "alumno_DNI": 489721048,
-	  "estado": true,
-	  "creation_date": "20/05/2019",
-	  "detalles_dia": [
-		{
-			"planificacion_id": 1,
-			"dia": "Martes",
-			"detalle": "Espalda y Bíceps\n\nDominadas o Pull-ups: 3-4 series de 6-8 repeticiones.\nPeso muerto: 3 series de 6-8 repeticiones.\nPull-ups en máquina asistida: 3 series de 8-10 repeticiones (si es necesario).\nCurl de bíceps con barra: 3-4 series de 6-8 repeticiones.\nCurl de martillo con mancuernas: 3 series de 8-10 repeticiones.\nCurl de bíceps en polea baja: 3 series de 10-12 repeticiones."
-		},
-		{
-		  "planificacion_id": 2,
-		  "dia": "Miercoles",
-		  "detalle": " Pecho y Tríceps\n\nPress de banca: 3-4 series de 6-8 repeticiones\nPress de banca inclinado: 3 series de 8-10 repeticiones\nAperturas con mancuernas: 3 series de 10-12 repeticiones\nFondos en paralelas: 3 series de 8-10 repeticiones\nPress de tríceps con barra: 3-4 series de 6-8 repeticiones\nTríceps en polea alta: 3 series de 8-10 repeticiones."
-	  }
-	  ]
-	}
-  ];
-  // "profesores" se va a obtener desde el back cuando lo conectemos
   profesores = [
 	{
 	  "Especialidad": "cardio",
@@ -82,11 +33,15 @@ export class TabContentComponent {
 
   alumnosObj!: any;
   clasesObj!: any;
+  planificacionesObj!: any;
+  profesoresObj!: any;
+  clasesDisponiblesObj!: any;
 
   constructor(
 	private router: Router,
 	private alumnoService: AlumnoService,
-	private clasesService: ClasesService) {
+	private clasesService: ClasesService,
+  private planificacionService: PlanificacionService) {
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
   }
@@ -99,74 +54,75 @@ export class TabContentComponent {
     return localStorage.getItem('token_rol');
   }
   
+  get isDNI() {
+    return Number(localStorage.getItem('dni'));
+  }
+
   ngOnInit() {
+    this.executeAsyncQueries()
+  }
+
+  async executeAsyncQueries() {
     if (this.isTokenRol === "admin") {
       this.getAlumnos()
       console.log(this.alumnosObj)
     } else if (this.isTokenRol === "profesor") {
 
     } else if (this.isTokenRol === "alumno") {
-      this.getClases()
-      this.getClasesInscripto();
-      this.getClasesDisponibles();
-      this.getPlanificaciones();
+      await this.getUserData()
+      await this.getClasesDisponibles();
+      for (let plan of this.planificacionesObj) {
+        await this.getPlanDetalle(plan);
+      }
     } else {
       this.getClases()
     }
   }
-
+  
   definePageContent(page: string){
     let gettersDict: { [page: string]: any} = {
       "inscripto": this.clasesObj,
-      "disponibles": this.getClasesDisponibles(),
-      "planificaciones": this.getPlanificaciones(),
+      "disponibles": this.clasesDisponiblesObj,
+      "planificaciones": this.planificacionesObj,
       "profesores": this.getProfesores(),
       "alumnos": this.alumnosObj,
     };
     return gettersDict[page]
   }
 
-  getUserData() {
-    this.clasesService.getClases().subscribe({
-      next: (data: any) => {
-        this.clasesObj = data.Clases;
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
+  async getUserData() {
+    return firstValueFrom(this.alumnoService.getAlumnoByDni(this.isDNI)).then((data: any) => {
+      this.clasesObj = data.Clases
+      this.planificacionesObj = data.Planificaciones
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+  
+  async getClases() {
+    return firstValueFrom(this.clasesService.getClases()).then((data: any) => {
+      this.clasesObj = data.Clases;
+    }).catch((err) => {
+      console.log(err)
     })
   }
 
-  getClases() {
-    this.clasesService.getClases().subscribe({
-      next: (data: any) => {
-        this.clasesObj = data.Clases;
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
+  async getClasesDisponibles() {
+    return firstValueFrom(this.clasesService.getClases()).then((data: any) => {
+      const claseIds = this.clasesObj.map((clase: any) => clase.Clase_id);
+      const filteredData = data.Clases.filter((clase: any) => !claseIds.includes(clase.Clase_id));
+      this.clasesDisponiblesObj = filteredData;
+    }).catch((err) => {
+      console.log(err)
     })
   }
 
-	getClasesInscripto() {
-    this.clasesService.getClasesInscripto().subscribe({
-      next: (data: any) => {
-        this.clasesObj = data.Clases;
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
+  async getPlanDetalle(plan: any) {
+    return firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
+      plan["detalles_dia"] = data.detalles_dia;
+    }).catch((err) => {
+      console.log(err)
     })
-	}
-
-  getClasesDisponibles() {
-    for (let clase of this.clasesObj) {
-
-    }
-  }
-
-  getPlanificaciones() {
-	  return this.planificaciones;
   }
 
   getProfesores() {
@@ -174,14 +130,16 @@ export class TabContentComponent {
   }
 
   getAlumnos() {
-    this.alumnoService.getAlumnos().subscribe({
-      next: (data: any) => {
-        this.alumnosObj = data.alumnos;
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    })
+      return new Promise(() => {
+      this.alumnoService.getAlumnos().subscribe({
+        next: (data: any) => {
+          this.alumnosObj = data.alumnos;
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      })
+    });
   }
 
   getProfesorByDni(dni: number) {
