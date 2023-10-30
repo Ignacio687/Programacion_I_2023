@@ -17,4 +17,14 @@ export class ClasesService {
     })
     return this.httpClient.get(`${this.url}/clases`, {headers: headers}).pipe(first())
   }
+
+  inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(`${this.url}/alum_clas/${claseID}/${userDNI}`, null, {headers: headers})
+  }
+
 }

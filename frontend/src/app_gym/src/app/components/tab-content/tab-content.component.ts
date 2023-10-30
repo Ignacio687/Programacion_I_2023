@@ -55,7 +55,7 @@ export class TabContentComponent {
   }
   
   get isDNI() {
-    return Number(localStorage.getItem('dni'));
+    return Number(localStorage.getItem('token_DNI'));
   }
 
   ngOnInit() {
@@ -67,12 +67,14 @@ export class TabContentComponent {
       this.getAlumnos()
       console.log(this.alumnosObj)
     } else if (this.isTokenRol === "profesor") {
-
+      
     } else if (this.isTokenRol === "alumno") {
       await this.getUserData()
       await this.getClasesDisponibles();
-      for (let plan of this.planificacionesObj) {
-        await this.getPlanDetalle(plan);
+      for (let planIndex=0; planIndex < this.planificacionesObj.length; planIndex++) {
+        let plan = this.planificacionesObj[planIndex]
+        await this.getPlanDetalle(plan ,planIndex);
+      console.log(this.planificacionesObj)
       }
     } else {
       this.getClases()
@@ -117,9 +119,9 @@ export class TabContentComponent {
     })
   }
 
-  async getPlanDetalle(plan: any) {
+  async getPlanDetalle(plan: any, planIndex: number) {
     return firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
-      plan["detalles_dia"] = data.detalles_dia;
+      this.planificacionesObj[planIndex] = data
     }).catch((err) => {
       console.log(err)
     })
@@ -130,24 +132,11 @@ export class TabContentComponent {
   }
 
   getAlumnos() {
-      return new Promise(() => {
-      this.alumnoService.getAlumnos().subscribe({
-        next: (data: any) => {
-          this.alumnosObj = data.alumnos;
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      })
-    });
-  }
-
-  getProfesorByDni(dni: number) {
-	  return "Lillo"
-  }
-
-  getAlumnoByDni(dni: number) {
-	  return "Pablo Ruiz"
+    return firstValueFrom(this.alumnoService.getAlumnos()).then(data => {
+      this.alumnosObj = data.alumnos;
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   getProfesorProfileImg(dni: number) {
@@ -155,7 +144,12 @@ export class TabContentComponent {
   }
 
   inscribirse(clase_id:number) {
-	  console.log(clase_id)
+	  this.clasesService.inscribirseAlumno(clase_id, this.isDNI).subscribe({
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
+    this.router.navigateByUrl("/alum-clases")
   }
 
   desuscribirse(clase_id:number) {
@@ -190,11 +184,11 @@ export class TabContentComponent {
     else {
       let action = optionsDict[this.currentRoute][page][1];
       if (action === 'Desuscribirse') {
-      this.desuscribirse(parameter_id);
+        this.desuscribirse(parameter_id);
       } else if ( action === 'Inscribirse') {
-      this.inscribirse(parameter_id);
+        this.inscribirse(parameter_id);
       } else {
-      this.router.navigate([action]);
+        this.router.navigate([action]);
       }
       return false;
     }
