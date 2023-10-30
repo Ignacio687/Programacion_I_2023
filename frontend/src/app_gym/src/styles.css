@@ -337,3 +337,8 @@ input {
   padding-top: 10px;
   font-size: medium;
 }
+.dropdown-menu {
+  background-color: rgba(94, 109, 131, 0.7);
+  opacity: 0.5;
+  
+}

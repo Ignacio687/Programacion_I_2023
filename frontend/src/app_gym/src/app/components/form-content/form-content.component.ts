@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterTestingHarness } from '@angular/router/testing';
 import { RegisterService } from 'src/app/services/auth/register.service';
 import { DataManagerService } from 'src/app/services/data-manager.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
@@ -120,6 +119,18 @@ export class FormContentComponent {
       "/register-form": this.registerForm
     }
     return conditionalArray[this.currentRoute]
+  }
+
+  dropdownMenuOptionsSelector(key: string) {
+    const conditionalArray: { [key: string]: {[key: string]: string[]} } = {
+      "/plan-form": {
+        "dias": ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
+      },
+      "/register-form": {
+        "rol": ['Alumno', 'Profesor']
+      }
+    }
+    return conditionalArray[this.currentRoute][key];
   }
 
   register(dataRegister: any = {}, alumnoData: any = {}){

@@ -22,13 +22,10 @@
                     </div>
                 </div>
                 <!-- Selector de estado -->
-                <label for="opcion">Selecciona una opción:</label>
-                <select formControlName="opcion" id="opcion">
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
+                <label for="opcion" class="form-label mx-2">Seleccione un dia</label>
+                <select formControlName="dia" id="opcion">
+                    <option *ngFor="let option of dropdownMenuOptionsSelector('dias')" value="{{option}}">{{option}}</option>
                 </select>
-                <button type="submit">Enviar</button>
                 <!-- Submit Button -->
                 <div class="row">
                     <div class="col align-self-end">
