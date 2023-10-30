@@ -10,7 +10,7 @@ export class TabPagesComponent {
   titlesList: { [key: string]: string[] } = {
     "alum-clases": ["inscripto", "disponibles", "planificaciones"],
     "admin-page": ["profesores", "alumnos"],
-    "clases-plan": ["disponibles", "planificaciones"]
+    "clases-plan": ["inscripto", "planificaciones"]
   };
   
   currentRoute: string;

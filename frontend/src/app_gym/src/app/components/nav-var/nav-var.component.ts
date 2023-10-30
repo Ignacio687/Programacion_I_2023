@@ -1,6 +1,9 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, firstValueFrom } from 'rxjs';
 import { LoginService } from 'src/app/services/auth/login.service';
+import { AlumnoService } from'src/app/services/user/alumno.service';
+import { ProfesorService } from 'src/app/services/user/profesor.service';
 
 @Component({
   selector: 'app-nav-var',
@@ -49,12 +52,14 @@ export class NavVarComponent{
     },
   ];
 
-  tokenRol = localStorage.getItem('token_rol')
+  userData!: any;
 
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef, 
+    private alumnoService: AlumnoService,
+    private profesorService: ProfesorService,
     ) {
   }
 
@@ -64,6 +69,34 @@ export class NavVarComponent{
 
   get isToken(){
     return localStorage.getItem('token');
+  }
+
+  get isDNI() {
+    return Number(localStorage.getItem('token_DNI'));
+  }
+
+  ngOnInit() {
+    this.executeAsyncQueries()
+  }
+
+  async executeAsyncQueries() {
+    if (this.isToken) {
+    await this.getUserData()
+    }
+  }
+
+  async getUserData() {
+    let service!: Observable<any>
+    if (this.isTokenRol ==="alumno") {
+      service = this.alumnoService.getAlumnoByDni(this.isDNI);
+    } else if (this.isTokenRol === "profesor") {
+      service = this.profesorService.getProfeByDni(this.isDNI);
+    }
+    return firstValueFrom(service).then((data: any) => {
+      this.userData = data;
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
   cerrarSesion(){
@@ -76,8 +109,8 @@ export class NavVarComponent{
   }
   
   setButtonVisibility(page: any) {
-    if (this.tokenRol) {
-      if(page.permission.includes(this.tokenRol)) {
+    if (this.isTokenRol) {
+      if(page.permission.includes(this.isTokenRol)) {
         return true
       } else { 
         return false

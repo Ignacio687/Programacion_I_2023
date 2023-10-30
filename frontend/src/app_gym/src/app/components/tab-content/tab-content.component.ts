@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, TitleStrategy } from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
+import { ProfesorService } from 'src/app/services/user/profesor.service';
 
 @Component({
   selector: 'app-tab-content',
@@ -41,7 +42,8 @@ export class TabContentComponent {
 	private router: Router,
 	private alumnoService: AlumnoService,
 	private clasesService: ClasesService,
-  private planificacionService: PlanificacionService) {
+  private planificacionService: PlanificacionService,
+  private profesorService: ProfesorService) {
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
   }
@@ -50,8 +52,8 @@ export class TabContentComponent {
     return localStorage.getItem('token');
   }
 
-  get isTokenRol() {
-    return localStorage.getItem('token_rol');
+  get isTokenRol(): string {
+    return localStorage.getItem('token_rol')!;
   }
   
   get isDNI() {
@@ -66,15 +68,14 @@ export class TabContentComponent {
     if (this.isTokenRol === "admin") {
       this.getAlumnos()
       console.log(this.alumnosObj)
-    } else if (this.isTokenRol === "profesor") {
-      
-    } else if (this.isTokenRol === "alumno") {
+    } else if (["profesor", "alumno"].includes(this.isTokenRol)) {
       await this.getUserData()
-      await this.getClasesDisponibles();
+      if (this.isTokenRol === "alumno") {
+        await this.getClasesDisponibles();
+      }
       for (let planIndex=0; planIndex < this.planificacionesObj.length; planIndex++) {
         let plan = this.planificacionesObj[planIndex]
         await this.getPlanDetalle(plan ,planIndex);
-      console.log(this.planificacionesObj)
       }
     } else {
       this.getClases()
@@ -93,7 +94,13 @@ export class TabContentComponent {
   }
 
   async getUserData() {
-    return firstValueFrom(this.alumnoService.getAlumnoByDni(this.isDNI)).then((data: any) => {
+    let service!: Observable<any>
+    if (this.isTokenRol ==="alumno") {
+      service = this.alumnoService.getAlumnoByDni(this.isDNI);
+    } else if (this.isTokenRol === "profesor") {
+      service = this.profesorService.getProfeByDni(this.isDNI);
+    }
+    return firstValueFrom(service).then((data: any) => {
       this.clasesObj = data.Clases
       this.planificacionesObj = data.Planificaciones
     }).catch((error) => {
@@ -149,11 +156,14 @@ export class TabContentComponent {
         console.log(err);
       }
     })
-    this.router.navigateByUrl("/alum-clases")
   }
 
   desuscribirse(clase_id:number) {
-	  console.log(clase_id)
+	  this.clasesService.desuscribirseAlumno(clase_id, this.isDNI).subscribe({
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
   }
 
   convertirSaltosDeLinea(texto: string): string {

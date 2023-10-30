@@ -18,9 +18,22 @@
 						<div class="col d-flex flex-column">
 							<a class="btn-outline-primary" routerLink="/change-user-info" role="button"
 								style="text-decoration: none;" data-bs-toggle="offcanvas">
-								<h5 style="color: white;">Emily Smith</h5>
+								<h5 style="color: white;">
+									<div *ngIf="userData; else elseBlockName">
+										{{userData.Usuario.Nombre}} {{userData.Usuario.Apellidos}}
+									</div>
+									<ng-template #elseBlockName>
+                                        Bienvenido!
+                                    </ng-template>
+								</h5>
 							</a>
-							<p>correo@example.com</p>
+							<div *ngIf="userData; else elseBlockEmail">
+								<p>{{userData.Usuario.Email}}</p>
+							</div>
+							<ng-template #elseBlockEmail>
+								<p>Crea una cuanta o inicia sesion</p>
+							</ng-template>
+							
 						</div>
 					</div>
 				</div>
