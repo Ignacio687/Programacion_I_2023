@@ -20,11 +20,12 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { TabPagesComponent } from './components/tab-pages/tab-pages.component';
 import { TabContentComponent } from './components/tab-content/tab-content.component';
 import { SearchboxComponent } from './components/searchbox/searchbox.component';
-import { GenerateRegisterButtonComponent } from './components/generate-register-button/generate-register-button.component'
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserCredentialsComponent } from './components/user-credentials/user-credentials.component';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormSelectorButtonComponent } from './components/form-selector-button/form-selector-button.component';
+import { FormContentComponent } from './components/form-content/form-content.component'
 
 @NgModule({
   declarations: [
@@ -46,8 +47,9 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms'
     TabPagesComponent,
     TabContentComponent,
     SearchboxComponent,
-    GenerateRegisterButtonComponent,
     UserCredentialsComponent,
+    FormSelectorButtonComponent,
+    FormContentComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+<div class="container mt-5" style="max-width: 650px">
+    <div class="col-sm m-2">
+        <form [formGroup]="formGroupSelector()">
+            <div class="row text-center">
+                <h2 class="page-title mb-5">{{inputFields[currentRoute].formLabel}}</h2>
+            </div>
+            <div class="container">
+                <div *ngFor="let field of formLabelsSelector()" class="mb-3">
+                    <label class="form-label">{{field.label}}</label>
+                    <input type="{{field.type}}" class="form-control" formControlName="{{field.formControlName}}">
+                </div>
+                <!-- Selector de sexo -->
+                <div *ngIf="currentRoute==='/register-form'" class="mx-4 d-flex align-items-center">
+                    <span style="color: #D0FD3E;">Sexo: </span>
+                    <div class="btn-group dropend mx-2">
+                        <button class="btn dropdown-toggle" style="color: #D0FD3E;" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ selectedOption }}
+                        </button>
+                        <ul class="dropdown-menu" id="dropdownMenuOptions">
+                            <li *ngFor="let sexo of ['Masculino', 'Femenino']"><a class="dropdown-item" id="option{{sexo}}" (click)="selectedOption = sexo">{{sexo}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Selector de estado -->
+                <label for="opcion">Selecciona una opción:</label>
+                <select formControlName="opcion" id="opcion">
+                  <option value="opcion1">Opción 1</option>
+                  <option value="opcion2">Opción 2</option>
+                  <option value="opcion3">Opción 3</option>
+                </select>
+                <button type="submit">Enviar</button>
+                <!-- Submit Button -->
+                <div class="row">
+                    <div class="col align-self-end">
+                        <a class="btn back-button border-2" routerLink="/register" role="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <button (click)="submit()" class="btn standard-button">Comenzar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
