@@ -99,15 +99,16 @@
                     </div>
                 </div>
             </div>
+            <ngb-pagination *ngIf="page==='disponibles'|| !isToken"
+                [collectionSize]=collectionSize
+                [(page)]="pageNumber"
+                [maxSize]="10"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="definePaginationConditionalAction(pageNumber, per_page)"
+                class="d-flex justify-content-center pagination">
+            </ngb-pagination>
             <app-form-selector-button [parentPage]="page"></app-form-selector-button>
         </div>
     </ng-template>
-<div>
-<!-- <ngb-pagination
-	[collectionSize]="150"
-	[(page)]="page"
-	[maxSize]="5"
-	[rotate]="true"
-	[ellipses]="false"
-	[boundaryLinks]="true"
-></ngb-pagination> -->
+</div>

@@ -1,7 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, first, take } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, first } from 'rxjs';
 
+interface Clase {
+  Clase_id: number;
+  Nombre: string;
+  Tipo: string;
+  Dia: string;
+  Horario: string;
+}
+
+interface ApiResponse {
+  Clases: Clase[];
+  total: number;
+  pages: number;
+  page: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -11,11 +25,15 @@ export class ClasesService {
     private httpClient: HttpClient,
   ) { }
     
-  getClases(): Observable<any>{
+  getClases(page: number, per_page: number): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     })
-    return this.httpClient.get(`${this.url}/clases`, {headers: headers}).pipe(first())
+    const params = new HttpParams().appendAll({
+      "per_page": per_page,
+      "page": page
+    });
+    return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
   }
 
   inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{

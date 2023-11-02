@@ -20,7 +20,7 @@ export class TabContentComponent {
 	  "Usuario": {
 		  "DNI": 48988794,
 		  "Nombre": "Cristian",
-		  "Apellidos": "Coria",  // IMPORTANTE en la base de datos esta como Apelidos le falta una l arreglar
+		  "Apellidos": "Coria",
 		  "Telefono": "2614347800",
 		  "Email": "cristiancoria@gmail.com",
 		  "Rol": "profesor"
@@ -28,9 +28,12 @@ export class TabContentComponent {
 	}
   ];
   
-  page=1;
   @Input() parentPageTitles: string[];
   currentRoute: string;
+  items: any[] = [];
+  collectionSize!: number;
+  pageNumber = 1;
+  per_page = 1;
 
   alumnosObj!: any;
   clasesObj!: any;
@@ -41,8 +44,8 @@ export class TabContentComponent {
   constructor(
 	private router: Router,
 	private alumnoService: AlumnoService,
-	private clasesService: ClasesService,
   private planificacionService: PlanificacionService,
+  private clasesService: ClasesService,
   private profesorService: ProfesorService) {
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
@@ -71,14 +74,14 @@ export class TabContentComponent {
     } else if (["profesor", "alumno"].includes(this.isTokenRol)) {
       await this.getUserData()
       if (this.isTokenRol === "alumno") {
-        await this.getClasesDisponibles();
+        await this.getClasesDisponibles(1, this.per_page);
       }
       for (let planIndex=0; planIndex < this.planificacionesObj.length; planIndex++) {
         let plan = this.planificacionesObj[planIndex]
         await this.getPlanDetalle(plan ,planIndex);
       }
     } else {
-      this.getClases()
+      this.getClases(1, this.per_page)
     }
   }
   
@@ -91,6 +94,14 @@ export class TabContentComponent {
       "alumnos": this.alumnosObj,
     };
     return gettersDict[page]
+  }
+
+  definePaginationConditionalAction(page: number, per_page: number) {
+    if (!this.isToken) {
+      this.getClases(page, per_page)
+    } else if (this.currentRoute === "/alum-clases") {
+      this.getClasesDisponibles(page, per_page)
+    }
   }
 
   async getUserData() {
@@ -108,16 +119,20 @@ export class TabContentComponent {
     })
   }
   
-  async getClases() {
-    return firstValueFrom(this.clasesService.getClases()).then((data: any) => {
+  async getClases(page: number, per_page: number) {
+    return firstValueFrom(this.clasesService.getClases(page, per_page)).then((data: any) => {
+      this.collectionSize = data.pages*10;
+      this.pageNumber = data.page;
       this.clasesObj = data.Clases;
     }).catch((err) => {
       console.log(err)
     })
   }
 
-  async getClasesDisponibles() {
-    return firstValueFrom(this.clasesService.getClases()).then((data: any) => {
+  async getClasesDisponibles(page: number, per_page: number) {
+    return firstValueFrom(this.clasesService.getClases(page, per_page)).then((data: any) => {
+      this.pageNumber = data.page;
+      this.collectionSize = data.pages*10;
       const claseIds = this.clasesObj.map((clase: any) => clase.Clase_id);
       const filteredData = data.Clases.filter((clase: any) => !claseIds.includes(clase.Clase_id));
       this.clasesDisponiblesObj = filteredData;
@@ -152,6 +167,9 @@ export class TabContentComponent {
 
   inscribirse(clase_id:number) {
 	  this.clasesService.inscribirseAlumno(clase_id, this.isDNI).subscribe({
+      next: (data: any) => {
+        this.executeAsyncQueries()
+      },
       error: (err: any) => {
         console.log(err);
       }
@@ -160,6 +178,9 @@ export class TabContentComponent {
 
   desuscribirse(clase_id:number) {
 	  this.clasesService.desuscribirseAlumno(clase_id, this.isDNI).subscribe({
+      next: (data: any) => {
+        this.executeAsyncQueries()
+      },
       error: (err: any) => {
         console.log(err);
       }
@@ -200,6 +221,7 @@ export class TabContentComponent {
       } else {
         this.router.navigate([action]);
       }
+
       return false;
     }
   }

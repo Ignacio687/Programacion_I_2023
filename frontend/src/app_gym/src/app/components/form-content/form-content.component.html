@@ -21,13 +21,13 @@
                         </ul>
                     </div>
                 </div>
-                <!-- Selector de estado -->
+                <!-- Selector de dia -->
                 <label for="opcion" class="form-label mx-2">Seleccione un dia</label>
                 <select formControlName="dia" id="opcion">
                     <option *ngFor="let option of dropdownMenuOptionsSelector('dias')" value="{{option}}">{{option}}</option>
                 </select>
                 <!-- Submit Button -->
-                <div class="row">
+                <div class="row ">
                     <div class="col align-self-end">
                         <a class="btn back-button border-2" routerLink="/register" role="button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">

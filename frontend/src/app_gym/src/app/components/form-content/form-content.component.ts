@@ -180,4 +180,7 @@ export class FormContentComponent {
     }
   }
 
+  refeshComponent() {
+    
+  }
 }

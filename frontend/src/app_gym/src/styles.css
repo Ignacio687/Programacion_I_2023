@@ -342,3 +342,26 @@ input {
   opacity: 0.5;
   
 }
+.pagination {
+  padding-top: 20px;
+  --bs-pagination-padding-x: 0.75rem;
+  --bs-pagination-padding-y: 0.25rem;
+  --bs-pagination-font-size: 1.1rem;
+  --bs-pagination-color: white;
+  --bs-pagination-bg: var(--background-color-inactive);
+  --bs-pagination-border-width: 1px;
+  --bs-pagination-border-color: var(--bs-border-color);
+  --bs-pagination-border-radius: var(--bs-border-radius);
+  --bs-pagination-hover-color: var(--bs-link-hover-color);
+  --bs-pagination-hover-bg: var(--bs-tertiary-bg);
+  --bs-pagination-hover-border-color: var(--bs-border-color);
+  --bs-pagination-focus-color: var(--bs-link-hover-color);
+  --bs-pagination-focus-bg: var(--bs-secondary-bg);
+  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(0, 51, 8, 0.822);
+  --bs-pagination-active-color: black;
+  --bs-pagination-active-bg: var(--background-color-focus);
+  --bs-pagination-active-border-color: #0d6efd;
+  --bs-pagination-disabled-color: white;
+  --bs-pagination-disabled-bg: var(--background-color-inactive);
+  --bs-pagination-disabled-border-color: var(--bs-border-color);
+}
