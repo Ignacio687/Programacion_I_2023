@@ -30,6 +30,7 @@ export class TabContentComponent {
   
   @Input() parentPageTitles: string[];
   currentRoute: string;
+  dia: string = "";
   items: any[] = [];
   collectionSize!: number;
   pageNumber = 1;
@@ -64,7 +65,11 @@ export class TabContentComponent {
   }
 
   ngOnInit() {
-    this.executeAsyncQueries()
+    this.clasesService.diaSeleccionado$.subscribe(dia => {
+      // Aquí puedes realizar acciones con el día seleccionado, por ejemplo, actualizar las clases
+      // Llama a las funciones necesarias para obtener y mostrar las clases según el día seleccionado
+      this.executeAsyncQueries()
+    });
   }
 
   async executeAsyncQueries() {
