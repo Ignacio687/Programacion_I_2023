@@ -28,23 +28,40 @@ export class ClasesService {
   private diaSeleccionadoSubject = new BehaviorSubject<string>('');
   diaSeleccionado$ = this.diaSeleccionadoSubject.asObservable();
 
+  private tipoSeleccionadoSubject = new BehaviorSubject<string>('');
+  tipoSeleccionado$ = this.tipoSeleccionadoSubject.asObservable();
+  
+  private ordenarPorHora = new BehaviorSubject<boolean>(false);
+  setOrdenarPorHora$: Observable<boolean> = this.ordenarPorHora.asObservable();
+    private ordenar= false;
   setDiaSeleccionado(dia: string): void {
     this.diaSeleccionadoSubject.next(dia);
   }
 
   setTipoSeleccionado(tipo: string): void {
-    this.diaSeleccionadoSubject.next(tipo);
+    this.tipoSeleccionadoSubject.next(tipo);
+  }
+
+  setOrdenarPorHora(ordenar: boolean): void {
+    this.ordenarPorHora.next(ordenar); 
+    this.ordenar = ordenar;
   }
 
   getClases(page: number, per_page: number, dia:string=""): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     })
-    const params = new HttpParams().appendAll({
-      "per_page": per_page,
+    let params = new HttpParams().appendAll({
+      // "per_page": per_page,
       "page": page,
-      "dia" : this.diaSeleccionadoSubject.value
+      "dia" : this.diaSeleccionadoSubject.value,
+      "tipo" : this.tipoSeleccionadoSubject.value,
+      "orby_hora":""
     });
+    if (!this.ordenar) {
+      params = params.delete("orby_hora");
+    }
+    
     return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
   }
 

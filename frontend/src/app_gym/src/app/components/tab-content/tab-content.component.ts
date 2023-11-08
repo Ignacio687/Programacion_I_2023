@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, TitleStrategy } from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom,combineLatest, Subject } from 'rxjs';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-tab-content',
@@ -64,13 +65,21 @@ export class TabContentComponent {
     return Number(localStorage.getItem('token_DNI'));
   }
 
-  ngOnInit() {
-    this.clasesService.diaSeleccionado$.subscribe(dia => {
-      // Aquí puedes realizar acciones con el día seleccionado, por ejemplo, actualizar las clases
-      // Llama a las funciones necesarias para obtener y mostrar las clases según el día seleccionado
+  ngOnInit(): void {
+    console.log('d');
+    const combinedObservables = merge(
+      this.clasesService.diaSeleccionado$,
+      this.clasesService.tipoSeleccionado$,
+      this.clasesService.setOrdenarPorHora$
+    );
+    combinedObservables.subscribe(valor => {
+      // Código que se ejecutará cuando cualquiera de los observables se actualice
+      console.log('Observable actualizado:', valor);
       this.executeAsyncQueries()
+      // Puedes colocar aquí el código que deseas ejecutar cuando cualquiera de los observables se actualiza
     });
   }
+
 
   async executeAsyncQueries() {
     if (this.isTokenRol === "admin") {
