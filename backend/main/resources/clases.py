@@ -62,6 +62,63 @@ class Clases(Resource):
             "total": clases.total,
             "pages": clases.pages,
             "page": page})
+class ClasesDisponibles(Resource):
+    @jwt_required(optional=True)
+    def get(self, dni):
+        page, per_page = 1, 10
+        if request.args.get("page"):
+            page = int(request.args.get("page"))
+        if request.args.get("per_page"):
+            per_page = int(request.args.get("per_page"))
+        alumno = db.session.query(AlumnoModel).get_or_404(dni)
+        clases_inscripto = alumno.clases
+        clases = db.session.query(ClaseModel)
+        if request.args.get("tipo"):
+            clases = clases.filter(ClaseModel.tipo.like(request.args.get("tipo")))
+        if request.args.get("dia"):
+            clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
+        if request.args.get("hora"):
+            clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("hora"), "%H:%M")))
+        if "orby_hora" in request.args.keys():
+            clases = clases.order_by(ClaseModel.horario.asc())
+        if request.args.get("nr_alumnos"):
+            clases = clases.outerjoin(ClaseModel.alumnos).group_by(ClaseModel.clase_id).having(
+                func.count(AlumnoModel.dni)==int(request.args.get("nr_alumnos")))
+        clases = clases.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify(
+            {"Clases": [clase.to_json() for clase in clases if clase not in clases_inscripto],
+            "total": clases.total,
+            "pages": clases.pages,
+            "page": page})
+
+#ARreglar y combinar con la claes de arriba
+class ClasesInscripto(Resource):
+    @jwt_required(optional=True)
+    def get(self, dni):
+        page, per_page = 1, 10
+        if request.args.get("page"):
+            page = int(request.args.get("page"))
+        if request.args.get("per_page"):
+            per_page = int(request.args.get("per_page"))
+        alumno = db.session.query(AlumnoModel).get_or_404(dni)
+        clases = alumno.clases
+        if request.args.get("tipo"):
+            clases = clases.filter(ClaseModel.tipo.like(request.args.get("tipo")))
+        if request.args.get("dia"):
+            clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
+        if request.args.get("hora"):
+            clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("hora"), "%H:%M")))
+        if "orby_hora" in request.args.keys():
+            clases = clases.order_by(ClaseModel.horario.asc())
+        if request.args.get("nr_alumnos"):
+            clases = clases.outerjoin(ClaseModel.alumnos).group_by(ClaseModel.clase_id).having(
+                func.count(AlumnoModel.dni)==int(request.args.get("nr_alumnos")))
+        clases = clases.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        return jsonify(
+            {"Clases": [clase.to_json() for clase in clases],
+            "total": clases.total,
+            "pages": clases.pages,
+            "page": page})
 
     @role_required(roles = ["admin"])
     def post(self):

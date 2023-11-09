@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, first } from 'rxjs';
+import { Observable, first, BehaviorSubject } from 'rxjs';
 
 interface Clase {
   Clase_id: number;
@@ -19,20 +19,49 @@ interface ApiResponse {
 @Injectable({
   providedIn: 'root'
 })
+
 export class ClasesService {
   url= '/api'
   constructor(
     private httpClient: HttpClient,
   ) { }
-    
-  getClases(page: number, per_page: number): Observable<any>{
+  private diaSeleccionadoSubject = new BehaviorSubject<string>('');
+  diaSeleccionado$ = this.diaSeleccionadoSubject.asObservable();
+
+  private tipoSeleccionadoSubject = new BehaviorSubject<string>('');
+  tipoSeleccionado$ = this.tipoSeleccionadoSubject.asObservable();
+  
+  private ordenarPorHora = new BehaviorSubject<boolean>(false);
+  setOrdenarPorHora$: Observable<boolean> = this.ordenarPorHora.asObservable();
+    private ordenar= false;
+  setDiaSeleccionado(dia: string): void {
+    this.diaSeleccionadoSubject.next(dia);
+  }
+
+  setTipoSeleccionado(tipo: string): void {
+    this.tipoSeleccionadoSubject.next(tipo);
+  }
+
+  setOrdenarPorHora(ordenar: boolean): void {
+    this.ordenarPorHora.next(ordenar); 
+    this.ordenar = ordenar;
+  }
+
+  getClases(page: number, per_page: number, dia:string=""): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     })
-    const params = new HttpParams().appendAll({
-      "per_page": per_page,
-      "page": page
+    let params = new HttpParams().appendAll({
+      // "per_page": per_page,
+      "page": page,
+      "dia" : this.diaSeleccionadoSubject.value,
+      "tipo" : this.tipoSeleccionadoSubject.value,
+      "orby_hora":""
     });
+    if (!this.ordenar) {
+      params = params.delete("orby_hora");
+    }
+    
     return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
   }
 

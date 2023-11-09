@@ -46,6 +46,23 @@ class Planificacion(db.Model):
         }
         return plan_json
 
+    def to_json_detalle(self):
+        for index, user in enumerate([self.profesor, self.alumno]):
+            if user:
+                jsonObj = user.to_json()
+                for key in ["Especialidad", "Inicio_actividad"] if index == 0 else ["Edad", "Sexo"]:
+                    jsonObj.pop(key)
+                jsonObj["Usuario"].pop("Telefono")
+                jsonObj["Usuario"].pop("Rol")
+            else: jsonObj = ""
+        plan_json = {
+            "planificacion_id": self.planificacion_id,
+            "estado": self.estado,
+            "creation_date": str(self.creation_date.strftime("%d/%m/%Y")),
+            "detalles_dia": ([detalle.to_json() for detalle in self.detalles_dia])
+        }
+        return plan_json
+
     @staticmethod
     def from_json(plan_json):
         return Planificacion(
