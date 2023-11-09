@@ -1,9 +1,10 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, firstValueFrom } from 'rxjs';
 import { LoginService } from 'src/app/services/auth/login.service';
 import { AlumnoService } from'src/app/services/user/alumno.service';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
+import { UsuarioService } from 'src/app/services/user/usuario.service';
 
 @Component({
   selector: 'app-nav-var',
@@ -58,9 +59,7 @@ export class NavVarComponent{
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private alumnoService: AlumnoService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private profesorService: ProfesorService,
+    private usuarioService: UsuarioService
     ) {
   }
 
@@ -84,13 +83,7 @@ export class NavVarComponent{
   }
 
   getUserData() {
-    let service!: Observable<any>
-    if (this.isTokenRol ==="alumno") {
-      service = this.alumnoService.getAlumnoByDni(this.isDNI);
-    } else if (this.isTokenRol === "profesor") {
-      service = this.profesorService.getProfeByDni(this.isDNI);
-    }
-    return firstValueFrom(service).then((data: any) => {
+    return firstValueFrom(this.usuarioService.getUserByDni(this.isDNI)).then((data: any) => {
       this.userData = data;
     }).catch((error) => {
       this.userData = null;

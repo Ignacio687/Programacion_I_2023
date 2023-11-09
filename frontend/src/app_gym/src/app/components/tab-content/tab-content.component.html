@@ -6,14 +6,14 @@
                     <div  *ngFor="let detalle of (page === 'planificaciones' ? pillData.detalles_dia : [0,]); index as cardDetalleNumber" class="card border-0 mt-4">
                         <button class="d-flex align-items-center card-body btn" type="button" [attr.data-bs-toggle]="'collapse'" aria-expanded="false" [attr.data-bs-target]="(page === 'planificaciones')? '#planifiDetalleDesp_'+cardDetalleNumber+cardNumber: '#optionButton_' + cardNumber" [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'">
                             <div *ngIf="page === 'profesores'" class="profesor-card me-3">
-                                <img class="img-fluid" src="{{getProfesorProfileImg(pillData.Profesor.Usuario.DNI)}}" alt="">
+                                <img class="img-fluid" src="{{getProfesorProfileImg(pillData.Usuario.DNI)}}" alt="">
                             </div>
                             <div class="d-flex flex-column ms-2">
                                 <h5 class="card-title">
                                     <div *ngIf="page === 'planificaciones'; then thenBlock else elseBlock"></div>
                                     <ng-template #thenBlock>
                                         <div *ngIf="currentRoute === '/clases-plan'; else elseBlockPlan">
-                                            {{pillData.Alumno.Usuario.Nombre}} {{pillData.Alumno.Usuario.Apellidos}}
+                                            {{isTokenRol!=="admin"?pillData.Usuario.Nombre: pillData.Alumno.Usuario.Nombre}} {{isTokenRol!=="admin"?pillData.Usuario.Apellidos: pillData.Alumno.Usuario.Apellidos}}
                                         </div>
                                         <ng-template #elseBlockPlan>
                                             Profesor {{pillData.Profesor.Usuario.Nombre}} {{pillData.Profesor.Usuario.Apellidos}}

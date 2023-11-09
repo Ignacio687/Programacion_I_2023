@@ -17,12 +17,14 @@ export class FormSelectorButtonComponent {
     this.currentRoute = this.router.url;
   }
 
+  get isTokenRol(): string {
+    return localStorage.getItem('token_rol')!;
+  }
+
   routeSelector() {
     let routerDict: { [key: string]: string } = {
       "inscripto": '/clases-form',
       "planificaciones": '/plan-form',
-      "profesores": '/register',
-      "alumnos": '/register',
     }
     this.router.navigateByUrl(routerDict[this.parentPage])
   }

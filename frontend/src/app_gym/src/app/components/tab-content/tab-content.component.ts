@@ -1,12 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Router, TitleStrategy } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { Router} from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { ClasesService } from 'src/app/services/clases/clases.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
-import { Observable, firstValueFrom,combineLatest, Subject } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
 import { merge } from 'rxjs';
-import { popper } from '@popperjs/core';
 
 @Component({
   selector: 'app-tab-content',
@@ -15,20 +14,6 @@ import { popper } from '@popperjs/core';
   styleUrls: ['./tab-content.component.css']
 })
 export class TabContentComponent {
-  profesores = [
-    {
-      "Especialidad": "cardio",
-      "Inicio_actividad": "20/12/2017",
-      "Usuario": {
-        "DNI": 48988794,
-        "Nombre": "Cristian",
-        "Apellidos": "Coria",
-        "Telefono": "2614347800",
-        "Email": "cristiancoria@gmail.com",
-        "Rol": "profesor"
-      },
-    }
-  ];
 
   per_page: number = 1
 
@@ -109,10 +94,12 @@ export class TabContentComponent {
     });
   }
 
-
   async executeAsyncQueries(pageNumber: number, per_page: number) {
     if (this.isTokenRol === "admin") {
-      this.getAlumnos()
+      this.getAlumnos(pageNumber, per_page)
+      this.getProfesores(pageNumber, per_page)
+      this.getClases(pageNumber, per_page)
+      this.getPlanificaciones(pageNumber, per_page)
     } else if (["profesor", "alumno"].includes(this.isTokenRol)) {
       this.getClasesDisponibles(false, pageNumber, per_page);
       if (this.isTokenRol === "alumno") {
@@ -120,7 +107,7 @@ export class TabContentComponent {
       }
       this.getPlanDetalle(pageNumber, per_page)
     } else {
-      this.getClases(1, per_page)
+      this.getClases(pageNumber, per_page)
     }
   }
   
@@ -129,7 +116,7 @@ export class TabContentComponent {
       "inscripto": this.clasesObj,
       "disponibles": this.clasesDisponiblesObj,
       "planificaciones": this.planificacionesObj,
-      "profesores": this.getProfesores(),
+      "profesores": this.profesoresObj,
       "alumnos": this.alumnosObj,
     };
     return gettersDict[page]
@@ -140,19 +127,19 @@ export class TabContentComponent {
       useFunction: Function
     }; } = {
       "inscripto": {
-        useFunction: () => this.getClasesDisponibles(false, pageNumber, this.paginationParams[page].per_page)
+        useFunction: () => this.isTokenRol!=="admin"? this.getClasesDisponibles(false, pageNumber, this.paginationParams[page].per_page): this.getClases(pageNumber, this.paginationParams[page].per_page)
       }, 
       "disponibles": {
         useFunction: () => this.getClasesDisponibles(true, pageNumber, this.paginationParams[page].per_page)
       },
       "planificaciones": {
-        useFunction: () => this.getPlanDetalle(pageNumber, this.paginationParams[page].per_page)
+        useFunction: () => this.isTokenRol!=="admin"? this.getPlanDetalle(pageNumber, this.paginationParams[page].per_page): this.getPlanificaciones(pageNumber, this.paginationParams[page].per_page)
       },
       "profesores": {
-        useFunction: () => this.getProfesores()
+        useFunction: () => this.getProfesores(pageNumber, this.paginationParams[page].per_page)
       },
       "alumnos": {
-        useFunction: () => this.getAlumnos()
+        useFunction: () => this.getAlumnos(pageNumber, this.paginationParams[page].per_page)
       },
     }
     if (!this.isToken) {
@@ -202,12 +189,37 @@ export class TabContentComponent {
     })
   }
 
-  getProfesores() {
-	  return this.profesores;
+  async getPlanificaciones(pageNumber: number, per_page: number) {
+    firstValueFrom(this.planificacionService.getPlanificaciones(pageNumber, per_page)).then((data: any) => {
+      this.paginationParams["planificaciones"].pageNumber = data.page;
+      this.paginationParams["planificaciones"].collectionSize = data.pages*10;
+      this.planificacionesObj = []
+      for (let plan of data.Planificaciones) {
+        firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
+          this.planificacionesObj.push(data);
+        }).catch((err: any) => {
+      console.log(err)
+        })
+      }
+    }).catch((err: any) => {
+      console.log(err)
+    })
   }
 
-  getAlumnos() {
-    return firstValueFrom(this.alumnoService.getAlumnos()).then(data => {
+  async getProfesores(pageNumber: number, per_page: number) {
+    return firstValueFrom(this.profesorService.getProfesores(pageNumber, per_page)).then(data => {
+      this.paginationParams["profesores"].pageNumber = data.page;
+      this.paginationParams["profesores"].collectionSize = data.pages*10;
+      this.profesoresObj = data.profesores;
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  async getAlumnos(pageNumber: number, per_page: number) {
+    return firstValueFrom(this.alumnoService.getAlumnos(pageNumber, per_page)).then(data => {
+      this.paginationParams["alumnos"].pageNumber = data.page;
+      this.paginationParams["alumnos"].collectionSize = data.pages*10;
       this.alumnosObj = data.alumnos;
     }).catch(err => {
       console.log(err);

@@ -145,6 +145,14 @@ export class FormContentComponent {
       dia: ['', [Validators.required]],
       detalle: ['', [Validators.required]],
     })
+    if (this.isTokenRol==="admin") {
+      this.planForm.addControl("profesorDNI", this.formBuilder.control('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]))
+      this.inputFields["/plan-form"].formContentLabels.splice(1, 0 ,{
+        label: "DNI del Profesor",
+        type: "number",
+        formControlName: "profesorDNI"
+      })
+    }
   }
 
   formGroupSelector() {
@@ -165,6 +173,11 @@ export class FormContentComponent {
           detalle: data.detalles_dia.find((detalle: any) => detalle.dia === this.route.snapshot.paramMap.get('dia')).detalle,
           dia: this.route.snapshot.paramMap.get('dia')
         });
+        if (this.isTokenRol==="admin") {
+          this.planForm.patchValue({
+            profesorDNI: data.Profesor.Usuario.DNI
+          })
+        }
       },
       error: (err: any) => {
         console.log(err);
@@ -232,8 +245,12 @@ export class FormContentComponent {
         const diaFormateado = dia.toString().padStart(2, '0');
         const mesFormateado = mes.toString().padStart(2, '0');
         const fechaFormateada = `${diaFormateado}/${mesFormateado}/${año}`;
+        let dniProfe = this.isTokenDNI
+        if (this.isTokenRol==="admin") {
+
+        }
         const planData = {
-          "profesor_DNI": this.isTokenDNI,
+          "profesor_DNI": dniProfe,
           "alumno_DNI":  this.planForm.get("alumnoDNI")?.value,
           "estado": true,
           "creation_date": fechaFormateada

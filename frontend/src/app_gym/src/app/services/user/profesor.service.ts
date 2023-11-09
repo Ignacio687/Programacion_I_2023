@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, first } from 'rxjs';
 
@@ -18,5 +18,18 @@ export class ProfesorService {
       'Authorization': `Bearer ${auth_token}`
     })
     return this.httpClient.get(`${this.url}/profe/${dni}`, {headers: headers}).pipe(first())
+  }
+
+  getProfesores(page: number, per_page: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    let params = new HttpParams().appendAll({
+      "per_page": per_page,
+      "page": page,
+    });
+    return this.httpClient.get(`${this.url}/profs`, {headers: headers, params: params})
   }
 }

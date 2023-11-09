@@ -15,7 +15,7 @@ class Usuario(Resource):
         if identity.get("rol") == "alumno":
             dni = identity.get("DNI")
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
-        return usuario.to_json_complete()
+        return usuario.to_json()
 
     @jwt_required()
     def put(self, dni):

@@ -16,14 +16,14 @@
 						<div class="col d-flex flex-column">
 							<h5 style="color: white;">
 								<div *ngIf="userData; else elseBlockName">
-									{{userData.Usuario.Nombre}} {{userData.Usuario.Apellidos}}
+									{{userData.Nombre}} {{userData.Apellidos}}
 								</div>
 								<ng-template #elseBlockName>
 									Bienvenido!
 								</ng-template>
 							</h5>
 							<div *ngIf="userData; else elseBlockEmail">
-								<p>{{userData.Usuario.Email}}</p>
+								<p>{{userData.Email}}</p>
 							</div>
 							<ng-template #elseBlockEmail>
 								<p>Crea una cuanta o inicia sesion</p>

@@ -1,4 +1,4 @@
-<div *ngIf="currentRoute!=='/alum-clases' && parentPage!=='inscripto'" class="nav nav-fill justify-content-end fav-container">
+<div *ngIf="(currentRoute==='/clases-plan' && parentPage!=='inscripto') || currentRoute==='/clases-plan' && isTokenRol==='admin'" class="nav nav-fill justify-content-end fav-container">
     <a class="btn btn-primary fav" (click)="routeSelector()" role="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
             class="bi bi-plus" viewBox="0 0 16 16">
