@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/auth/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import jwt_decode from "jwt-decode";
+import { DataManagerService } from 'src/app/services/data-manager.service'
 
 @Component({
   selector: 'app-user-credentials',
@@ -10,7 +11,8 @@ import jwt_decode from "jwt-decode";
   styleUrls: ['./user-credentials.component.css']
 })
 export class UserCredentialsComponent {
-  selectedOption: string = 'Selecciona una opción'; // Valor inicial'
+  samePasswordCondition: boolean = true;
+  
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   recoverPassForm!: FormGroup;
@@ -18,8 +20,10 @@ export class UserCredentialsComponent {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private formBuilder: FormBuilder
-    ) {}
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef,
+    private dataManagerService: DataManagerService
+    ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -37,11 +41,9 @@ export class UserCredentialsComponent {
   }   
 
   login(dataLogin: any = {}){
-    console.log(dataLogin);
     console.log('Comprobando credenciales');
     this.loginService.login(dataLogin).subscribe({
       next: (rta: any) => {
-        console.log('Respuesta login: ', rta.access_token);
         localStorage.setItem('token', rta.access_token);
         let tokenPayload: any = jwt_decode(rta.access_token)
         localStorage.setItem('token_rol', tokenPayload.rol);
@@ -61,21 +63,26 @@ export class UserCredentialsComponent {
   }
 
   getFormValue(index: number): any {
-    if (!index) {
-      return this.loginForm.get('email');
+    if (index === 0) {
+      return this.getFormGroup().get('email');
     } else {
-      return this.loginForm.get('password'+index);
+      return this.getFormGroup().get(`password${index}`);
     }
   }
 
   submit() {
-    if (this.loginForm.valid) {
+    if (this.getFormGroup().valid) {
       if (this.getCurrentRoute() === '/login') {
         this.login({email: this.getFormValue(0)?.value, password: this.getFormValue(1)?.value})
       } else if (this.getCurrentRoute() === '/register') {
-
+        if (this.getFormValue(1).value===this.getFormValue(2).value) {
+          this.dataManagerService.setUserCredentials(this.getFormValue(0).value, this.getFormValue(1).value)
+          this.router.navigateByUrl("/register-form")
+        } else {
+          this.samePasswordCondition = false
+        }
       } else {
-        this.sendRecoverEmail(this.getFormValue(0)?.value)
+        this.sendRecoverEmail(this.getFormValue(0).value)
       }
     }
   }

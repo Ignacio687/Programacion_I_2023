@@ -1,8 +1,7 @@
 from flask import request, Blueprint
 from .. import db
 from main.models import UsuariosModel
-from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt
-from main.auth.decorators import role_required
+from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 from main.mail.functions import sendMail
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -26,11 +25,11 @@ def login():
 #el estado en False no pueda a acceder a ningun recurso que requiera jwt
 
 @auth.route('/register', methods=['POST'])
-@role_required(roles = ["admin","profesor"])
+@jwt_required(optional=True)
 def register():
     usuario = UsuariosModel.from_json(request.get_json())
-    if "admin" not in get_jwt().get("rol") and usuario.rol != "alumno":
-        return f'Solo administradores pueden registrar profesores o administradores', 403
+    # if ("admin" not in get_jwt().get("rol") if get_jwt() else False) and usuario.rol != "":
+    #     return f'Solo administradores pueden habilitar cuentas', 403
     existsMail = db.session.query(UsuariosModel).filter(UsuariosModel.email == usuario.email).scalar() is not None
     existsDNI = db.session.query(UsuariosModel).filter(UsuariosModel.dni == usuario.dni).scalar() is not None
     if existsMail:

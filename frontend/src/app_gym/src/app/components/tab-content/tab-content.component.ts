@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
+import { ClasesService } from 'src/app/services/clases/clases.service';
+import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
+import { firstValueFrom } from 'rxjs';
+import { ProfesorService } from 'src/app/services/user/profesor.service';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-tab-content',
@@ -9,222 +14,290 @@ import { AlumnoService } from 'src/app/services/user/alumno.service';
   styleUrls: ['./tab-content.component.css']
 })
 export class TabContentComponent {
-  // "clases" se va a obtener desde el back cuando lo conectemos
-  clases = [
-	{
-	  "Clase_id": 1,
-	  "Nombre": "Zumba",
-	  "Tipo": "Cardio",
-	  "Dia": "Lunes",
-	  "Horario": "10:30"
-	},
-	{
-	  "Clase_id": 3,
-	  "Nombre": "Functional",
-	  "Tipo": "Estiramiento",
-	  "Dia": "Jueves",
-	  "Horario": "12:15"
-	}
-  ];
-  // "clasesDisponibles" se va a obtener desde el back cuando lo conectemos
-  clasesDisponibles = [
-	{
-	  "Clase_id": 2,
-	  "Nombre": "Boxeo",
-	  "Tipo": "Cardio",
-	  "Dia": "Martes",
-	  "Horario": "20:30"
-	}
-  ];
-  // "planificaciones" se va a obtener desde el back cuando lo conectemos
-  planificaciones = [
-	{
-	  "planificacion_id": 1,
-	  "profesor_DNI": 48988794,
-	  "alumno_DNI": 489721048,
-	  "estado": true,
-	  "creation_date": "20/05/2019",
-	  "detalles_dia": [
-		{
-			"planificacion_id": 1,
-			"dia": "Martes",
-			"detalle": "Espalda y Bíceps\n\nDominadas o Pull-ups: 3-4 series de 6-8 repeticiones.\nPeso muerto: 3 series de 6-8 repeticiones.\nPull-ups en máquina asistida: 3 series de 8-10 repeticiones (si es necesario).\nCurl de bíceps con barra: 3-4 series de 6-8 repeticiones.\nCurl de martillo con mancuernas: 3 series de 8-10 repeticiones.\nCurl de bíceps en polea baja: 3 series de 10-12 repeticiones."
-		},
-		{
-		  "planificacion_id": 2,
-		  "dia": "Miercoles",
-		  "detalle": " Pecho y Tríceps\n\nPress de banca: 3-4 series de 6-8 repeticiones\nPress de banca inclinado: 3 series de 8-10 repeticiones\nAperturas con mancuernas: 3 series de 10-12 repeticiones\nFondos en paralelas: 3 series de 8-10 repeticiones\nPress de tríceps con barra: 3-4 series de 6-8 repeticiones\nTríceps en polea alta: 3 series de 8-10 repeticiones."
-	  }
-	  ]
-	}
-  ];
-  // "profesores" se va a obtener desde el back cuando lo conectemos
-  profesores = [
-	{
-	  "Especialidad": "cardio",
-	  "Inicio_actividad": "20/12/2017",
-	  "Usuario": {
-		  "DNI": 48988794,
-		  "Nombre": "Cristian",
-		  "Apellidos": "Coria",  // IMPORTANTE en la base de datos esta como Apelidos le falta una l arreglar
-		  "Telefono": "2614347800",
-		  "Email": "cristiancoria@gmail.com",
-		  "Rol": "profesor"
-	  },
-	}
-  ];
-  // "alumnos" se va a obtener desde el back cuando lo conectemos
-//   alumnos = [
-// 	{
-// 	  "Edad": 30,
-// 	  "Sexo": false,
-// 	  "Usuario": {
-// 		  "DNI": 48978797,
-// 		  "Nombre": "Tomas",
-// 		  "Apellidos": "Bastias",
-// 		  "Telefono": "2614348546",
-// 		  "Email": "tomasbastias@gmail.com",
-// 		  "Rol": "alumno"
-// 	  },
-// 	},
-// 	{
-// 	  "Edad": 25,
-// 	  "Sexo": true,
-// 	  "Usuario": {
-// 		  "DNI": 48987025,
-// 		  "Nombre": "Franco",
-// 		  "Apellidos": "Sales",
-// 		  "Telefono": "2614349987",
-// 		  "Email": "francosales@gmail.com",
-// 		  "Rol": "alumno"
-// 	  },
-// 	},
-// 	{
-// 	  "Edad": 55,
-// 	  "Sexo": false,
-// 	  "Usuario": {
-// 		  "DNI": 489721048,
-// 		  "Nombre": "Lisan",
-// 		  "Apellidos": "Rivera",
-// 		  "Telefono": "2614348976",
-// 		  "Email": "riveralisan@gmail.com",
-// 		  "Rol": "alumno"
-// 	  },
-// 	}
-//   ];
+
+  per_page: number = 2
+
+  paginationParams: { [key: string]: {
+    pageNumber: number;
+    collectionSize: number;
+    per_page: number;
+  }; } = {
+    "inscripto": {
+      pageNumber: 1,
+      collectionSize: 0,
+      per_page: this.per_page
+    }, 
+    "disponibles": {
+      pageNumber: 1,
+      collectionSize: 0,
+      per_page: this.per_page
+    },
+    "planificaciones": {
+      pageNumber: 1,
+      collectionSize: 0,
+      per_page: 1
+    },
+    "profesores": {
+      pageNumber: 1,
+      collectionSize: 0,
+      per_page: this.per_page
+    },
+    "alumnos": {
+      pageNumber: 1,
+      collectionSize: 0,
+      per_page: this.per_page
+    },
+  }
   
-  page=1;
   @Input() parentPageTitles: string[];
+  // @Input() 
   currentRoute: string;
+  dia: string = "";
+  items: any[] = [];
+ 
 
-  alumnosObj: any;
-
+  alumnosObj!: any;
+  clasesObj!: any;
+  planificacionesObj!: any;
+  profesoresObj!: any;
+  clasesDisponiblesObj!: any;
+  page_anterior = "inscripto";
+  
   constructor(
 	private router: Router,
-	private alumnoService: AlumnoService) {
-	this.parentPageTitles = [];
-	this.currentRoute = this.router.url;
+	private alumnoService: AlumnoService,
+  private planificacionService: PlanificacionService,
+  private clasesService: ClasesService,
+  private profesorService: ProfesorService) {
+    this.parentPageTitles = [];
+    this.currentRoute = this.router.url;
+    this.clasesService.onPillChange().subscribe(page => {
+      this.set_default_filter_values()
+      this.definePaginationConditionalAction(page, this.paginationParams[page].pageNumber, this.paginationParams[page].per_page);
+      this.page_anterior = page;
+    });
+  }
+
+  get isToken() {
+    return localStorage.getItem('token');
+  }
+
+  get isTokenRol(): string {
+    return localStorage.getItem('token_rol')!;
   }
   
-  ngOnInit() {
-	this.getAlumnos()
-	console.log(this.alumnosObj)
+  get isDNI() {
+    return Number(localStorage.getItem('token_DNI'));
   }
 
+  ngOnInit(): void {
+    this.set_default_filter_values()
+    this.clasesService.setFiltroAplicado$.subscribe(valor => {
+      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
+    });
+    this.executeAsyncQueries(1, this.per_page)
+  }
+
+  async executeAsyncQueries(pageNumber: number, per_page: number) {
+    if (this.isTokenRol === "admin") {
+      this.getAlumnos(pageNumber, per_page)
+      this.getProfesores(pageNumber, per_page)
+      this.getClases(pageNumber, per_page)
+      this.getPlanificaciones(pageNumber, per_page)
+    } else if (["profesor", "alumno"].includes(this.isTokenRol)) {
+      this.getClasesDisponibles(false, pageNumber, per_page);
+      if (this.isTokenRol === "alumno") {
+        this.getClasesDisponibles(true, pageNumber, per_page);
+      }
+      this.getPlanDetalle(pageNumber, per_page)
+    } else {
+      this.getClases(pageNumber, per_page)
+    }
+  }
+
+  set_default_filter_values(){
+    this.clasesService.setDiaSeleccionado('')
+    this.clasesService.setOrdenarPorHora(false);
+    this.clasesService.setTipoSeleccionado('')
+  }
+  
   definePageContent(page: string){
-	let gettersDict: { [page: string]: any} = {
-	  "inscripto": this.getClases(),
-	  "disponibles": this.getClasesDisponibles(),
-	  "planificaciones": this.getPlanificaciones(),
-	  "profesores": this.getProfesores(),
-	  "alumnos": this.alumnosObj,
-	};
-	return gettersDict[page]
+    let gettersDict: { [page: string]: any} = {
+      "inscripto": this.clasesObj,
+      "disponibles": this.clasesDisponiblesObj,
+      "planificaciones": this.planificacionesObj,
+      "profesores": this.profesoresObj,
+      "alumnos": this.alumnosObj,
+    };
+    return gettersDict[page]
   }
 
-  getClases() {
-	return this.clases;
+  definePaginationConditionalAction(page: string, pageNumber: number, per_page: number) {
+    const functions: { [key: string]: {
+      useFunction: Function
+    }; } = {
+      "inscripto": {
+        useFunction: () => this.isTokenRol!=="admin"? this.getClasesDisponibles(false, pageNumber, this.paginationParams[page].per_page): this.getClases(pageNumber, this.paginationParams[page].per_page)
+      }, 
+      "disponibles": {
+        useFunction: () => this.getClasesDisponibles(true, pageNumber, this.paginationParams[page].per_page)
+      },
+      "planificaciones": {
+        useFunction: () => this.isTokenRol!=="admin"? this.getPlanDetalle(pageNumber, this.paginationParams[page].per_page): this.getPlanificaciones(pageNumber, this.paginationParams[page].per_page)
+      },
+      "profesores": {
+        useFunction: () => this.getProfesores(pageNumber, this.paginationParams[page].per_page)
+      },
+      "alumnos": {
+        useFunction: () => this.getAlumnos(pageNumber, this.paginationParams[page].per_page)
+      },
+    }
+    if (!this.isTokenRol) {
+      this.getClases(pageNumber, this.paginationParams[page].per_page)
+    } else {
+      functions[page].useFunction()
+    }
   }
 
-  getClasesDisponibles() {
-	return this.clasesDisponibles;
+  async getClases(pageNumber: number, per_page: number) {
+    return firstValueFrom(this.clasesService.getClases(pageNumber, per_page)).then((data: any) => {
+      this.paginationParams["inscripto"].collectionSize = data.pages*10;
+      this.paginationParams["inscripto"].pageNumber = data.page;
+      this.clasesObj = data.Clases;
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
-  getPlanificaciones() {
-	return this.planificaciones;
+  async getClasesDisponibles(dispoInscFlag: boolean, pageNumber: number, per_page: number) {
+    return firstValueFrom(this.clasesService.getClasesDisponibles(dispoInscFlag, pageNumber, per_page)).then((data: any) => {
+      if (dispoInscFlag) {
+        this.paginationParams["disponibles"].pageNumber = data.page;
+        this.paginationParams["disponibles"].collectionSize = data.pages*10;
+        this.clasesDisponiblesObj = data.Clases
+      } else {
+        this.paginationParams["inscripto"].pageNumber = data.page;
+        this.paginationParams["inscripto"].collectionSize = data.pages*10;
+        this.clasesObj = data.Clases
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
-  getProfesores() {
-	return this.profesores;
+  async getPlanDetalle(pageNumber: number, per_page: number) {
+    let service = this.planificacionService.getPlanificacionProfeDNI(this.isDNI, pageNumber, per_page)
+    if (this.isTokenRol === "alumno") {
+      service = this.planificacionService.getPlanificacionAlumnoDNI(this.isDNI, pageNumber, per_page)
+    }
+    return firstValueFrom(service).then((data: any) => {
+      this.paginationParams["planificaciones"].pageNumber = data.page;
+      this.paginationParams["planificaciones"].collectionSize = data.pages*10;
+      this.planificacionesObj = data.planificaciones
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
-  getAlumnos() {
-	this.alumnoService.getAlumnos().subscribe({
-		next: (data: any) => {
-			this.alumnosObj = data.alumnos;
-		},
-		error: (error: any) => {
-			console.log(error);
-		}
-	})
+  async getPlanificaciones(pageNumber: number, per_page: number) {
+    firstValueFrom(this.planificacionService.getPlanificaciones(pageNumber, per_page)).then((data: any) => {
+      this.paginationParams["planificaciones"].pageNumber = data.page;
+      this.paginationParams["planificaciones"].collectionSize = data.pages*10;
+      this.planificacionesObj = []
+      for (let plan of data.Planificaciones) {
+        firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
+          this.planificacionesObj.push(data);
+        }).catch((err: any) => {
+          console.log(err)
+        })
+      }
+    }).catch((err: any) => {
+      console.log(err)
+    })
   }
 
-  getProfesorByDni(dni: number) {
-	return "Lillo"
+  async getProfesores(pageNumber: number, per_page: number) {
+    return firstValueFrom(this.profesorService.getProfesores(pageNumber, per_page)).then(data => {
+      this.paginationParams["profesores"].pageNumber = data.page;
+      this.paginationParams["profesores"].collectionSize = data.pages*10;
+      this.profesoresObj = data.profesores;
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
-  getAlumnoByDni(dni: number) {
-	return "Pablo Ruiz"
+  async getAlumnos(pageNumber: number, per_page: number) {
+    return firstValueFrom(this.alumnoService.getAlumnos(pageNumber, per_page)).then(data => {
+      this.paginationParams["alumnos"].pageNumber = data.page;
+      this.paginationParams["alumnos"].collectionSize = data.pages*10;
+      this.alumnosObj = data.alumnos;
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   getProfesorProfileImg(dni: number) {
-	return "assets/profe 22.png"
+	  return "assets/profe 22.png"
   }
 
   inscribirse(clase_id:number) {
-	console.log(clase_id)
+	  this.clasesService.inscribirseAlumno(clase_id, this.isDNI).subscribe({
+      next: (data: any) => {
+        this.executeAsyncQueries(1, this.per_page)
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
   }
 
   desuscribirse(clase_id:number) {
-	console.log(clase_id)
+	  this.clasesService.desuscribirseAlumno(clase_id, this.isDNI).subscribe({
+      next: (data: any) => {
+        this.executeAsyncQueries(1, this.per_page)
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
   }
 
   convertirSaltosDeLinea(texto: string): string {
-	return texto.replace(/\n/g, '<br>');
+	  return texto.replace(/\n/g, '<br>');
   }
 
-  dropdownButtonConditionalAction(page: string, title: boolean, parameter_id: number=0) {
-	let optionsDict: { [key: string]: { [key: string]: string[]; }; } = {
-	  "/alum-clases":
-	  {
-		"inscripto": ['Desuscribirse', 'Desuscribirse'],
-		"disponibles": ['Inscribirse', 'Inscribirse'],
-	  },
-	  "/clases-plan":
-	  {
-		"disponibles": ['Editar', 'clases-form/:'+String(parameter_id)+'/editar'],
-		"planificaciones": ['Editar', 'plan-form/:'+String(parameter_id)+'/editar']
-	  },
-	  "/admin-page":
-	  {
-		"profesores": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar'],
-		"alumnos": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar']
-	  }
-	};
-	if (title) {
-	  return optionsDict[this.currentRoute][page][0]
-	}
-	else {
-	  let action = optionsDict[this.currentRoute][page][1];
-	  if (action === 'Desuscribirse') {
-		this.desuscribirse(parameter_id);
-	  } else if ( action === 'Inscribirse') {
-		this.inscribirse(parameter_id);
-	  } else {
-		this.router.navigate([action]);
-	  }
-	  return false;
-	}
+  dropdownButtonConditionalAction(page: string, title: boolean, ...parameters: any[]) {
+    let optionsDict: { [key: string]: { [key: string]: any[]; }; } = {
+      "/alum-clases":
+      {
+      "inscripto": ['Desuscribirse', () => this.desuscribirse(parameters[0])],
+      "disponibles": ['Inscribirse', () => this.inscribirse(parameters[0])],
+      },
+      "/clases-plan":
+      {
+      "disponibles": ['Editar', "clases-form/"],
+      "planificaciones": ['Editar', "plan-form/"]
+      },
+      "/admin-page":
+      {
+      "profesores": ['Editar', "change-user-info/"],
+      "alumnos": ['Editar', "change-user-info/"]
+      }
+    };
+    if (title) {
+      return optionsDict[this.currentRoute][page][0]
+    }
+    else {
+      if (this.currentRoute === "/alum-clases") {
+        optionsDict[this.currentRoute][page][1]();
+      } else {
+        if (parameters[0][1]) {
+          this.router.navigate([optionsDict[this.currentRoute][page][1], parameters[0][0], parameters[0][1], 'editar'])
+        } else {
+          this.router.navigate([optionsDict[this.currentRoute][page][1], parameters[0], 'editar'])
+        }
+      }
+    }
   }
 
 }

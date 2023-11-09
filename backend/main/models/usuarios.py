@@ -49,15 +49,20 @@ class Usuarios(db.Model):
             roltxt = "Profesor"
             roljson = self.profesor.to_json()
         else: roltxt, roljson = "", ""
-        usuario_json = {
-            "DNI": self.dni,
-            "Nombre": str(self.nombre),
-            "Apelidos": str(self.apellidos),
-            "Telefono": str(self.telefono),
-            "Email": str(self.email),
-            "Rol": str(self.rol),
-            roltxt: roljson
-        }
+        if roltxt == "":
+            usuario_json = {
+                "DNI": self.dni,
+                "Nombre": str(self.nombre),
+                "Apelidos": str(self.apellidos),
+                "Telefono": str(self.telefono),
+                "Email": str(self.email),
+                "Rol": str(self.rol),
+                roltxt: roljson
+            }
+        else:
+            usuario_json = {
+                roltxt: roljson
+            }
         return usuario_json
 
     @staticmethod

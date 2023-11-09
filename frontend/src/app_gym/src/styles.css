@@ -103,15 +103,7 @@
   justify-content: center; /* Centrar horizontalmente */
   align-items: center; /* Centrar verticalmente */
 }
-.dropdown-menu {
-  background-color: rgba(94, 109, 131, 0.7);
-  backdrop-filter: blur(5px);
-  min-width: auto;
-}
-.dropdown-item:hover {
-  background-color: rgba(94, 109, 131, 0.7) !important;
-  color: white !important;
-}
+
 .card-title {
   font-family: "Ubuntu";
   font-weight: 700;
@@ -298,15 +290,7 @@ input {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(27, 35, 46, 1));
   z-index: -1;
 }
-.dropdown-menu {
-  background-color: rgba(94, 109, 131, 0.7);
-  backdrop-filter: blur(5px);
-  min-width: auto;
-}
-.dropdown-item:hover {
-  background-color: #d0fd3e;
-  color: black;
-}
+
 .material-symbols-outlined {
   color: gray;
   height: 100%;
@@ -322,11 +306,8 @@ input {
 .card-container:hover{
   color: black;
 }
-.dropdown-button {
-  color: white;
-  margin: 0;
-}
-.card:hover .dropdown-button{
+
+.card:hover {
   color: black;
 }
 .form-container {
@@ -336,4 +317,34 @@ input {
   color: red;
   padding-top: 10px;
   font-size: medium;
+}
+
+.pagination {
+  padding-top: 20px;
+  --bs-pagination-padding-x: 0.75rem;
+  --bs-pagination-padding-y: 0.25rem;
+  --bs-pagination-font-size: 1.1rem;
+  --bs-pagination-color: white;
+  --bs-pagination-bg: var(--background-color-inactive);
+  --bs-pagination-border-width: 1px;
+  --bs-pagination-border-color: var(--bs-border-color);
+  --bs-pagination-border-radius: var(--bs-border-radius);
+  --bs-pagination-hover-color: var(--bs-link-hover-color);
+  --bs-pagination-hover-bg: var(--bs-tertiary-bg);
+  --bs-pagination-hover-border-color: var(--bs-border-color);
+  --bs-pagination-focus-color: var(--bs-link-hover-color);
+  --bs-pagination-focus-bg: var(--bs-secondary-bg);
+  --bs-pagination-focus-box-shadow: transparent;
+  --bs-pagination-active-color: black;
+  --bs-pagination-active-bg: var(--background-color-focus);
+  --bs-pagination-active-border-color: #0d6efd;
+  --bs-pagination-disabled-color: #131b26;
+  --bs-pagination-disabled-bg: #131b26;
+  --bs-pagination-disabled-border-color: #131b26;
+}
+.tab-content-dropdown-button {
+  color: white;
+}
+.card:hover .tab-content-dropdown-button {
+  color: black;
 }
