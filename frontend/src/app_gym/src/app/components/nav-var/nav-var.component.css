@@ -47,4 +47,24 @@ body {
   font-weight: 400;
   /* font-weight: 300; */
 }
+.cerrar-sesion{
+  color:red;
+  margin: 0 auto;
+  padding: 10px 20px;
+
+}
+.cerrar-sesion:hover{
+  border-radius: 100px;
+  border: 1px solid red;
+}
+.iniciar-sesion{
+  color: var(--background-color-focus);
+  margin: 0 auto;
+  padding: 10px 20px;
+  
+}
+.iniciar-sesion:hover{
+  border-radius: 100px;
+  border: 1px solid var(--background-color-focus);
+}
   /* <a class="nav-link active spetial_button" aria-current="page" routerLink="/home"> */

@@ -78,16 +78,36 @@ class Planificaciones(Resource):
 class PlanificacionAlumno(Resource):
     @jwt_required()
     def get(self, dni):
-        planificacion = (
-            db.session.query(PlanificacionModel).filter(PlanificacionModel.alumno_dni == dni)).all()
-        return jsonify([plan.to_json() for plan in planificacion])
+        page, per_page = 1, 10
+        if request.args.get("page"):
+            page = int(request.args.get("page"))
+        if request.args.get("per_page"):
+            per_page = int(request.args.get("per_page"))
+        planificacion = db.session.query(PlanificacionModel).filter(PlanificacionModel.alumno_dni == dni).paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        response = {
+            "planificaciones": [plan.to_json_complete() for plan in planificacion],
+            "total": planificacion.total,
+            "pages": planificacion.pages,
+            "page": page
+        }
+        return jsonify(response)
 
 class PlanificacionProfesor(Resource):
     @role_required(roles = ["admin", "profesor"])
     def get(self, dni):
-        planificacion = (
-            db.session.query(PlanificacionModel).filter(PlanificacionModel.profesor_dni == dni)).all()
-        return jsonify([plan.to_json() for plan in planificacion])
+        page, per_page = 1, 10
+        if request.args.get("page"):
+            page = int(request.args.get("page"))
+        if request.args.get("per_page"):
+            per_page = int(request.args.get("per_page"))
+        planificacion = db.session.query(PlanificacionModel).filter(PlanificacionModel.profesor_dni == dni).paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
+        response = {
+            "planificaciones": [plan.to_json_complete() for plan in planificacion],
+            "total": planificacion.total,
+            "pages": planificacion.pages,
+            "page": page
+        }
+        return jsonify(response)
 
 class PlanificacionDetalle(Resource):
     @jwt_required()

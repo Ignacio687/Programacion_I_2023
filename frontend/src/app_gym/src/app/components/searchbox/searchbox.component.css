@@ -1,0 +1,40 @@
+:root {
+    --background-color-focus: #d0fd3e;
+    --background-color-inactive: #1b232e;
+    --border-radius: 6px;
+    --text-color-inactive: #8076b0;
+    --background-default: #1b232e;
+  }
+.dropdown-menu {
+    background-color: rgba(94, 109, 131, 0.8);
+    backdrop-filter: blur(3px);
+    min-width: auto;
+    border: 0;
+    font-family: "Ubuntu";
+    font-weight: 400;
+  }
+  .dropdown-item:hover {
+    background-color: #d0fd3e;
+    color: black;
+    font-family: "Ubuntu";
+    font-weight: 400;
+}
+.dropdown-item{
+    font-family: "Ubuntu";
+    font-weight: 400;
+}
+.form-check-label {
+    color: #8076b0;
+    border: 0;  
+  }
+.form-check-input {
+    min-width: auto;
+    color: #8076b0 ;
+}
+label, select ,option{
+    font-family: "Ubuntu";
+    font-weight: 400;
+}
+.dropdown-toggle{
+    color: #8076b0 ;
+}

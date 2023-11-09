@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent {
-
+  constructor() { }
+  
 }

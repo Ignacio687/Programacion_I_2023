@@ -15,9 +15,9 @@ class Usuario(Resource):
         if identity.get("rol") == "alumno":
             dni = identity.get("DNI")
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
-        return usuario.to_json_complete()
+        return usuario.to_json()
 
-    @jwt_required()
+    @role_required(roles = ["admin"])
     def put(self, dni):
         identity = get_jwt()
         if identity.get("rol") == "alumno":
@@ -61,7 +61,7 @@ class Usuarios(Resource):
             "page": usuarios.page
             })
 
-    @role_required(roles = ["admin"])
+    @jwt_required(optional=True)
     def post(self):
         usuario = UsuariosModel.from_json(request.get_json())
         try:
@@ -80,7 +80,7 @@ class UsuarioAlumno(Resource):
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
         return alumno.to_json_complete()
 
-    @jwt_required()
+    @role_required(roles = ["admin"])
     def put(self, dni):
         identity = get_jwt()
         if identity.get("rol") == "alumno":
@@ -115,7 +115,7 @@ class UsuariosAlumnos(Resource):
             "page": alumnos.page
             })
 
-    @role_required(roles = ["admin", "profesor"])
+    @jwt_required(optional=True)
     def post(self):
         alumno = AlumnoModel.from_json(request.get_json())
         exist = db.session.query(UsuariosModel).get_or_404(alumno.dni)
@@ -135,7 +135,7 @@ class UsuarioProfesor(Resource):
         profesor = db.session.query(ProfesorModel).get_or_404(dni)
         return profesor.to_json_complete()
 
-    @role_required(roles = ["admin", "profesor"])
+    @role_required(roles = ["admin"])
     def put(self, dni):
         identity = get_jwt()
         if identity.get("rol") == "profesor":

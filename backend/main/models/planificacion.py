@@ -26,12 +26,22 @@ class Planificacion(db.Model):
         return plan_json
 
     def to_json_complete(self):
+        for index, user in enumerate([self.profesor, self.alumno]):
+            if user:
+                jsonObj = user.to_json()
+                for key in ["Especialidad", "Inicio_actividad"] if index == 0 else ["Edad", "Sexo"]:
+                    jsonObj.pop(key)
+                jsonObj["Usuario"].pop("Telefono")
+                jsonObj["Usuario"].pop("Rol")
+            else: jsonObj = ""
+            if index == 0: profesorJson = jsonObj
+            else: alumnoJson = jsonObj
         plan_json = {
             "planificacion_id": self.planificacion_id,
             "estado": self.estado,
             "creation_date": str(self.creation_date.strftime("%d/%m/%Y")),
-            "Profesor": self.profesor.to_json() if self.profesor != None else "",
-            "Alumno": self.alumno.to_json() if self.alumno != None else "",
+            "Profesor": profesorJson,
+            "Alumno": alumnoJson,
             "detalles_dia": ([detalle.to_json() for detalle in self.detalles_dia])
         }
         return plan_json
