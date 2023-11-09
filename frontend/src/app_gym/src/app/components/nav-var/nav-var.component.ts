@@ -53,7 +53,7 @@ export class NavVarComponent{
   ];
 
   userData!: any;
-  tokenStatus: string|null = this.isToken
+  tokenStatus!: string|null
 
   constructor(
     private router: Router,
@@ -79,15 +79,11 @@ export class NavVarComponent{
   ngDoCheck() {
     if (this.tokenStatus !== this.isToken) {
       this.tokenStatus = this.isToken
-      this.executeAsyncQueries()
+      this.getUserData()
     }
   }
 
-  async executeAsyncQueries() {
-    await this.getUserData()
-  }
-
-  async getUserData() {
+  getUserData() {
     let service!: Observable<any>
     if (this.isTokenRol ==="alumno") {
       service = this.alumnoService.getAlumnoByDni(this.isDNI);

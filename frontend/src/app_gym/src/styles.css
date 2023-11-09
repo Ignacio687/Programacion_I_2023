@@ -342,3 +342,9 @@ input {
   --bs-pagination-disabled-bg: #131b26;
   --bs-pagination-disabled-border-color: #131b26;
 }
+.tab-content-dropdown-button {
+  color: white;
+}
+.card:hover .tab-content-dropdown-button {
+  color: black;
+}

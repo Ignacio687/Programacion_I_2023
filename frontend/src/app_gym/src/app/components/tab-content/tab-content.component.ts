@@ -30,29 +30,37 @@ export class TabContentComponent {
     }
   ];
 
+  per_page: number = 1
+
   paginationParams: { [key: string]: {
     pageNumber: number;
     collectionSize: number;
+    per_page: number;
   }; } = {
     "inscripto": {
       pageNumber: 1,
       collectionSize: 0,
+      per_page: this.per_page
     }, 
     "disponibles": {
       pageNumber: 1,
       collectionSize: 0,
+      per_page: this.per_page
     },
     "planificaciones": {
       pageNumber: 1,
       collectionSize: 0,
+      per_page: this.per_page
     },
     "profesores": {
       pageNumber: 1,
       collectionSize: 0,
+      per_page: this.per_page
     },
     "alumnos": {
       pageNumber: 1,
       collectionSize: 0,
+      per_page: this.per_page
     },
   }
   
@@ -60,7 +68,7 @@ export class TabContentComponent {
   currentRoute: string;
   dia: string = "";
   items: any[] = [];
-  per_page = 3;
+ 
 
   alumnosObj!: any;
   clasesObj!: any;
@@ -97,22 +105,22 @@ export class TabContentComponent {
       this.clasesService.setOrdenarPorHora$
     );
     combinedObservables.subscribe(valor => {
-      this.executeAsyncQueries(1)
+      this.executeAsyncQueries(1, this.per_page)
     });
   }
 
 
-  async executeAsyncQueries(page: number) {
+  async executeAsyncQueries(pageNumber: number, per_page: number) {
     if (this.isTokenRol === "admin") {
       this.getAlumnos()
     } else if (["profesor", "alumno"].includes(this.isTokenRol)) {
-      this.getClasesDisponibles(false, page, this.per_page);
+      this.getClasesDisponibles(false, pageNumber, per_page);
       if (this.isTokenRol === "alumno") {
-        this.getClasesDisponibles(true, page, this.per_page);
+        this.getClasesDisponibles(true, pageNumber, per_page);
       }
-      this.getPlanDetalle(page, this.per_page)
+      this.getPlanDetalle(pageNumber, per_page)
     } else {
-      this.getClases(1, this.per_page)
+      this.getClases(1, per_page)
     }
   }
   
@@ -132,13 +140,13 @@ export class TabContentComponent {
       useFunction: Function
     }; } = {
       "inscripto": {
-        useFunction: () => this.getClasesDisponibles(false, pageNumber, per_page)
+        useFunction: () => this.getClasesDisponibles(false, pageNumber, this.paginationParams[page].per_page)
       }, 
       "disponibles": {
-        useFunction: () => this.getClasesDisponibles(true, pageNumber, per_page)
+        useFunction: () => this.getClasesDisponibles(true, pageNumber, this.paginationParams[page].per_page)
       },
       "planificaciones": {
-        useFunction: () => this.getPlanDetalle(pageNumber, this.per_page)
+        useFunction: () => this.getPlanDetalle(pageNumber, this.paginationParams[page].per_page)
       },
       "profesores": {
         useFunction: () => this.getProfesores()
@@ -148,7 +156,7 @@ export class TabContentComponent {
       },
     }
     if (!this.isToken) {
-      this.getClases(pageNumber, per_page)
+      this.getClases(pageNumber, this.paginationParams[page].per_page)
     } else {
       functions[page].useFunction()
     }
@@ -181,7 +189,11 @@ export class TabContentComponent {
   }
 
   async getPlanDetalle(pageNumber: number, per_page: number) {
-    return firstValueFrom(this.planificacionService.getPlanificacionAlumnoDNI(this.isDNI, pageNumber, per_page)).then((data: any) => {
+    let service = this.planificacionService.getPlanificacionProfeDNI(this.isDNI, pageNumber, per_page)
+    if (this.isTokenRol === "alumno") {
+      service = this.planificacionService.getPlanificacionAlumnoDNI(this.isDNI, pageNumber, per_page)
+    }
+    return firstValueFrom(service).then((data: any) => {
       this.paginationParams["planificaciones"].pageNumber = data.page;
       this.paginationParams["planificaciones"].collectionSize = data.pages*10;
       this.planificacionesObj = data.planificaciones
@@ -209,7 +221,7 @@ export class TabContentComponent {
   inscribirse(clase_id:number) {
 	  this.clasesService.inscribirseAlumno(clase_id, this.isDNI).subscribe({
       next: (data: any) => {
-        this.executeAsyncQueries(1)
+        this.executeAsyncQueries(1, this.per_page)
       },
       error: (err: any) => {
         console.log(err);
@@ -220,7 +232,7 @@ export class TabContentComponent {
   desuscribirse(clase_id:number) {
 	  this.clasesService.desuscribirseAlumno(clase_id, this.isDNI).subscribe({
       next: (data: any) => {
-        this.executeAsyncQueries(1)
+        this.executeAsyncQueries(1, this.per_page)
       },
       error: (err: any) => {
         console.log(err);
@@ -232,38 +244,37 @@ export class TabContentComponent {
 	  return texto.replace(/\n/g, '<br>');
   }
 
-  dropdownButtonConditionalAction(page: string, title: boolean, parameter_id: number=0) {
-    let optionsDict: { [key: string]: { [key: string]: string[]; }; } = {
+  dropdownButtonConditionalAction(page: string, title: boolean, ...parameters: any[]) {
+    let optionsDict: { [key: string]: { [key: string]: any[]; }; } = {
       "/alum-clases":
       {
-      "inscripto": ['Desuscribirse', 'Desuscribirse'],
-      "disponibles": ['Inscribirse', 'Inscribirse'],
+      "inscripto": [() => this.desuscribirse(parameters[0]), 'Desuscribirse'],
+      "disponibles": [() => this.inscribirse(parameters[0]), 'Inscribirse'],
       },
       "/clases-plan":
       {
-      "disponibles": ['Editar', 'clases-form/:'+String(parameter_id)+'/editar'],
-      "planificaciones": ['Editar', 'plan-form/:'+String(parameter_id)+'/editar']
+      "disponibles": ['Editar', "clases-form/"],
+      "planificaciones": ['Editar', "plan-form/"]
       },
       "/admin-page":
       {
-      "profesores": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar'],
-      "alumnos": ['Editar', 'change-user-info/'+String(parameter_id)+'/editar']
+      "profesores": ['Editar', "change-user-info/"],
+      "alumnos": ['Editar', "change-user-info/"]
       }
     };
     if (title) {
       return optionsDict[this.currentRoute][page][0]
     }
     else {
-      let action = optionsDict[this.currentRoute][page][1];
-      if (action === 'Desuscribirse') {
-        this.desuscribirse(parameter_id);
-      } else if ( action === 'Inscribirse') {
-        this.inscribirse(parameter_id);
+      if (this.currentRoute === "/alum-clases") {
+        optionsDict[this.currentRoute][page][1]();
       } else {
-        this.router.navigate([action]);
+        let parameter2 = ''
+        if (parameters[0][1]) {
+          parameter2 = parameters[0][1]
+        }
+        this.router.navigate([optionsDict[this.currentRoute][page][1], parameters[0][0], parameter2, 'editar'])
       }
-
-      return false;
     }
   }
 

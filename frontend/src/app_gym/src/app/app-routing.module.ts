@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'clases-form/:id/editar', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
   { path: 'clases-plan', component: ClasesPlanComponent, canActivate:[profesorSessionGuard]},
   { path: 'plan-form', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
-  { path: 'plan-form/:id/editar', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
+  { path: 'plan-form/:id/:dia/editar', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
   { path: 'register-form', component: RegisterFormComponent, },
   { path: 'register', component: UserRegisterComponent},
   { path: 'error404', component: PageNotFoundComponent},

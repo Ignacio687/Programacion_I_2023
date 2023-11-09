@@ -27,6 +27,7 @@ export class DetalleService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`
     })
+    console.log(data)
     return this.httpClient.put(`${this.url}/detalle/${id}/${dia}`, data, {headers: headers}).pipe(first())
   }
 

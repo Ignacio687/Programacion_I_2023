@@ -33,6 +33,19 @@ export class PlanificacionService {
     return this.httpClient.get(`${this.url}/plan_alumno/${dni}`, {headers: headers, params: params}).pipe(first())
   }
 
+  getPlanificacionProfeDNI(dni: number, page: number, per_page: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    let params = new HttpParams().appendAll({
+      "per_page": per_page,
+      "page": page,
+    });
+    return this.httpClient.get(`${this.url}/plan_prof/${dni}`, {headers: headers, params: params}).pipe(first())
+  }
+
   postPlanificacion(data: any): Observable<any>{
     let auth_token = localStorage.getItem('token')
     const headers = new HttpHeaders({

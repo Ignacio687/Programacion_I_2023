@@ -71,8 +71,9 @@ class ClasesDisponibles(Resource):
             page = int(request.args.get("page"))
         if request.args.get("per_page"):
             per_page = int(request.args.get("per_page"))
-        alumno = db.session.query(AlumnoModel).get_or_404(dni)
-        clases = db.session.query(ClaseModel).filter(~ClaseModel.alumnos.any(AlumnoModel.usuario.has(dni=alumno.dni)))
+        dbModel = AlumnoModel if get_jwt()['rol'] == "alumno" else ProfesorModel
+        usuario = db.session.query(dbModel).get_or_404(dni)
+        clases = db.session.query(ClaseModel).filter(~ClaseModel.alumnos.any(AlumnoModel.usuario.has(dni=usuario.dni)))
         if request.args.get("tipo"):
             clases = clases.filter(ClaseModel.tipo.like(request.args.get("tipo")))
         if request.args.get("dia"):
@@ -100,8 +101,9 @@ class ClasesInscripto(Resource):
             page = int(request.args.get("page"))
         if request.args.get("per_page"):
             per_page = int(request.args.get("per_page"))
-        alumno = db.session.query(AlumnoModel).get_or_404(dni)
-        clases = alumno.clases
+        dbModel = AlumnoModel if get_jwt()['rol'] == "alumno" else ProfesorModel
+        usuario = db.session.query(dbModel).get_or_404(dni)
+        clases = usuario.clases
         if request.args.get("tipo"):
             clases = clases.filter(ClaseModel.tipo.like(request.args.get("tipo")))
         if request.args.get("dia"):
