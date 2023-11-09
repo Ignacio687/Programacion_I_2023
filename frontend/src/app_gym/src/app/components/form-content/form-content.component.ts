@@ -7,6 +7,7 @@ import { DataManagerService } from 'src/app/services/data-manager.service';
 import { DetalleService } from 'src/app/services/planificacion/detalle.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
+import { UsuarioService } from 'src/app/services/user/usuario.service';
 
 
 @Component({
@@ -95,10 +96,45 @@ export class FormContentComponent {
         },
       ]
     },
+    "/change-user-info": {
+      formLabel: "Editar la información personal del usuario",
+      submitButtonLabel: "Actualizar",
+      backButtonURL: "/admin-page",
+      formContentLabels: [
+        {
+          label: "DNI",
+          type: "number",
+          formControlName: "dni"
+        },
+        {
+          label: "Nombre",
+          type: "text",
+          formControlName: "nombre"
+        },
+        {
+          label: "Apellido",
+          type: "text",
+          formControlName: "apellido"
+        },
+        {
+          label: "Teléfono",
+          type: "number",
+          formControlName: "telefono"
+        },
+      ],
+      formOptionsContent: [
+        {
+          label: "Selecciona un rol",
+          formControlName: "rol",
+          optionsList: ['admin', 'alumno', 'profesor']
+        }
+      ]
+    },
   }
 
   registerForm!: FormGroup;
   planForm!: FormGroup;
+  changeUserInfoForm!: FormGroup;
 
   get isTokenRol() { 
     return localStorage.getItem('token_rol');
@@ -121,14 +157,18 @@ export class FormContentComponent {
     private registerService: RegisterService,
     private planificacionService: PlanificacionService,
     private detalleService: DetalleService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private usuarioService: UsuarioService
     ) { }
 
   ngOnInit() {
     this.formGenerator()
     if (this.route.snapshot.paramMap.get('id')) {
       this.getPlanDetalle(Number(this.route.snapshot.paramMap.get('id')))
-    }
+    } else if (this.route.snapshot.paramMap.get('dni')) {
+      this.getUserInfo(Number(this.route.snapshot.paramMap.get('dni')))
+    } 
+
   }
 
   formGenerator() {
@@ -145,6 +185,13 @@ export class FormContentComponent {
       dia: ['', [Validators.required]],
       detalle: ['', [Validators.required]],
     })
+    this.changeUserInfoForm = this.formBuilder.group({
+      dni: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      telefono: ['', [Validators.maxLength(10), Validators.required]],
+      rol: ['', [Validators.required]],
+    })
     if (this.isTokenRol==="admin") {
       this.planForm.addControl("profesorDNI", this.formBuilder.control('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]))
       this.inputFields["/plan-form"].formContentLabels.splice(1, 0 ,{
@@ -158,7 +205,8 @@ export class FormContentComponent {
   formGroupSelector() {
     const conditionalArray: {[key:string]: any} = {
       "/plan-form": this.planForm,
-      "/register-form": this.registerForm
+      "/register-form": this.registerForm,
+      "/change-user-info": this.changeUserInfoForm
     }
     return conditionalArray[this.currentRoute]
   }
@@ -195,7 +243,7 @@ export class FormContentComponent {
         "Telefono": Number(this.registerForm.get("telefono")?.value),
         "Email": credentials.email,
         "Password": credentials.password,
-        "Rol": "alumno",
+        "Rol": "",
       }
       let userSex = true
       if (this.registerForm.get("sexo")?.value === "Masculino") {
@@ -230,7 +278,8 @@ export class FormContentComponent {
   submit() { 
     const functions: { [key:string]: any } = {
       "/register-form": () => this.register(),
-      "/plan-form": () => this.submitPlanificacion()
+      "/plan-form": () => this.submitPlanificacion(),
+      "/change-user-info": () => this.updateUserInfo()
     }
     functions[this.currentRoute]()
   }
@@ -290,6 +339,40 @@ export class FormContentComponent {
       })
     } else {
       return null;
+    }
+  }
+
+  getUserInfo(dni: number) {
+    return firstValueFrom(this.usuarioService.getUserByDni(dni)).then((data: any) => {
+      this.changeUserInfoForm.patchValue({
+        dni: data.DNI,
+        nombre: data.Nombre,
+        apellido: data.Apellidos,
+        telefono: data.Telefono,
+        rol: data.Rol
+      });
+    }).catch((err) => {
+      console.log(err);
+    })
+
+  }
+
+  updateUserInfo() {
+    const userData = {
+      "Nombre": this.changeUserInfoForm.get("nombre")?.value,
+      "Apellidos": this.changeUserInfoForm.get("apellido")?.value,
+      "Telefono": Number(this.changeUserInfoForm.get("telefono")?.value),
+      "Rol": this.changeUserInfoForm.get("rol")?.value
+    }
+    if (this.changeUserInfoForm.valid) {
+      return firstValueFrom(this.usuarioService.updateUserInfo(Number(this.route.snapshot.paramMap.get('dni')), userData)).then((data: any) => {
+        this.router.navigateByUrl("/admin-page")
+      }).catch((err) => {
+        alert("Error al actualizar los datos")
+        console.log(err);
+      })
+    } else {
+      return false;
     }
   }
 

@@ -15,7 +15,7 @@ import { merge } from 'rxjs';
 })
 export class TabContentComponent {
 
-  per_page: number = 1
+  per_page: number = 3
 
   paginationParams: { [key: string]: {
     pageNumber: number;
@@ -281,11 +281,11 @@ export class TabContentComponent {
       if (this.currentRoute === "/alum-clases") {
         optionsDict[this.currentRoute][page][1]();
       } else {
-        let parameter2 = ''
         if (parameters[0][1]) {
-          parameter2 = parameters[0][1]
+          this.router.navigate([optionsDict[this.currentRoute][page][1], parameters[0][0], parameters[0][1], 'editar'])
+        } else {
+          this.router.navigate([optionsDict[this.currentRoute][page][1], parameters[0], 'editar'])
         }
-        this.router.navigate([optionsDict[this.currentRoute][page][1], parameters[0][0], parameter2, 'editar'])
       }
     }
   }

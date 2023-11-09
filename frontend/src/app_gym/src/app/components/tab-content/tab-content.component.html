@@ -84,7 +84,7 @@
                             <!-- Dropdown Button -->
                             <div *ngIf="!(page === 'planificaciones' && currentRoute === '/alum-clases' || page === 'inscripto' && currentRoute === '/clases-plan')&&isToken" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_'+cardDetalleNumber+cardNumber">
                                 <div class="card card-body">
-                                    <button class="btn dropdown-button tab-content-dropdown-button" (click)="dropdownButtonConditionalAction(page, false, pillData.Clase_id?pillData.Clase_id:page==='planificaciones'? [pillData.planificacion_id, detalle.dia]:pillData.Usuario.DNI?pillData.Usuario.DNI:0)">
+                                    <button class="btn dropdown-button tab-content-dropdown-button" (click)="dropdownButtonConditionalAction(page, false, page==='planificaciones'? [pillData.planificacion_id, detalle.dia]:currentRoute==='/admin-page'?pillData.Usuario.DNI:0)">
                                         <h5>{{dropdownButtonConditionalAction(page, true)}}</h5>
                                     </button>
                                 </div>
