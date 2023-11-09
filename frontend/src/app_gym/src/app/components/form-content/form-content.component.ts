@@ -73,7 +73,7 @@ export class FormContentComponent {
       ]
     },
     "/plan-form": {
-      formLabel: "Crear una planificación",
+      formLabel: this.urlParameterID? "Mofidicar Planificación":"Crear una planificación",
       submitButtonLabel: "Crear",
       backButtonURL: "/clases-plan",
       formContentLabels: [
@@ -149,6 +149,14 @@ export class FormContentComponent {
     return `/${urlSections[1]}`
   }
 
+  get urlParameterDNI() {
+    return Number(this.route.snapshot.paramMap.get('dni'))
+  }
+
+  get urlParameterID() {
+    return Number(this.route.snapshot.paramMap.get('id'))
+  }
+
   constructor(
     private dataManagerService: DataManagerService,
     private formBuilder: FormBuilder,
@@ -164,9 +172,9 @@ export class FormContentComponent {
   ngOnInit() {
     this.formGenerator()
     if (this.route.snapshot.paramMap.get('id')) {
-      this.getPlanDetalle(Number(this.route.snapshot.paramMap.get('id')))
+      this.getPlanDetalle(this.urlParameterID)
     } else if (this.route.snapshot.paramMap.get('dni')) {
-      this.getUserInfo(Number(this.route.snapshot.paramMap.get('dni')))
+      this.getUserInfo(this.urlParameterDNI)
     } 
 
   }

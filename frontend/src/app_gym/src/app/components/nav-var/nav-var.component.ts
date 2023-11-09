@@ -78,7 +78,11 @@ export class NavVarComponent{
   ngDoCheck() {
     if (this.tokenStatus !== this.isToken) {
       this.tokenStatus = this.isToken
-      this.getUserData()
+      if (this.isToken) {
+        this.getUserData()
+      } else {
+        this.userData = null
+      }
     }
   }
 

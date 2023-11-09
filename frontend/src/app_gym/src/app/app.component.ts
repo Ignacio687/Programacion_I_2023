@@ -11,10 +11,9 @@ export class AppComponent {
   ngOnInit() {
     console.log(
       {
-        Admin: {email: 'matiasboldrini@gmail.com', password: 'ujshu110945-'},
+        Admin: {email: 'ignaciochaves@gmail.com', password: '45sdkaj1i28f*R%@D'},
         Profesor: {email: 'gonzaloruiz@gmail.com', password: '45skuqy^%#.5665s'},
-        Alumno: {email: 'juangomez@gmail.com', password: 'adhwir6292.&@'},
-        Alumno2: {email: 'pepeGarcia@gmail.com', password: 'adsd4848*awd92'}
+        Alumno: {email: 'pepeGarcia@gmail.com', password: 'adsd4848*awd92'}
       }
     )
   }

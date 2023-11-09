@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, first, BehaviorSubject } from 'rxjs';
+import { Observable, first, BehaviorSubject, Subject } from 'rxjs';
 
 interface Clase {
   Clase_id: number;
@@ -33,7 +33,20 @@ export class ClasesService {
   
   private ordenarPorHora = new BehaviorSubject<boolean>(false);
   setOrdenarPorHora$: Observable<boolean> = this.ordenarPorHora.asObservable();
-    private ordenar= false;
+  private ordenar= false;
+
+  private pillChangeSubject = new Subject<string>();
+
+  // Método para emitir eventos cuando se hace clic en una píldora
+  emitPillChange(page: string) {
+    this.pillChangeSubject.next(page);
+  }
+
+  // Método para suscribirse a los cambios en las píldoras
+  onPillChange() {
+    return this.pillChangeSubject.asObservable();
+  }
+
   setDiaSeleccionado(dia: string): void {
     this.diaSeleccionadoSubject.next(dia);
   }

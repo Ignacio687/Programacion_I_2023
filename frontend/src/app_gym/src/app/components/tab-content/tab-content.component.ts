@@ -15,7 +15,7 @@ import { merge } from 'rxjs';
 })
 export class TabContentComponent {
 
-  per_page: number = 3
+  per_page: number = 1
 
   paginationParams: { [key: string]: {
     pageNumber: number;
@@ -50,6 +50,7 @@ export class TabContentComponent {
   }
   
   @Input() parentPageTitles: string[];
+  // @Input() 
   currentRoute: string;
   dia: string = "";
   items: any[] = [];
@@ -92,6 +93,7 @@ export class TabContentComponent {
     combinedObservables.subscribe(valor => {
       this.executeAsyncQueries(1, this.per_page)
     });
+
   }
 
   async executeAsyncQueries(pageNumber: number, per_page: number) {
@@ -142,7 +144,7 @@ export class TabContentComponent {
         useFunction: () => this.getAlumnos(pageNumber, this.paginationParams[page].per_page)
       },
     }
-    if (!this.isToken) {
+    if (!this.isTokenRol) {
       this.getClases(pageNumber, this.paginationParams[page].per_page)
     } else {
       functions[page].useFunction()
@@ -198,7 +200,7 @@ export class TabContentComponent {
         firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
           this.planificacionesObj.push(data);
         }).catch((err: any) => {
-      console.log(err)
+          console.log(err)
         })
       }
     }).catch((err: any) => {
@@ -260,8 +262,8 @@ export class TabContentComponent {
     let optionsDict: { [key: string]: { [key: string]: any[]; }; } = {
       "/alum-clases":
       {
-      "inscripto": [() => this.desuscribirse(parameters[0]), 'Desuscribirse'],
-      "disponibles": [() => this.inscribirse(parameters[0]), 'Inscribirse'],
+      "inscripto": ['Desuscribirse', () => this.desuscribirse(parameters[0])],
+      "disponibles": ['Inscribirse', () => this.inscribirse(parameters[0])],
       },
       "/clases-plan":
       {

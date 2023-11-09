@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { ClasesService } from 'src/app/services/clases/clases.service';
+
 
 @Component({
   selector: 'app-tab-pages',
@@ -14,12 +17,19 @@ export class TabPagesComponent {
   };
   
   currentRoute: string;
-  
+  onPillClick(page: string) {
+    this.clasesService.emitPillChange(page);
+  }
+
   get isToken() {
     return localStorage.getItem('token');
   }
 
-  constructor(private router: Router) {
+  get isTokenRol() {
+    return localStorage.getItem('token_rol');
+  }
+
+  constructor(private router: Router, private clasesService: ClasesService) {
     this.currentRoute = this.router.url;
   }
   getCurrentPageTitles(): string[] {
