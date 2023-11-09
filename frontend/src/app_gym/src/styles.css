@@ -334,7 +334,7 @@ input {
   --bs-pagination-hover-border-color: var(--bs-border-color);
   --bs-pagination-focus-color: var(--bs-link-hover-color);
   --bs-pagination-focus-bg: var(--bs-secondary-bg);
-  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(0, 51, 8, 0.822);
+  --bs-pagination-focus-box-shadow: transparent;
   --bs-pagination-active-color: black;
   --bs-pagination-active-bg: var(--background-color-focus);
   --bs-pagination-active-border-color: #0d6efd;

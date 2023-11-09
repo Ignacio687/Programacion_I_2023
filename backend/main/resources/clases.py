@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request, jsonify
 from .. import db, sa
-from main.models import ClaseModel, AlumnoModel, ProfesorModel
+from main.models import ClaseModel, AlumnoModel, ProfesorModel, UsuariosModel
 from datetime import datetime
 import regex
 from sqlalchemy import desc, func
@@ -62,8 +62,9 @@ class Clases(Resource):
             "total": clases.total,
             "pages": clases.pages,
             "page": page})
+    
 class ClasesDisponibles(Resource):
-    @jwt_required(optional=True)
+    @jwt_required()
     def get(self, dni):
         page, per_page = 1, 10
         if request.args.get("page"):
@@ -71,8 +72,7 @@ class ClasesDisponibles(Resource):
         if request.args.get("per_page"):
             per_page = int(request.args.get("per_page"))
         alumno = db.session.query(AlumnoModel).get_or_404(dni)
-        clases_inscripto = alumno.clases
-        clases = db.session.query(ClaseModel)
+        clases = db.session.query(ClaseModel).filter(~ClaseModel.alumnos.any(AlumnoModel.usuario.has(dni=alumno.dni)))
         if request.args.get("tipo"):
             clases = clases.filter(ClaseModel.tipo.like(request.args.get("tipo")))
         if request.args.get("dia"):
@@ -86,14 +86,14 @@ class ClasesDisponibles(Resource):
                 func.count(AlumnoModel.dni)==int(request.args.get("nr_alumnos")))
         clases = clases.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify(
-            {"Clases": [clase.to_json() for clase in clases if clase not in clases_inscripto],
+            {"Clases": [clase.to_json() for clase in clases],
             "total": clases.total,
             "pages": clases.pages,
             "page": page})
 
 #ARreglar y combinar con la claes de arriba
 class ClasesInscripto(Resource):
-    @jwt_required(optional=True)
+    @jwt_required()
     def get(self, dni):
         page, per_page = 1, 10
         if request.args.get("page"):

@@ -52,7 +52,7 @@ export class ClasesService {
       'Content-Type': 'application/json',
     })
     let params = new HttpParams().appendAll({
-      // "per_page": per_page,
+      "per_page": per_page,
       "page": page,
       "dia" : this.diaSeleccionadoSubject.value,
       "tipo" : this.tipoSeleccionadoSubject.value,
@@ -63,6 +63,27 @@ export class ClasesService {
     }
     
     return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
+  }
+
+  getClasesDisponibles(dispoInscFlag: boolean, page: number, per_page: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    let params = new HttpParams().appendAll({
+      "per_page": per_page,
+      "page": page,
+      "dia" : this.diaSeleccionadoSubject.value,
+      "tipo" : this.tipoSeleccionadoSubject.value,
+      "orby_hora":""
+    });
+    
+    if (!this.ordenar) {
+      params = params.delete("orby_hora");
+    }
+    
+    return this.httpClient.get(`${this.url}/clases/${dispoInscFlag === true ? "disponible" : "inscripto"}/${Number(localStorage.getItem('token_DNI'))}`, {headers: headers, params: params}).pipe(first())
   }
 
   inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{

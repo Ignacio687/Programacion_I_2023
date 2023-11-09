@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, first, take } from 'rxjs';
 
@@ -20,13 +20,17 @@ export class PlanificacionService {
     return this.httpClient.get(`${this.url}/plan/${id}`, {headers: headers}).pipe(first())
   }
 
-  getPlanificacionAlumnoDNI(dni: number): Observable<any>{
+  getPlanificacionAlumnoDNI(dni: number, page: number, per_page: number): Observable<any>{
     let auth_token = localStorage.getItem('token')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`
     })
-    return this.httpClient.get(`${this.url}/plan_alumno/${dni}`, {headers: headers}).pipe(first())
+    let params = new HttpParams().appendAll({
+      "per_page": per_page,
+      "page": page,
+    });
+    return this.httpClient.get(`${this.url}/plan_alumno/${dni}`, {headers: headers, params: params}).pipe(first())
   }
 
   postPlanificacion(data: any): Observable<any>{

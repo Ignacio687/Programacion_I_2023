@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterTestingHarness } from '@angular/router/testing';
 import { firstValueFrom } from 'rxjs';
 import { RegisterService } from 'src/app/services/auth/register.service';
 import { DataManagerService } from 'src/app/services/data-manager.service';
@@ -203,7 +202,7 @@ export class FormContentComponent {
 
   postPlanificacion() {
     if (this.planForm.valid) {
-      return firstValueFrom(this.planificacionService.getPlanificacionAlumnoDNI(this.planForm.get('alumnoDNI')?.value)).then((data: any) => {
+      return firstValueFrom(this.planificacionService.getPlanificacionAlumnoDNI(this.planForm.get('alumnoDNI')?.value, 1, 8)).then((data: any) => {
         if (data.length > 0) {
           this.putPlanificacion(data[0].planificacion_id, data)
         } else {

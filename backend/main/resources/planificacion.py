@@ -85,12 +85,13 @@ class PlanificacionAlumno(Resource):
             per_page = int(request.args.get("per_page"))
         planificacion = db.session.query(PlanificacionModel).filter(PlanificacionModel.alumno_dni == dni).paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         response = {
-            "planificaciones": [plan.to_json_detalle() for plan in planificacion.items],
+            "planificaciones": [plan.to_json_complete() for plan in planificacion],
             "total": planificacion.total,
             "pages": planificacion.pages,
             "page": page
         }
         return jsonify(response)
+
 class PlanificacionProfesor(Resource):
     @role_required(roles = ["admin", "profesor"])
     def get(self, dni):
@@ -101,13 +102,12 @@ class PlanificacionProfesor(Resource):
             per_page = int(request.args.get("per_page"))
         planificacion = db.session.query(PlanificacionModel).filter(PlanificacionModel.profesor_dni == dni).paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         response = {
-            "planificaciones": [plan.to_json_detalle() for plan in planificacion.items],
+            "planificaciones": [plan.to_json_complete() for plan in planificacion],
             "total": planificacion.total,
             "pages": planificacion.pages,
             "page": page
         }
         return jsonify(response)
-
 
 class PlanificacionDetalle(Resource):
     @jwt_required()
