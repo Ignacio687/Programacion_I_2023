@@ -4,7 +4,7 @@
             <div class="card-deck">
                 <div *ngFor="let pillData of definePageContent(page); index as cardNumber">
                     <div  *ngFor="let detalle of (page === 'planificaciones' ? pillData.detalles_dia : [0,]); index as cardDetalleNumber" class="card border-0 mt-4">
-                        <button class="d-flex align-items-center card-body btn" type="button" [attr.data-bs-toggle]="'collapse'" aria-expanded="false" [attr.data-bs-target]="(page === 'planificaciones')? '#planifiDetalleDesp_' + cardDetalleNumber: '#optionButton_' + cardNumber" [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'">
+                        <button class="d-flex align-items-center card-body btn" type="button" [attr.data-bs-toggle]="'collapse'" aria-expanded="false" [attr.data-bs-target]="(page === 'planificaciones')? '#planifiDetalleDesp_'+cardDetalleNumber+cardNumber: '#optionButton_' + cardNumber" [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'">
                             <div *ngIf="page === 'profesores'" class="profesor-card me-3">
                                 <img class="img-fluid" src="{{getProfesorProfileImg(pillData.Profesor.Usuario.DNI)}}" alt="">
                             </div>
@@ -82,7 +82,7 @@
                                 </ng-template>
                             </div>
                             <!-- Dropdown Button -->
-                            <div *ngIf="!(page === 'planificaciones' && currentRoute === '/alum-clases' || page === 'inscripto' && currentRoute === '/clases-plan')&&isToken" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_' + cardDetalleNumber">
+                            <div *ngIf="!(page === 'planificaciones' && currentRoute === '/alum-clases' || page === 'inscripto' && currentRoute === '/clases-plan')&&isToken" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_'+cardDetalleNumber+cardNumber">
                                 <div class="card card-body">
                                     <button class="btn dropdown-button" (click)="dropdownButtonConditionalAction(page, false, pillData.Clase_id?pillData.Clase_id:detalle.planificacion_id?detalle.planificacion_id:pillData.Usuario.DNI?pillData.Usuario.DNI:0)">
                                         <h5>{{dropdownButtonConditionalAction(page, true)}}</h5>
@@ -92,7 +92,7 @@
                         </button>
                         <!-- Detalle desplegable -->
                         <div *ngIf="page === 'planificaciones'">
-                            <div class="collapse " [id]="'planifiDetalleDesp_' + cardDetalleNumber">
+                            <div class="collapse " [id]="'planifiDetalleDesp_'+cardDetalleNumber+cardNumber">
                                 <div class="card card-body" [innerHTML]="convertirSaltosDeLinea(detalle.detalle)"></div>
                             </div>
                         </div>

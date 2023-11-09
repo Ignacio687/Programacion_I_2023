@@ -14,18 +14,18 @@ import { ProfesorService } from 'src/app/services/user/profesor.service';
 })
 export class TabContentComponent {
   profesores = [
-	{
-	  "Especialidad": "cardio",
-	  "Inicio_actividad": "20/12/2017",
-	  "Usuario": {
-		  "DNI": 48988794,
-		  "Nombre": "Cristian",
-		  "Apellidos": "Coria",
-		  "Telefono": "2614347800",
-		  "Email": "cristiancoria@gmail.com",
-		  "Rol": "profesor"
-	  },
-	}
+    {
+      "Especialidad": "cardio",
+      "Inicio_actividad": "20/12/2017",
+      "Usuario": {
+        "DNI": 48988794,
+        "Nombre": "Cristian",
+        "Apellidos": "Coria",
+        "Telefono": "2614347800",
+        "Email": "cristiancoria@gmail.com",
+        "Rol": "profesor"
+      },
+    }
   ];
   
   @Input() parentPageTitles: string[];

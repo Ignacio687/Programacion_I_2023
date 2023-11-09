@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { firstValueFrom } from 'rxjs';
 import { RegisterService } from 'src/app/services/auth/register.service';
 import { DataManagerService } from 'src/app/services/data-manager.service';
+import { DetalleService } from 'src/app/services/planificacion/detalle.service';
+import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 
 
@@ -15,15 +19,24 @@ export class FormContentComponent {
   inputFields: {
     [key: string]: {
       formLabel: string;
+      submitButtonLabel: string;
+      backButtonURL: string;
       formContentLabels: {
         label: string;
         type: string;
         formControlName: string;
-      }[];
+      }[],
+      formOptionsContent: {
+        label: string,
+        formControlName: string
+        optionsList: string[]
+      }[]
     };
   } = {
     "/register-form": {
       formLabel: "Contanos un poco sobre vos",
+      submitButtonLabel: "Registrarme",
+      backButtonURL: "/register",
       formContentLabels: [
         {
           label: "DNI",
@@ -50,10 +63,19 @@ export class FormContentComponent {
           type: "number",
           formControlName: "edad"
         },
+      ],
+      formOptionsContent: [
+        {
+          label: "Selecciona una opción",
+          formControlName: "sexo",
+          optionsList: ['Masculino', 'Femenino']
+        }
       ]
     },
     "/plan-form": {
       formLabel: "Crear una planificación",
+      submitButtonLabel: "Crear",
+      backButtonURL: "/clases-plan",
       formContentLabels: [
         {
           label: "DNI del Alumno",
@@ -62,19 +84,29 @@ export class FormContentComponent {
         },
         {
           label: "Detalle de la planificación",
-          type: "text",
+          type: "textarea",
           formControlName: "detalle"
+        },
+      ],
+      formOptionsContent: [
+        {
+          label: "Seleccione un día",
+          formControlName: "dia",
+          optionsList: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
         },
       ]
     },
   }
 
-  selectedOption: string = 'Selecciona una opción'; // Valor inicial'
   registerForm!: FormGroup;
   planForm!: FormGroup;
 
   get isTokenRol() { 
     return localStorage.getItem('token_rol');
+  }
+
+  get isTokenDNI() {
+    return Number(localStorage.getItem('token_DNI'));
   }
 
   get currentRoute() {
@@ -86,7 +118,9 @@ export class FormContentComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private alumnoService: AlumnoService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private planificacionService: PlanificacionService,
+    private detalleService: DetalleService
     ) { }
 
   ngOnInit() {
@@ -99,18 +133,14 @@ export class FormContentComponent {
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       telefono: ['', [Validators.maxLength(10), Validators.required]],
-      edad: ['', [Validators.required]]
+      edad: ['', [Validators.required]],
+      sexo: ['', [Validators.required]]
     })
     this.planForm = this.formBuilder.group({
       alumnoDNI: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
-      estado: ['', [Validators.required]],
       dia: ['', [Validators.required]],
       detalle: ['', [Validators.required]],
     })
-  }
-
-  formLabelsSelector() {
-    return this.inputFields[this.currentRoute].formContentLabels
   }
 
   formGroupSelector() {
@@ -121,41 +151,8 @@ export class FormContentComponent {
     return conditionalArray[this.currentRoute]
   }
 
-  dropdownMenuOptionsSelector(key: string) {
-    const conditionalArray: { [key: string]: {[key: string]: string[]} } = {
-      "/plan-form": {
-        "dias": ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
-      },
-      "/register-form": {
-        "rol": ['Alumno', 'Profesor']
-      }
-    }
-    return conditionalArray[this.currentRoute][key];
-  }
-
-  register(dataRegister: any = {}, alumnoData: any = {}){
-    this.registerService.register(dataRegister).subscribe({
-      next: (rta: any) => {
-        this.alumnoService.postAlumno(alumnoData).subscribe({
-          next: (rta: any) => {
-            alert("Registro Exitoso")
-            this.router.navigateByUrl('/home');
-          },
-          error: (error: any ) => {
-            console.log(error);
-            alert('Error al registrar')
-          }
-        })
-      },
-      error: (error: any) => {
-        console.log(error);
-        alert('Error al registrar')
-      },
-    })
-  }
-
-  submit() { 
-    if (this.registerForm.valid && this.selectedOption!=="Selecciona una opción") {
+  register(){
+    if (this.registerForm.valid) {
       let credentials = this.dataManagerService.getUserCredentials()
       let registerData = {
         "DNI": Number(this.registerForm.get("dni")?.value),
@@ -167,7 +164,7 @@ export class FormContentComponent {
         "Rol": "alumno",
       }
       let userSex = true
-      if (this.selectedOption === "Masculino") {
+      if (this.registerForm.get("sexo")?.value === "Masculino") {
         userSex = false
       }
       let alumnoData = {
@@ -175,12 +172,98 @@ export class FormContentComponent {
         "Edad": Number(this.registerForm.get("edad")?.value),
         "Sexo": userSex
       }
-      console.log(alumnoData)
-      this.register(registerData, alumnoData);
+      this.registerService.register(registerData).subscribe({
+        next: (rta: any) => {
+          this.alumnoService.postAlumno(alumnoData).subscribe({
+            next: (rta: any) => {
+              alert("Registro Exitoso")
+              this.router.navigateByUrl('/home');
+            },
+            error: (error: any ) => {
+              console.log(error);
+              alert('Error al registrar')
+            }
+          })
+        },
+        error: (error: any) => {
+          console.log(error);
+          alert('Error al registrar')
+        },
+      })
     }
   }
 
-  refeshComponent() {
-    
+  submit() { 
+    const functions: { [key:string]: any } = {
+      "/register-form": () => this.register(),
+      "/plan-form": () => this.postPlanificacion()
+    }
+    functions[this.currentRoute]()
+  }
+
+  postPlanificacion() {
+    if (this.planForm.valid) {
+      return firstValueFrom(this.planificacionService.getPlanificacionAlumnoDNI(this.planForm.get('alumnoDNI')?.value)).then((data: any) => {
+        if (data.length > 0) {
+          this.putPlanificacion(data[0].planificacion_id, data)
+        } else {
+          const fechaActual = new Date();
+          const dia = fechaActual.getDate();
+          const mes = fechaActual.getMonth() + 1;
+          const año = fechaActual.getFullYear();
+          const diaFormateado = dia.toString().padStart(2, '0');
+          const mesFormateado = mes.toString().padStart(2, '0');
+          const fechaFormateada = `${diaFormateado}/${mesFormateado}/${año}`;
+          const planData = {
+            "profesor_DNI": this.isTokenDNI,
+            "alumno_DNI":  this.planForm.get("alumnoDNI")?.value,
+            "estado": true,
+            "creation_date": fechaFormateada
+            }
+          this.planificacionService.postPlanificacion(planData).subscribe({
+            next: (rta: any) => {
+              const detalleData = {
+                "planificacion_id": rta.planificacion_id,
+                "dia": this.planForm.get("dia")?.value,
+                "detalle": this.planForm.get("detalle")?.value
+              }
+              this.detalleService.postDetalle(detalleData).subscribe({
+                next: (rta: any) => {
+                  this.router.navigateByUrl("/clases-plan")
+                },
+                error: (error: any) => {
+                  alert("Error al crear la planificacion")
+                  console.log(error);
+                }
+              })
+            },
+            error: (error: any) => {
+              console.log(error);
+            },
+          })
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
+    } else {
+      return null;
+    }
+  }
+
+  putPlanificacion(planID: Number, data: any) {
+    const detalleData = {
+      "planificacion_id": planID,
+      "dia": this.planForm.get("dia")?.value,
+      "detalle": this.planForm.get("detalle")?.value
+    }
+    this.detalleService.putDetalle(detalleData, planID, this.planForm.get("dia")?.value).subscribe({
+      next: (rta: any) => {
+        this.router.navigateByUrl("/clases-plan")
+      },
+      error: (error: any) => {
+        alert("Error al actualizar la planificacion")
+        console.log(error);
+      }
+    })
   }
 }

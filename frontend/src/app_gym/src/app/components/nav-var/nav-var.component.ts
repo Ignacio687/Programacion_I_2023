@@ -53,12 +53,13 @@ export class NavVarComponent{
   ];
 
   userData!: any;
+  tokenStatus: string|null = this.isToken
 
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private cdRef: ChangeDetectorRef, 
     private alumnoService: AlumnoService,
+    private changeDetectorRef: ChangeDetectorRef,
     private profesorService: ProfesorService,
     ) {
   }
@@ -75,14 +76,15 @@ export class NavVarComponent{
     return Number(localStorage.getItem('token_DNI'));
   }
 
-  ngOnInit() {
-    this.executeAsyncQueries()
+  ngDoCheck() {
+    if (this.tokenStatus !== this.isToken) {
+      this.tokenStatus = this.isToken
+      this.executeAsyncQueries()
+    }
   }
 
   async executeAsyncQueries() {
-    if (this.isToken) {
     await this.getUserData()
-    }
   }
 
   async getUserData() {
@@ -95,13 +97,12 @@ export class NavVarComponent{
     return firstValueFrom(service).then((data: any) => {
       this.userData = data;
     }).catch((error) => {
-      console.log(error)
+      this.userData = null;
     })
   }
 
   cerrarSesion(){
     this.loginService.logout();
-    this.cdRef.detectChanges()
   }
 
   getCurrentRoute() {

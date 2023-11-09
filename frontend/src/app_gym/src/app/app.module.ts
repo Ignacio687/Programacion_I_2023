@@ -25,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserCredentialsComponent } from './components/user-credentials/user-credentials.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FormSelectorButtonComponent } from './components/form-selector-button/form-selector-button.component';
-import { FormContentComponent } from './components/form-content/form-content.component'
+import { FormContentComponent } from './components/form-content/form-content.component';
+import { AutoResizeDirective } from './directives/auto-resize.directive'
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FormContentComponent } from './components/form-content/form-content.com
     UserCredentialsComponent,
     FormSelectorButtonComponent,
     FormContentComponent,
+    AutoResizeDirective,
   ],
   imports: [
     BrowserModule,

@@ -361,7 +361,7 @@ input {
   --bs-pagination-active-color: black;
   --bs-pagination-active-bg: var(--background-color-focus);
   --bs-pagination-active-border-color: #0d6efd;
-  --bs-pagination-disabled-color: white;
-  --bs-pagination-disabled-bg: var(--background-color-inactive);
-  --bs-pagination-disabled-border-color: var(--bs-border-color);
+  --bs-pagination-disabled-color: #131b26;
+  --bs-pagination-disabled-bg: #131b26;
+  --bs-pagination-disabled-border-color: #131b26;
 }

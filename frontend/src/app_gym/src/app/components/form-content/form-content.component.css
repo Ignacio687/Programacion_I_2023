@@ -1,0 +1,29 @@
+:root {
+    --background-color-focus: #d0fd3e;
+    --background-color-inactive: #1b232e;
+    --border-radius: 6px;
+    --text-color-inactive: #8076b0;
+    --background-default: #1b232e;
+}
+
+.custom-dropdown label {
+    color: var(--text-color-inactive);
+    font-family: "Ubuntu";
+    font-weight: 400;
+}
+
+.custom-dropdown select {
+    color: var(--text-color-inactive);
+    background-color: var(--background-color-inactive);
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: "Ubuntu";
+    font-weight: 400;
+    margin-top: 5px; /* Ajusta el margen superior según sea necesario */
+    padding: 5px; /* Ajusta el relleno según sea necesario */
+}
+
+.custom-dropdown select:focus {
+    background-color: var(--background-color-focus);
+    outline: none;
+}
