@@ -15,7 +15,7 @@ import { merge } from 'rxjs';
 })
 export class TabContentComponent {
 
-  per_page: number = 1
+  per_page: number = 2
 
   paginationParams: { [key: string]: {
     pageNumber: number;
@@ -35,7 +35,7 @@ export class TabContentComponent {
     "planificaciones": {
       pageNumber: 1,
       collectionSize: 0,
-      per_page: this.per_page
+      per_page: 1
     },
     "profesores": {
       pageNumber: 1,
@@ -61,7 +61,8 @@ export class TabContentComponent {
   planificacionesObj!: any;
   profesoresObj!: any;
   clasesDisponiblesObj!: any;
-
+  page_anterior = "inscripto";
+  
   constructor(
 	private router: Router,
 	private alumnoService: AlumnoService,
@@ -70,6 +71,11 @@ export class TabContentComponent {
   private profesorService: ProfesorService) {
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
+    this.clasesService.onPillChange().subscribe(page => {
+      this.set_default_filter_values()
+      this.definePaginationConditionalAction(page, this.paginationParams[page].pageNumber, this.paginationParams[page].per_page);
+      this.page_anterior = page;
+    });
   }
 
   get isToken() {
@@ -85,15 +91,11 @@ export class TabContentComponent {
   }
 
   ngOnInit(): void {
-    const combinedObservables = merge(
-      this.clasesService.diaSeleccionado$,
-      this.clasesService.tipoSeleccionado$,
-      this.clasesService.setOrdenarPorHora$
-    );
-    combinedObservables.subscribe(valor => {
-      this.executeAsyncQueries(1, this.per_page)
+    this.set_default_filter_values()
+    this.clasesService.setFiltroAplicado$.subscribe(valor => {
+      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
     });
-
+    this.executeAsyncQueries(1, this.per_page)
   }
 
   async executeAsyncQueries(pageNumber: number, per_page: number) {
@@ -111,6 +113,12 @@ export class TabContentComponent {
     } else {
       this.getClases(pageNumber, per_page)
     }
+  }
+
+  set_default_filter_values(){
+    this.clasesService.setDiaSeleccionado('')
+    this.clasesService.setOrdenarPorHora(false);
+    this.clasesService.setTipoSeleccionado('')
   }
   
   definePageContent(page: string){

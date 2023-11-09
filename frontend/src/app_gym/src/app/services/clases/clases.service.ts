@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, first, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, first, BehaviorSubject, Subject, merge } from 'rxjs';
 
 interface Clase {
   Clase_id: number;
@@ -25,18 +25,18 @@ export class ClasesService {
   constructor(
     private httpClient: HttpClient,
   ) { }
+
+  private filtroAplicado = new BehaviorSubject<boolean>(false);
+  setFiltroAplicado$ = this.filtroAplicado.asObservable();
+
   private diaSeleccionadoSubject = new BehaviorSubject<string>('');
-  diaSeleccionado$ = this.diaSeleccionadoSubject.asObservable();
 
   private tipoSeleccionadoSubject = new BehaviorSubject<string>('');
-  tipoSeleccionado$ = this.tipoSeleccionadoSubject.asObservable();
   
   private ordenarPorHora = new BehaviorSubject<boolean>(false);
-  setOrdenarPorHora$: Observable<boolean> = this.ordenarPorHora.asObservable();
-  private ordenar= false;
 
   private pillChangeSubject = new Subject<string>();
-
+  
   // Método para emitir eventos cuando se hace clic en una píldora
   emitPillChange(page: string) {
     this.pillChangeSubject.next(page);
@@ -45,6 +45,10 @@ export class ClasesService {
   // Método para suscribirse a los cambios en las píldoras
   onPillChange() {
     return this.pillChangeSubject.asObservable();
+  }
+
+  setFiltroAplicado(filtro: boolean): void {
+    this.filtroAplicado.next(filtro)
   }
 
   setDiaSeleccionado(dia: string): void {
@@ -56,8 +60,7 @@ export class ClasesService {
   }
 
   setOrdenarPorHora(ordenar: boolean): void {
-    this.ordenarPorHora.next(ordenar); 
-    this.ordenar = ordenar;
+    this.ordenarPorHora.next(ordenar);
   }
 
   getClases(page: number, per_page: number, dia:string=""): Observable<any>{
@@ -71,7 +74,7 @@ export class ClasesService {
       "tipo" : this.tipoSeleccionadoSubject.value,
       "orby_hora":""
     });
-    if (!this.ordenar) {
+    if (!this.ordenarPorHora) {
       params = params.delete("orby_hora");
     }
     
@@ -92,7 +95,7 @@ export class ClasesService {
       "orby_hora":""
     });
     
-    if (!this.ordenar) {
+    if (!this.ordenarPorHora) {
       params = params.delete("orby_hora");
     }
     

@@ -14,13 +14,6 @@ export class SearchboxComponent {
       endHour: new FormControl(24),
     });
     this.parentPage = ""
-    this.clasesService.onPillChange().subscribe(page => {
-      // Realiza acciones cuando se hace clic en una píldora
-      // this.clasesService.setDiaSeleccionado(this.dias[0])
-      // this.clasesService.setOrdenarPorHora(false);
-      // this.clasesService.setTipoSeleccionado(this.tipos[0])
-      // console.log('Píldora seleccionada en otro componente:', page);
-    });
   }
   
   selectedOption: string = "Cualquier dia"
@@ -31,26 +24,30 @@ export class SearchboxComponent {
   form: FormGroup;
   mostrarBtnGroup: boolean = false;
   ordenarPorHora = false;
+  filtroAplicado: boolean = true;
   
   @Input() parentPage: string;
 
   onSwitchChange(event: Event) {
     this.ordenarPorHora = (event.target as HTMLInputElement).checked;
     this.clasesService.setOrdenarPorHora(this.ordenarPorHora);
+    this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
 
   // Función para manejar la selección del día
   seleccionarDia(dia: string): void {
     this.diaSeleccionado = dia;
-    if ( dia == 'Cualquier dia'){ dia=''}
+    if ( dia == 'Cualquier dia' ){ dia='' }
       this.clasesService.setDiaSeleccionado(dia);
+    this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
 
   // Función para manejar la selección del tipo
   seleccionarTipo(tipo: string): void {
     this.tipoSeleccionado = tipo;
     if ( tipo == 'Cualquier tipo'){ tipo=''}
-      this.clasesService.setTipoSeleccionado(tipo)
+      this.clasesService.setTipoSeleccionado(tipo);
+    this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
 }
 
