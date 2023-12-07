@@ -21,4 +21,14 @@ export class LoginService {
     localStorage.removeItem('token_DNI');
     this.router.navigate(['/','home']);
   }
+  
+  enviarCorreo(to: string, subject: string, template: string, kwargs: any): Observable<any> {
+    const correoData = {
+      to,
+      subject,
+      template,
+    };
+
+    return this.httpClient.post(this.url+'/auth/recover-pass', correoData);
+  }
 }

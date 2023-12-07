@@ -82,13 +82,21 @@ export class UserCredentialsComponent {
           this.samePasswordCondition = false
         }
       } else {
-        this.sendRecoverEmail(this.getFormValue(0).value)
+        this.sendRecoverEmail(this.getFormValue(0).value, "Recupera tu contrasena", "recover_pass", "")
       }
     }
   }
 
-  sendRecoverEmail(email: string) {
-    console.log(email)
+  sendRecoverEmail(to: string, subject: string, template: string, kwargs: any) {
+    console.log(to)
+    this.loginService.enviarCorreo(to, subject, template, kwargs)
+      .subscribe(response => {
+        console.log(response);
+        // Manejar la respuesta según tus necesidades
+      }, error => {
+        console.error(error);
+        // Manejar el error según tus necesidades
+      });
     this.router.navigateByUrl('/login')
   }
 
@@ -115,4 +123,5 @@ export class UserCredentialsComponent {
       return ['Email']
     }
   }
+
 }
