@@ -26,7 +26,8 @@ import { UserCredentialsComponent } from './components/user-credentials/user-cre
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FormSelectorButtonComponent } from './components/form-selector-button/form-selector-button.component';
 import { FormContentComponent } from './components/form-content/form-content.component';
-import { AutoResizeDirective } from './directives/auto-resize.directive'
+import { AutoResizeDirective } from './directives/auto-resize.directive';
+import { RecoverPassFormComponent } from './pages/login/recover-pass-form/recover-pass-form.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AutoResizeDirective } from './directives/auto-resize.directive'
     FormSelectorButtonComponent,
     FormContentComponent,
     AutoResizeDirective,
+    RecoverPassFormComponent,
   ],
   imports: [
     BrowserModule,

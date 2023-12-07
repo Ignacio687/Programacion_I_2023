@@ -28,7 +28,7 @@ class Usuario(Resource):
             setattr(usuario, key.lower(), value)
         db.session.add(usuario)
         db.session.commit()
-        return usuario.to_json(), 201        
+        return usuario.to_json(), 201
 
     @role_required(roles = ["admin"])
     def delete(self, dni):

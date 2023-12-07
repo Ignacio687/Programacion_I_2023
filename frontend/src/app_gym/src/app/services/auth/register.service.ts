@@ -15,4 +15,8 @@ export class RegisterService {
   register (dataRegister: any): Observable<any>{
     return this.httpClient.post(this.url + '/auth/register', dataRegister).pipe(take(1))
   }
+
+  recoverPass(dataRecover: any): Observable<any> {
+    return this.httpClient.post(this.url + '/auth/recover-pass', dataRecover).pipe(take(1))
+  }
 }
