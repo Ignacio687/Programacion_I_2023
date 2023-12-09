@@ -53,6 +53,7 @@ class Clase(db.Model):
         return clase_json
     
     def from_json(clase_json):
+        print(clase_json.get("Horario"))
         return Clase(clase_id = clase_json.get("Clase_id"),
                     nombre = clase_json.get("Nombre"), 
                     tipo = clase_json.get("Tipo"),

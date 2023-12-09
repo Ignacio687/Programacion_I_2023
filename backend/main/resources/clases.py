@@ -69,6 +69,17 @@ class Clases(Resource):
             "total": clases.total,
             "pages": clases.pages,
             "page": page})
+
+    @role_required(roles = ["admin", "profesor"])
+    def post(self):
+        clase = ClaseModel.from_json(request.get_json())
+        print(clase)
+        try:
+            db.session.add(clase)
+            db.session.commit()
+        except Exception as e:
+            return f"Ocurrió un error: {type(e).__name__} - {str(e)}", 400
+        return clase.to_json(), 201
     
 class ClasesDisponibles(Resource):
     @jwt_required()
@@ -99,7 +110,7 @@ class ClasesDisponibles(Resource):
             "pages": clases.pages,
             "page": page})
 
-#ARreglar y combinar con la claes de arriba
+#Arreglar y combinar con la claes de arriba (???)
 class ClasesInscripto(Resource):
     @jwt_required()
     def get(self, dni):

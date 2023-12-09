@@ -6,6 +6,7 @@ import { RegisterService } from 'src/app/services/auth/register.service';
 import { DataManagerService } from 'src/app/services/data-manager.service';
 import { DetalleService } from 'src/app/services/planificacion/detalle.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
+import { ClasesService } from 'src/app/services/clases/clases.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { UsuarioService } from 'src/app/services/user/usuario.service';
 
@@ -96,6 +97,34 @@ export class FormContentComponent {
         },
       ]
     },
+    "/clases-form": {
+      formLabel: "Crear una Clase",
+      submitButtonLabel: "Crear",
+      backButtonURL: "/clases-plan",
+      formContentLabels: [
+        {
+          label: "Nombre de la Clase",
+          type: "text",
+          formControlName: "nombreClase",
+        },
+        {
+          label: "Hora de la Clase",
+          type: "time",
+          formControlName: "horario",
+        },
+        {
+          label: "Tipo de Clase",
+          type: "text",
+          formControlName: "tipoClase",
+        },
+      ],
+      formOptionsContent: [
+        {
+          label: "Seleccione un dia",
+          formControlName: "dia",
+          optionsList: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+      }]
+    },
     "/change-user-info": {
       formLabel: "Editar la información personal del usuario",
       submitButtonLabel: "Actualizar",
@@ -134,6 +163,7 @@ export class FormContentComponent {
 
   registerForm!: FormGroup;
   planForm!: FormGroup;
+  clasesForm!: FormGroup;
   changeUserInfoForm!: FormGroup;
 
   get isTokenRol() { 
@@ -164,6 +194,7 @@ export class FormContentComponent {
     private alumnoService: AlumnoService,
     private registerService: RegisterService,
     private planificacionService: PlanificacionService,
+    private claseService: ClasesService,
     private detalleService: DetalleService,
     private route: ActivatedRoute,
     private usuarioService: UsuarioService
@@ -193,6 +224,12 @@ export class FormContentComponent {
       dia: ['', [Validators.required]],
       detalle: ['', [Validators.required]],
     })
+    this.clasesForm = this.formBuilder.group({
+      nombreClase: ['', [Validators.maxLength(20), Validators.required]],
+      horario: ['', [Validators.required]],
+      tipoClase: ['', [Validators.maxLength(10), Validators.required]],
+      dia: ['', [Validators.required]],
+    })
     this.changeUserInfoForm = this.formBuilder.group({
       dni: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
       nombre: ['', [Validators.required]],
@@ -212,8 +249,9 @@ export class FormContentComponent {
 
   formGroupSelector() {
     const conditionalArray: {[key:string]: any} = {
-      "/plan-form": this.planForm,
       "/register-form": this.registerForm,
+      "/plan-form": this.planForm,
+      "/clases-form": this.clasesForm,
       "/change-user-info": this.changeUserInfoForm
     }
     return conditionalArray[this.currentRoute]
@@ -239,6 +277,16 @@ export class FormContentComponent {
         console.log(err);
       }
     })
+  }
+
+  submit() { 
+    const functions: { [key:string]: any } = {
+      "/register-form": () => this.register(),
+      "/plan-form": () => this.submitPlanificacion(),
+      "/clases-form": () => this.submitClases(),
+      "/change-user-info": () => this.updateUserInfo(),
+    }
+    functions[this.currentRoute]()
   }
 
   register(){
@@ -283,15 +331,6 @@ export class FormContentComponent {
     }
   }
 
-  submit() { 
-    const functions: { [key:string]: any } = {
-      "/register-form": () => this.register(),
-      "/plan-form": () => this.submitPlanificacion(),
-      "/change-user-info": () => this.updateUserInfo()
-    }
-    functions[this.currentRoute]()
-  }
-
   submitPlanificacion() {
     if (this.planForm.valid) {
       return firstValueFrom(this.planificacionService.getPlanificacionAlumnoDNI(this.planForm.get('alumnoDNI')?.value, 1, 8)).then((data: any) => {
@@ -312,7 +351,7 @@ export class FormContentComponent {
           "estado": true,
           "creation_date": fechaFormateada
         }
-        let detalleData: { [key:string]: any }= {
+        let detalleData: { [key:string]: any } = {
           "dia": this.planForm.get("dia")?.value,
           "detalle": this.planForm.get("detalle")?.value
         }
@@ -347,6 +386,26 @@ export class FormContentComponent {
       })
     } else {
       return null;
+    }
+  }
+
+  submitClases() {
+    if (this.clasesForm.valid){
+      let clasesData = {
+        "Nombre": this.clasesForm.get("nombreClase")?.value,
+        "Tipo": this.clasesForm.get("tipoClase")?.value,
+        "Dia": this.clasesForm.get("dia")?.value,
+        "Horario": this.clasesForm.get("horario")?.value,
+      }
+      this.claseService.postClase(clasesData).subscribe({
+        next: (rta: any) => {
+          this.router.navigateByUrl("/clases-plan")
+        },
+        error: (error: any) => {
+          alert("Error al crear la clase")
+          console.log(error);
+        }
+      })
     }
   }
 
