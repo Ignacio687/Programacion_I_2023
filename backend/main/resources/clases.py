@@ -4,7 +4,7 @@ from .. import db, sa
 from main.models import ClaseModel, AlumnoModel, ProfesorModel, UsuariosModel
 from datetime import datetime
 import regex
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, or_
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from ..auth.decorators import role_required
 
@@ -51,6 +51,13 @@ class Clases(Resource):
             clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
         if request.args.get("hora"):
             clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("hora"), "%H:%M")))
+        if request.args.get("nombre"):
+            clases = clases.filter(
+                or_(
+                    ClaseModel.nombre.startswith(request.args.get("nombre").strip()),
+                    ClaseModel.nombre.contains(request.args.get("nombre").strip())
+                )
+            )
         if "orby_hora" in request.args.keys():
             clases = clases.order_by(ClaseModel.horario.asc())
         if request.args.get("nr_alumnos"):

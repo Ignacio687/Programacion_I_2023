@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import jwt_decode from "jwt-decode";
 import { DataManagerService } from 'src/app/services/data-manager.service'
 import { RegisterService } from 'src/app/services/auth/register.service';
+
 @Component({
 	selector: 'app-user-credentials',
 	templateUrl: './user-credentials.component.html',
@@ -90,7 +91,7 @@ export class UserCredentialsComponent {
 				this.registerService.recoverPass({email: this.getFormValue(0).value}).subscribe({
 					next: (rta: any) => {
 						alert('Se ha enviado un correo de recuperación')
-						this.router.navigateByUrl('/login')
+						this.router.navigateByUrl('/login') //???
 					},
 					error: (error: any) => {
 						console.log(error);
@@ -115,7 +116,8 @@ export class UserCredentialsComponent {
 	}
 
 	getCurrentRoute() {
-		return this.router.url
+		const urlSections = this.router.url.split('/')
+		return `/${urlSections[1]}`
 	}
 
 	getFormGroup() {
@@ -124,22 +126,39 @@ export class UserCredentialsComponent {
 		} else if (this.getCurrentRoute() === '/register') {
 			return this.registerForm
 		} else if (this.getCurrentRoute() === '/recover-pass'){
-			return this.recoverPassDataForm
+			return this.recoverPassForm
 		}
 		else {
-			return this.recoverPassForm
+			return this.recoverPassDataForm
 		}
 	}
 
+
 	getIterable() {
 		if (this.getCurrentRoute() === '/register') {
-			return [['Email', 'Ingresa tu contraseña (no mas de 32 caracteres)'], ['Password', 'Ingresa tu contraseña (no mas de 32 caracteres)'], ['Password', 'Repetí tu contraseña']]
+		  return [
+			{ type: 'Email', placeholder: 'Ingresa tu dirección de correo' },
+			{ type: 'Password', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' },
+			{ type: 'Password', placeholder: 'Repetí tu contraseña' }
+		  ];
 		} else if (this.getCurrentRoute() === '/login') {
-			return [['Email', 'Ingresa tu contraseña (no mas de 32 caracteres)'], ['Password', 'Ingresa tu contraseña (no mas de 32 caracteres)']]
+		  return [
+			{ type: 'Email', placeholder: 'Ingresa tu dirección de correo' },
+			{ type: 'Password', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' }
+		  ];
 		} else if (this.getCurrentRoute() === '/recover-pass') {
-			return [['Email', 'Ingresa tu contraseña (no mas de 32 caracteres)']]
+		  return [
+			{ type: 'Email', placeholder: 'Ingresa tu dirección de correo' }
+		  ];
 		} else {
-			return [['Password', 'Ingresa tu contraseña (no mas de 32 caracteres)'], ['Password', 'Repetí tu contraseña']]
+		  return [
+			{ type: 'Password', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' },
+			{ type: 'Password', placeholder: 'Repetí tu contraseña' }
+		  ];
 		}
+	}
+
+	trackByIndex(index: number, item: any): number {
+		return index;
 	}
 }

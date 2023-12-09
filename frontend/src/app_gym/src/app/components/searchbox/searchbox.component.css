@@ -38,3 +38,9 @@ label, select ,option{
 .dropdown-toggle{
     color: #8076b0 ;
 }
+.search-button{
+  background-color: #d0fd3e;
+  color: #1b232e;
+  font-family: "Ubuntu";
+  border-radius: 10px;
+}

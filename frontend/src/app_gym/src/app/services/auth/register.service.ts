@@ -17,6 +17,6 @@ export class RegisterService {
   }
 
   recoverPass(dataRecover: any): Observable<any> {
-    return this.httpClient.post(this.url + '/auth/recover-pass', dataRecover).pipe(take(1))
+    return this.httpClient.post(this.url + '/auth/recover-pass-form', dataRecover).pipe(take(1))
   }
 }

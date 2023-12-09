@@ -3,24 +3,28 @@ from .. import db
 from main.models import UsuariosModel
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 from main.mail.functions import sendMail
+import datetime
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
+
 @auth.route('/recover-pass-form', methods=['PUT'])
 def reset_pwd():
     pass
 
-auth = Blueprint('auth', __name__, url_prefix='/auth')
+
 @auth.route('/recover-pass', methods=['POST'])
 def recoverPass():
     email = request.get_json().get('email')
     existsMail = db.session.query(UsuariosModel).filter(UsuariosModel.email == email).scalar() is not None
-    usuario = db.session.query(UsuariosModel).filter(UsuariosModel.email == email).first_or_404()
+    usuario = db.session.query(UsuariosModel).filter(UsuariosModel.email == email).first()
+    if not usuario:
+        return 'Mail no registrado', 409
     usuario.rol == "recover-pass"
-    access_token = create_access_token(identity=usuario)
+    access_token = create_access_token(identity=usuario, fresh=datetime.timedelta(minutes=10))
     if existsMail:
         result = sendMail([email], "Recupera tu contraseña", "recover_pass", usuario=usuario, token=access_token)
-        if result is True:
-            return 'Correo de recuperación enviado exitosamente',200
+        if result:
+            return 'Correo de recuperación enviado exitosamente', 200
         else:
             return 'Error al enviar el correo de recuperación' , 500
     else:

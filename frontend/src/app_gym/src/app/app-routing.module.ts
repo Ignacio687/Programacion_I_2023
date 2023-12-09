@@ -27,7 +27,8 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent}, 
   { path: 'horarios', component: HorariosDireccionComponent},
   { path: 'recover-pass', component: RecoverPassComponent},
-  { path: 'recover-pass-form', component: RecoverPassFormComponent}, // canActivate:[recoverPassGuard]} 
+  { path: 'recover-pass-form', component: RecoverPassFormComponent},
+  { path: 'recover-pass-form/:token', component: RecoverPassFormComponent}, // canActivate:[recoverPassGuard]}
   { path: 'login', component: UserLoginComponent},
   { path: 'clases-form', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
   { path: 'clases-form/:id/editar', component: ClasesFormComponent, canActivate:[adminSessionGuard]},

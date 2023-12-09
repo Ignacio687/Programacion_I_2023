@@ -15,12 +15,12 @@ export class SearchboxComponent {
     });
     this.parentPage = ""
   }
-  
   selectedOption: string = "Cualquier dia"
   dias: string[] = ['Cualquier dia','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
   tipos: string[] = ['Cualquier tipo','Cardio', 'estiramiento', 'EstafaPiramedal'];
   diaSeleccionado: string = 'Cualquier dia';
   tipoSeleccionado: string = 'Cualquier tipo';
+  stringSearch: string = '';
   form: FormGroup;
   mostrarBtnGroup: boolean = false;
   ordenarPorHora = false;
@@ -39,6 +39,11 @@ export class SearchboxComponent {
     this.diaSeleccionado = dia;
     if ( dia == 'Cualquier dia' ){ dia='' }
       this.clasesService.setDiaSeleccionado(dia);
+    this.clasesService.setFiltroAplicado(this.filtroAplicado);
+  }
+  buscar(keyword: string): void {
+    this.stringSearch = keyword;
+    this.clasesService.setStringSearch(keyword);
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
 

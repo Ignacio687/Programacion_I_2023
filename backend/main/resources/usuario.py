@@ -17,7 +17,7 @@ class Usuario(Resource):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         return usuario.to_json()
 
-    @role_required(roles = ["admin"])
+    @role_required(roles = ["admin", "recover-pass"])
     def put(self, dni):
         identity = get_jwt()
         if identity.get("rol") == "alumno":

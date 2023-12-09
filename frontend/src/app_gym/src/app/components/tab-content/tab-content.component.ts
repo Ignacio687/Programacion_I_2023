@@ -116,6 +116,7 @@ export class TabContentComponent {
   }
 
   set_default_filter_values(){
+    this.clasesService.setStringSearch('')
     this.clasesService.setDiaSeleccionado('')
     this.clasesService.setOrdenarPorHora(false);
     this.clasesService.setTipoSeleccionado('')
