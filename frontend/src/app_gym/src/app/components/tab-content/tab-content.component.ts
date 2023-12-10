@@ -277,7 +277,8 @@ export class TabContentComponent {
       "/clases-plan":
       {
       "disponibles": ['Editar', "clases-form/"],
-      "planificaciones": ['Editar', "plan-form/"]
+      "planificaciones": ['Editar', "plan-form/"],
+      "inscripto": ['Editar', "clases-form/"],
       },
       "/admin-page":
       {
