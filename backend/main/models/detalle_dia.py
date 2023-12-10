@@ -8,7 +8,7 @@ class Detalle_dia(db.Model):
     planificacion = db.relationship("Planificacion", back_populates= "detalles_dia", uselist=False, single_parent=True)
     
     def __repr__(self):
-        return f"<Dia {self.dia} Detealle: {self.detalle}>"
+        return f"<Dia {self.dia} Detalle: {self.detalle}>"
 
     def to_json(self):
         detalle_json = {
