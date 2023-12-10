@@ -83,7 +83,7 @@
                                 </ng-template>
                             </div>
                             <!-- Dropdown Button -->
-                            <div *ngIf="!(page === 'planificaciones' && currentRoute === '/alum-clases' || page === 'inscripto' && currentRoute === '/clases-plan')&&isTokenRol" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_'+cardDetalleNumber+cardNumber">
+                            <div *ngIf="!(page === 'planificaciones' && currentRoute === '/alum-clases' || isTokenRol === 'profesor' && page === 'inscripto' )&&isTokenRol" class="collapse" [id]="(page !== 'planificaciones')? 'optionButton_' + cardNumber: 'planifiDetalleDesp_'+cardDetalleNumber+cardNumber">
                                 <div class="card card-body">
                                     <button class="btn dropdown-button tab-content-dropdown-button" (click)="dropdownButtonConditionalAction(page, false, page==='planificaciones'? [pillData.planificacion_id, detalle.dia]:currentRoute==='/admin-page'?pillData.Usuario.DNI:pillData.Clase_id)">
                                         <h5>{{dropdownButtonConditionalAction(page, true)}}</h5>

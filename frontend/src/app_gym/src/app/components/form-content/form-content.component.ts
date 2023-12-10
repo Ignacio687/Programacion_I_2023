@@ -6,6 +6,7 @@ import { RegisterService } from 'src/app/services/auth/register.service';
 import { DataManagerService } from 'src/app/services/data-manager.service';
 import { DetalleService } from 'src/app/services/planificacion/detalle.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
+import { ClasesService } from 'src/app/services/clases/clases.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { UsuarioService } from 'src/app/services/user/usuario.service';
 
@@ -96,6 +97,34 @@ export class FormContentComponent {
         },
       ]
     },
+    "/clases-form": {
+      formLabel: this.urlParameterID? "Mofidicar la Clase":"Crear una Clase",
+      submitButtonLabel: "Crear",
+      backButtonURL: "/clases-plan",
+      formContentLabels: [
+        {
+          label: "Nombre de la Clase",
+          type: "text",
+          formControlName: "nombreClase",
+        },
+        {
+          label: "Hora de la Clase",
+          type: "time",
+          formControlName: "horario",
+        },
+        {
+          label: "Tipo de Clase",
+          type: "text",
+          formControlName: "tipoClase",
+        },
+      ],
+      formOptionsContent: [
+        {
+          label: "Seleccione un dia",
+          formControlName: "dia",
+          optionsList: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+      }]
+    },
     "/change-user-info": {
       formLabel: "Editar la información personal del usuario",
       submitButtonLabel: "Actualizar",
@@ -134,6 +163,7 @@ export class FormContentComponent {
 
   registerForm!: FormGroup;
   planForm!: FormGroup;
+  clasesForm!: FormGroup;
   changeUserInfoForm!: FormGroup;
 
   get isTokenRol() { 
@@ -164,20 +194,11 @@ export class FormContentComponent {
     private alumnoService: AlumnoService,
     private registerService: RegisterService,
     private planificacionService: PlanificacionService,
+    private claseService: ClasesService,
     private detalleService: DetalleService,
     private route: ActivatedRoute,
     private usuarioService: UsuarioService
     ) { }
-
-  ngOnInit() {
-    this.formGenerator()
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.getPlanDetalle(this.urlParameterID)
-    } else if (this.route.snapshot.paramMap.get('dni')) {
-      this.getUserInfo(this.urlParameterDNI)
-    } 
-
-  }
 
   formGenerator() {
     this.registerForm = this.formBuilder.group({
@@ -193,6 +214,12 @@ export class FormContentComponent {
       dia: ['', [Validators.required]],
       detalle: ['', [Validators.required]],
     })
+    this.clasesForm = this.formBuilder.group({
+      nombreClase: ['', [Validators.maxLength(20), Validators.required]],
+      horario: ['', [Validators.required]],
+      tipoClase: ['', [Validators.maxLength(10), Validators.required]],
+      dia: ['', [Validators.required]],
+    })
     this.changeUserInfoForm = this.formBuilder.group({
       dni: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
       nombre: ['', [Validators.required]],
@@ -207,23 +234,44 @@ export class FormContentComponent {
         type: "number",
         formControlName: "profesorDNI"
       })
+      this.clasesForm.addControl("profesorDNI", this.formBuilder.control('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]))
+      this.inputFields["/clases-form"].formContentLabels.splice(1, 0 ,{
+        label: "DNI del Profesor",
+        type: "number",
+        formControlName: "profesorDNI"
+      })
     }
   }
 
   formGroupSelector() {
     const conditionalArray: {[key:string]: any} = {
-      "/plan-form": this.planForm,
       "/register-form": this.registerForm,
+      "/plan-form": this.planForm,
+      "/clases-form": this.clasesForm,
       "/change-user-info": this.changeUserInfoForm
     }
     return conditionalArray[this.currentRoute]
   }
 
+  ngOnInit() {
+    this.formGenerator()
+    if (this.route.snapshot.paramMap.get('id')) {
+      if (this.currentRoute === '/clases-form') {
+        this.getClaseDetalle(this.urlParameterID)
+      }
+      else if (this.currentRoute === '/plan-form') {
+        this.getPlanDetalle(this.urlParameterID)
+      } 
+    } else if (this.route.snapshot.paramMap.get('dni')) {
+      this.getUserInfo(this.urlParameterDNI)
+    }
+  }
+
   getPlanDetalle(planID: number) {
     this.planificacionService.getPlanificacionById(planID).subscribe({
       next: (data: any) => {
+        console.log(data)
         const dia = data.detalles_dia.find((detalle: any) => detalle.dia === this.route.snapshot.paramMap.get('dia'))
-        console.log(dia)
         this.planForm.patchValue({
           alumnoDNI: data.Alumno.Usuario.DNI,
           detalle: data.detalles_dia.find((detalle: any) => detalle.dia === this.route.snapshot.paramMap.get('dia')).detalle,
@@ -239,6 +287,51 @@ export class FormContentComponent {
         console.log(err);
       }
     })
+  }
+
+  getClaseDetalle(claseID: number){
+    this.claseService.getClaseById(claseID).subscribe({
+      next: (data: any) => {
+        this.clasesForm.patchValue({
+          nombreClase: data.Nombre,
+          horario: data.Horario,
+          tipoClase: data.Tipo, 
+          dia: data.Dia
+        });
+        if (this.isTokenRol==="admin") {
+          this.clasesForm.patchValue({
+            profesorDNI: data.Profesores[0].Usuario.DNI
+          })
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getUserInfo(dni: number) {
+    return firstValueFrom(this.usuarioService.getUserByDni(dni)).then((data: any) => {
+      this.changeUserInfoForm.patchValue({
+        dni: data.DNI,
+        nombre: data.Nombre,
+        apellido: data.Apellidos,
+        telefono: data.Telefono,
+        rol: data.Rol
+      });
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  submit() { 
+    const functions: { [key:string]: any } = {
+      "/register-form": () => this.register(),
+      "/plan-form": () => this.submitPlanificacion(),
+      "/clases-form": () => this.submitClases(),
+      "/change-user-info": () => this.updateUserInfo(),
+    }
+    functions[this.currentRoute]()
   }
 
   register(){
@@ -283,15 +376,6 @@ export class FormContentComponent {
     }
   }
 
-  submit() { 
-    const functions: { [key:string]: any } = {
-      "/register-form": () => this.register(),
-      "/plan-form": () => this.submitPlanificacion(),
-      "/change-user-info": () => this.updateUserInfo()
-    }
-    functions[this.currentRoute]()
-  }
-
   submitPlanificacion() {
     if (this.planForm.valid) {
       return firstValueFrom(this.planificacionService.getPlanificacionAlumnoDNI(this.planForm.get('alumnoDNI')?.value, 1, 8)).then((data: any) => {
@@ -304,7 +388,7 @@ export class FormContentComponent {
         const fechaFormateada = `${diaFormateado}/${mesFormateado}/${año}`;
         let dniProfe = this.isTokenDNI
         if (this.isTokenRol==="admin") {
-
+          dniProfe = this.planForm.get("profesorDNI")?.value
         }
         const planData = {
           "profesor_DNI": dniProfe,
@@ -312,7 +396,7 @@ export class FormContentComponent {
           "estado": true,
           "creation_date": fechaFormateada
         }
-        let detalleData: { [key:string]: any }= {
+        let detalleData: { [key:string]: any } = {
           "dia": this.planForm.get("dia")?.value,
           "detalle": this.planForm.get("detalle")?.value
         }
@@ -350,19 +434,47 @@ export class FormContentComponent {
     }
   }
 
-  getUserInfo(dni: number) {
-    return firstValueFrom(this.usuarioService.getUserByDni(dni)).then((data: any) => {
-      this.changeUserInfoForm.patchValue({
-        dni: data.DNI,
-        nombre: data.Nombre,
-        apellido: data.Apellidos,
-        telefono: data.Telefono,
-        rol: data.Rol
-      });
-    }).catch((err) => {
-      console.log(err);
-    })
+  submitClases() {
+    if (this.clasesForm.valid) {
+      let dniProfe = this.isTokenDNI
+        if (this.isTokenRol==="admin") {
+          dniProfe = this.clasesForm.get("profesorDNI")?.value
+        }
+      let clasesData = {
+        "Nombre": this.clasesForm.get("nombreClase")?.value,
+        "Tipo": this.clasesForm.get("tipoClase")?.value,
+        "Dia": this.clasesForm.get("dia")?.value,
+        "Horario": this.clasesForm.get("horario")?.value,
+      }
+      let clasesProfes: { [key:string]: any } = {
+        "profeDNI": dniProfe,
+      }
 
+      let claseSet = this.claseService.postClase(clasesData)
+      
+      if (this.urlParameterID) {
+        claseSet = this.claseService.putClase(clasesData, this.urlParameterID)
+      }
+      claseSet.subscribe({
+        next: (rta: any) => {
+          clasesProfes ["claseID"] = rta.Clase_id
+          let clasesProfeService = this.claseService.postClaseProfesor(clasesProfes)
+          clasesProfeService.subscribe({
+            next: (rta: any) => {
+              this.router.navigateByUrl("/clases-plan")
+            },
+            error: (error: any) => {
+              alert("Clase Creada. Error al crear la asociacion con el Profesor")
+              console.log(error);
+            }
+          }) 
+        },
+        error: (error: any) => {
+          alert("Error al crear la clase")
+          console.log(error);
+        }
+      })
+    }
   }
 
   updateUserInfo() {
@@ -383,5 +495,4 @@ export class FormContentComponent {
       return false;
     }
   }
-
 }

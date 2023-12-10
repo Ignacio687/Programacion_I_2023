@@ -55,10 +55,10 @@ export class ClasesService {
   setDiaSeleccionado(dia: string): void {
     this.diaSeleccionadoSubject.next(dia);
   }
+
   setStringSearch(dia: string): void {
     this.stringSearchSubject.next(dia);
   }
-
 
   setTipoSeleccionado(tipo: string): void {
     this.tipoSeleccionadoSubject.next(tipo);
@@ -87,6 +87,15 @@ export class ClasesService {
     return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
   }
 
+  getClaseById(id: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.get(`${this.url}/clase/${id}`, {headers: headers}).pipe(first())
+  }
+
   getClasesDisponibles(dispoInscFlag: boolean, page: number, per_page: number): Observable<any>{
     let auth_token = localStorage.getItem('token')
     const headers = new HttpHeaders({
@@ -106,6 +115,33 @@ export class ClasesService {
     }
     
     return this.httpClient.get(`${this.url}/clases/${dispoInscFlag === true ? "disponible" : "inscripto"}/${Number(localStorage.getItem('token_DNI'))}`, {headers: headers, params: params}).pipe(first())
+  }
+
+  postClase(data: any): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(`${this.url}/clases`, data, {headers: headers}).pipe(first())
+  }
+
+  postClaseProfesor(data: any): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(`${this.url}/prof_clas/${data.claseID}/${data.profeDNI}`, null, {headers: headers}).pipe(first())
+  }
+
+  putClase(data: any, id: Number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.put(`${this.url}/clase/${id}`, data, {headers: headers}).pipe(first())
   }
 
   inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{
