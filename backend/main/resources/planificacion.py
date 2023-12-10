@@ -7,7 +7,8 @@ from datetime import datetime
 from sqlalchemy import func, desc, asc
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..auth.decorators import role_required
-
+from main.models import UsuariosModel
+from main.mail.functions import sendMail
 class Planificacion(Resource):
     @jwt_required()
     def get(self, id):
@@ -69,8 +70,10 @@ class Planificaciones(Resource):
     def post(self):
         try:
             plan = PlanificacionModel.from_json(request.get_json())
+            dni = request.get_json().get("alumno_DNI")
         except:
             return 'Formato incorrecto', 400
+        # sendMail([mail.email], "Se ha creado una planificacion para usted", "planificacion", plan=plan)
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
@@ -130,6 +133,16 @@ class PlanificacionDetalle(Resource):
             data = request.get_json().items()
             for key, value in data:
                 setattr(plan, key, value)
+            data_dict = dict(data)
+            usuario_query = db.session.query(PlanificacionModel).filter(PlanificacionModel.planificacion_id == data_dict['planificacion_id']).first()
+            usuario_query = usuario_query.to_json()
+            dni = usuario_query['alumno_DNI']
+            dni_profesor = usuario_query['profesor_DNI']
+            nombre_profesor = db.session.query(UsuariosModel).filter(UsuariosModel.dni == dni_profesor).first()
+            nombre_profesor = nombre_profesor.to_json()['Nombre'] + ' ' + nombre_profesor.to_json()['Apellidos']
+            mail = db.session.query(UsuariosModel).filter(dni == UsuariosModel.dni).first()
+            mail = mail.to_json()['Email']
+            sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=data_dict, nombre_profesor=nombre_profesor)
             db.session.add(plan)
             db.session.commit()
             return plan.to_json() , 201
@@ -143,6 +156,15 @@ class PlanificacionDetalles(Resource):
         except:
              return 'Formato incorrecto', 400
         exist = db.session.query(PlanificacionModel).get_or_404(plan.planificacion_id)
+        usuario_query = db.session.query(PlanificacionModel).filter(PlanificacionModel.planificacion_id == plan.planificacion_id).first()
+        usuario_query = usuario_query.to_json()
+        dni = usuario_query['alumno_DNI']
+        dni_profesor = usuario_query['profesor_DNI']
+        nombre_profesor = db.session.query(UsuariosModel).filter(UsuariosModel.dni == dni_profesor).first()
+        nombre_profesor = nombre_profesor.to_json()['Nombre']#+ ' ' + nombre_profesor.to_json()['Apellidos']
+        mail = db.session.query(UsuariosModel).filter(dni == UsuariosModel.dni).first()
+        mail = mail.to_json()['Email']
+        sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=plan, nombre_profesor=nombre_profesor)
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
