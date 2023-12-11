@@ -18,8 +18,8 @@ class Planificacion(Resource):
     @role_required(roles = ["admin", "profesor"])
     def put(self, id):
         plan = db.session.query(PlanificacionModel).get_or_404(id)
-        data = request.get_json().items()
-        for key, value in data:
+        data = request.get_json()
+        for key, value in data.items():
             if regex.match(r"(0?[1-9]|[12][0-9]|3[01])(/)(0?[1-9]|1[012])\2(\d{4})", str(value)) != None:
                 setattr(plan, key.lower(), datetime.strptime(value, "%d/%m/%Y"))
             else: setattr(plan, key.lower(), value)
@@ -58,7 +58,7 @@ class Planificaciones(Resource):
             
         if request.args.get('order_by_date') == 'desc':
             plan=plan.order_by(desc(PlanificacionModel.creation_date))
-
+   
         plan = plan.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify(
             {"Planificaciones": [plan.to_json() for plan in plan],
@@ -142,7 +142,7 @@ class PlanificacionDetalle(Resource):
             nombre_profesor = nombre_profesor.to_json()['Nombre'] + ' ' + nombre_profesor.to_json()['Apellidos']
             mail = db.session.query(UsuariosModel).filter(dni == UsuariosModel.dni).first()
             mail = mail.to_json()['Email']
-            sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=data_dict, nombre_profesor=nombre_profesor)
+            #sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=data_dict, nombre_profesor=nombre_profesor)
             db.session.add(plan)
             db.session.commit()
             return plan.to_json() , 201
@@ -164,7 +164,7 @@ class PlanificacionDetalles(Resource):
         nombre_profesor = nombre_profesor.to_json()['Nombre']#+ ' ' + nombre_profesor.to_json()['Apellidos']
         mail = db.session.query(UsuariosModel).filter(dni == UsuariosModel.dni).first()
         mail = mail.to_json()['Email']
-        sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=plan, nombre_profesor=nombre_profesor)
+        #sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=plan, nombre_profesor=nombre_profesor)
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
