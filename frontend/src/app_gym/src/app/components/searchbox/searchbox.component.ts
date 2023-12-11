@@ -17,7 +17,7 @@ export class SearchboxComponent {
   }
   selectedOption: string = "Cualquier dia"
   dias: string[] = ['Cualquier dia','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-  tipos: string[] = ['Cualquier tipo','Cardio', 'estiramiento', 'EstafaPiramedal'];
+  tipos: string[] = ['Cualquier tipo','Cardio', 'Estiramiento', 'Crossfit', 'Running'];
   diaSeleccionado: string = 'Cualquier dia';
   tipoSeleccionado: string = 'Cualquier tipo';
   stringSearch: string = '';
@@ -43,15 +43,19 @@ export class SearchboxComponent {
   }
   buscar(keyword: string): void {
     this.stringSearch = keyword;
-    this.clasesService.setStringSearch(keyword);
-    this.clasesService.setFiltroAplicado(this.filtroAplicado);
+    if (this.parentPage === 'planificaciones'){
+      
+    }else{
+      this.clasesService.setStringSearch(keyword);
+      this.clasesService.setFiltroAplicado(this.filtroAplicado);
+    }
   }
 
   // Función para manejar la selección del tipo
   seleccionarTipo(tipo: string): void {
     this.tipoSeleccionado = tipo;
     if ( tipo == 'Cualquier tipo'){ tipo=''}
-      this.clasesService.setTipoSeleccionado(tipo);
+    this.clasesService.setTipoSeleccionado(tipo);
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
 }

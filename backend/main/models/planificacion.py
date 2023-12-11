@@ -36,13 +36,15 @@ class Planificacion(db.Model):
             else: jsonObj = ""
             if index == 0: profesorJson = jsonObj
             else: alumnoJson = jsonObj
+        dias_orden = {"Lunes": 1, "Martes": 2, "Miercoles": 3,"Miércoles": 3, "Jueves": 4, "Viernes": 5, "Sábado": 6,"Sabado": 6, "Domingo": 7}
+        detalles_dia_ordenados = sorted(self.detalles_dia, key=lambda x: dias_orden[x.dia])
         plan_json = {
             "planificacion_id": self.planificacion_id,
             "estado": self.estado,
             "creation_date": str(self.creation_date.strftime("%d/%m/%Y")),
             "Profesor": profesorJson,
             "Alumno": alumnoJson,
-            "detalles_dia": ([detalle.to_json() for detalle in self.detalles_dia])
+            "detalles_dia": ([detalle.to_json() for detalle in detalles_dia_ordenados])
         }
         return plan_json
 

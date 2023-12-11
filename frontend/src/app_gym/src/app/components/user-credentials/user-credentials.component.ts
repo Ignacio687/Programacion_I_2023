@@ -1,10 +1,11 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/auth/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import jwt_decode from "jwt-decode";
 import { DataManagerService } from 'src/app/services/data-manager.service'
 import { RegisterService } from 'src/app/services/auth/register.service';
+import { UsuarioService } from 'src/app/services/user/usuario.service';
 
 @Component({
 	selector: 'app-user-credentials',
@@ -20,6 +21,10 @@ export class UserCredentialsComponent {
 	recoverPassForm!: FormGroup;
 	recoverPassDataForm!: FormGroup;
 
+	get isTokenDNI() {
+		return Number(localStorage.getItem('token_DNI'));
+	  }
+
 	constructor(
 		private loginService: LoginService,
 		private router: Router,
@@ -27,6 +32,8 @@ export class UserCredentialsComponent {
 		private cdRef: ChangeDetectorRef,
 		private dataManagerService: DataManagerService,
 		private registerService: RegisterService,
+		private usuarioService: UsuarioService,
+		private route: ActivatedRoute,
 	) { }
 
 
@@ -47,6 +54,11 @@ export class UserCredentialsComponent {
 			password1: ['', [Validators.maxLength(32), Validators.required]],
 			password2: ['', [Validators.maxLength(32), Validators.required]]
 		})
+	}
+
+	getCurrentRoute() {
+		const urlSections = this.router.url.split('/')
+		return `/${urlSections[1]}`
 	}
 
 	login(dataLogin: any = {}) {
@@ -97,7 +109,7 @@ export class UserCredentialsComponent {
 				this.registerService.recoverPass({email: this.getFormValue(0).value}).subscribe({
 					next: (rta: any) => {
 						alert('Se ha enviado un correo de recuperación')
-						this.router.navigateByUrl('/login') //???
+						this.router.navigateByUrl('/login')
 					},
 					error: (error: any) => {
 						console.log(error);
@@ -105,7 +117,10 @@ export class UserCredentialsComponent {
 				})
 			} else if (this.getCurrentRoute() === '/recover-pass-form'){
 				if (this.getFormValue(1).value === this.getFormValue(2).value) {
-					this.registerService.recoverPass({password: this.getFormValue(1).value}).subscribe({
+					const userToken: string = String(this.route.snapshot.paramMap.get('token'))
+					const userTokenPayload: any = jwt_decode(userToken)
+					const userDNI = userTokenPayload.DNI
+					this.registerService.changePassword(userToken, userDNI, {password: this.getFormValue(1).value}).subscribe({
 						next: (rta: any) => {
 							alert('Se ha cambiado la contraseña')
 							this.router.navigateByUrl('/login')
@@ -121,11 +136,6 @@ export class UserCredentialsComponent {
 		} else {
 			this.commitAttempted = true
 		}
-	}
-
-	getCurrentRoute() {
-		const urlSections = this.router.url.split('/')
-		return `/${urlSections[1]}`
 	}
 
 	getFormGroup() {

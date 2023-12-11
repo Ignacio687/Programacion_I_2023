@@ -7,6 +7,7 @@ from datetime import datetime
 from sqlalchemy import func, desc, asc
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from ..auth.decorators import role_required
+from werkzeug.security import generate_password_hash
 
 class Usuario(Resource):
     @jwt_required()
@@ -25,7 +26,10 @@ class Usuario(Resource):
         usuario = db.session.query(UsuariosModel).get_or_404(dni)
         data = request.get_json().items()
         for key, value in data:
-            setattr(usuario, key.lower(), value)
+            if key.lower() == 'password':
+                usuario.password = generate_password_hash(value)
+            else:
+                setattr(usuario, key.lower(), value)
         db.session.add(usuario)
         db.session.commit()
         return usuario.to_json(), 201
