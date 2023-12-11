@@ -135,13 +135,22 @@ export class ClasesService {
     return this.httpClient.post(`${this.url}/prof_clas/${data.claseID}/${data.profeDNI}`, null, {headers: headers}).pipe(first())
   }
 
-  putClase(data: any, id: Number): Observable<any>{
+  putClase(data: any, claseID: Number): Observable<any> {
     let auth_token = localStorage.getItem('token')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`
     })
-    return this.httpClient.put(`${this.url}/clase/${id}`, data, {headers: headers}).pipe(first())
+    return this.httpClient.put(`${this.url}/clase/${claseID}`, data, {headers: headers}).pipe(first())
+  }
+
+  deleteClase(claseID: number): Observable<any> {
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.delete(`${this.url}/clase/${claseID}`, {headers: headers})
   }
 
   inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{

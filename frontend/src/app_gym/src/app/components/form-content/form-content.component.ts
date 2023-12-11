@@ -324,6 +324,18 @@ export class FormContentComponent {
     })
   }
 
+  delete(){
+    this.claseService.deleteClase(this.urlParameterID).subscribe({
+        next: (rta: any) => {
+          this.router.navigateByUrl("/clases-plan")
+        },
+        error: (error: any) => {
+          alert("Error al elimnar la clase")
+          console.log(error);
+        }
+    }) 
+  }
+
   submit() { 
     const functions: { [key:string]: any } = {
       "/register-form": () => this.register(),
