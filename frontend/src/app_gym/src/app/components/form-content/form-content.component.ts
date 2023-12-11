@@ -67,7 +67,7 @@ export class FormContentComponent {
       ],
       formOptionsContent: [
         {
-          label: "Selecciona una opción",
+          label: "Seleccion su genero",
           formControlName: "sexo",
           optionsList: ['Masculino', 'Femenino']
         }
@@ -322,6 +322,18 @@ export class FormContentComponent {
     }).catch((err) => {
       console.log(err);
     })
+  }
+
+  delete(){
+    this.claseService.deleteClase(this.urlParameterID).subscribe({
+        next: (rta: any) => {
+          this.router.navigateByUrl("/clases-plan")
+        },
+        error: (error: any) => {
+          alert("Error al elimnar la clase")
+          console.log(error);
+        }
+    }) 
   }
 
   submit() { 

@@ -14,6 +14,7 @@ import { UsuarioService } from 'src/app/services/user/usuario.service';
 })
 export class UserCredentialsComponent {
 	samePasswordCondition: boolean = true;
+	commitAttempted:boolean = false;
 
 	loginForm!: FormGroup;
 	registerForm!: FormGroup;
@@ -34,6 +35,7 @@ export class UserCredentialsComponent {
 		private usuarioService: UsuarioService,
 		private route: ActivatedRoute,
 	) { }
+
 
 	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
@@ -82,7 +84,11 @@ export class UserCredentialsComponent {
 
 	getFormValue(index: number): any {
 		if (index === 0) {
-			return this.getFormGroup().get('email');
+			if (this.getCurrentRoute()=== "/recover-pass-form") {
+				return this.getFormGroup().get('password')
+			} else {
+				return this.getFormGroup().get('email');
+			}
 		} else {
 			return this.getFormGroup().get(`password${index}`);
 		}
@@ -127,6 +133,8 @@ export class UserCredentialsComponent {
 					this.samePasswordCondition = false
 				}
 			}
+		} else {
+			this.commitAttempted = true
 		}
 	}
 
@@ -143,27 +151,26 @@ export class UserCredentialsComponent {
 		}
 	}
 
-
 	getIterable() {
 		if (this.getCurrentRoute() === '/register') {
 		  return [
-			{ type: 'Email', placeholder: 'Ingresa tu dirección de correo' },
-			{ type: 'Password', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' },
-			{ type: 'Password', placeholder: 'Repetí tu contraseña' }
+			{ type: 'Mail', placeholder: 'Ingresa tu dirección de correo' },
+			{ type: 'Contraseña', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' },
+			{ type: 'Confirmar Contraseña', placeholder: 'Repetí tu contraseña' }
 		  ];
 		} else if (this.getCurrentRoute() === '/login') {
 		  return [
-			{ type: 'Email', placeholder: 'Ingresa tu dirección de correo' },
-			{ type: 'Password', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' }
+			{ type: 'Mail', placeholder: 'Ingresa tu dirección de correo' },
+			{ type: 'Contraseña', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' }
 		  ];
 		} else if (this.getCurrentRoute() === '/recover-pass') {
 		  return [
-			{ type: 'Email', placeholder: 'Ingresa tu dirección de correo' }
+			{ type: 'Mail', placeholder: 'Ingresa tu dirección de correo' }
 		  ];
 		} else {
 		  return [
-			{ type: 'Password', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' },
-			{ type: 'Password', placeholder: 'Repetí tu contraseña' }
+			{ type: 'Contraseña', placeholder: 'Ingresa tu contraseña (no más de 32 caracteres)' },
+			{ type: 'Confirmar Contraseña', placeholder: 'Repetí tu contraseña' }
 		  ];
 		}
 	}
