@@ -32,6 +32,7 @@
     font-size: 16px;
     font-weight: bold;
     padding: 8px 32px;
+    display: flex;
 }
 
 .custom-delete-button {

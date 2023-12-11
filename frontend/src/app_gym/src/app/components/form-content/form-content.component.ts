@@ -67,7 +67,7 @@ export class FormContentComponent {
       ],
       formOptionsContent: [
         {
-          label: "Selecciona una opción",
+          label: "Seleccion su genero",
           formControlName: "sexo",
           optionsList: ['Masculino', 'Femenino']
         }
