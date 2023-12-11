@@ -22,7 +22,6 @@ import { recoverPassGuard } from './guards/recover-pass.guard';
 const routes: Routes = [
   { path: 'admin-page', component: AlumProfAdmComponent, canActivate:[adminSessionGuard]},
   { path: 'alum-clases', component: ClasesComponent},
-  { path: 'change-user-info', component: ChangeUserInfoComponent, canActivate:[adminSessionGuard]},
   { path: 'change-user-info/:dni/editar', component: ChangeUserInfoComponent, canActivate:[adminSessionGuard]},
   { path: 'home', component: HomePageComponent}, 
   { path: 'horarios', component: HorariosDireccionComponent},
