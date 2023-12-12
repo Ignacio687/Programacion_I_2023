@@ -126,15 +126,7 @@ export class ClasesService {
     return this.httpClient.post(`${this.url}/clases`, data, {headers: headers}).pipe(first())
   }
 
-  postClaseProfesor(data: any): Observable<any>{
-    let auth_token = localStorage.getItem('token')
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    })
-    return this.httpClient.post(`${this.url}/prof_clas/${data.claseID}/${data.profeDNI}`, null, {headers: headers}).pipe(first())
-  }
-
+  
   putClase(data: any, claseID: Number): Observable<any> {
     let auth_token = localStorage.getItem('token')
     const headers = new HttpHeaders({
@@ -151,6 +143,24 @@ export class ClasesService {
       'Authorization': `Bearer ${auth_token}`
     })
     return this.httpClient.delete(`${this.url}/clase/${claseID}`, {headers: headers})
+  }
+  
+  postClaseProfesor(data: any): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(`${this.url}/prof_clas/${data.claseID}/${data.profeDNI}`, null, {headers: headers}).pipe(first())
+  }
+
+  deleteClaseProfesor(claseID: number, profeDNI: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.delete(`${this.url}/prof_clas/${claseID}/${profeDNI}`, {headers: headers}).pipe(first())
   }
 
   inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{
