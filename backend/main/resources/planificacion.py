@@ -139,10 +139,10 @@ class PlanificacionDetalle(Resource):
             dni = usuario_query['alumno_DNI']
             dni_profesor = usuario_query['profesor_DNI']
             nombre_profesor = db.session.query(UsuariosModel).filter(UsuariosModel.dni == dni_profesor).first()
-            nombre_profesor = nombre_profesor.to_json()['Nombre'] + ' ' + nombre_profesor.to_json()['Apellidos']
+            nombre_profesor = nombre_profesor.nombre + ' ' + nombre_profesor.apellidos
             mail = db.session.query(UsuariosModel).filter(dni == UsuariosModel.dni).first()
             mail = mail.to_json()['Email']
-            #sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=data_dict, nombre_profesor=nombre_profesor)
+            sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=data_dict, nombre_profesor=nombre_profesor)
             db.session.add(plan)
             db.session.commit()
             return plan.to_json() , 201
@@ -161,10 +161,10 @@ class PlanificacionDetalles(Resource):
         dni = usuario_query['alumno_DNI']
         dni_profesor = usuario_query['profesor_DNI']
         nombre_profesor = db.session.query(UsuariosModel).filter(UsuariosModel.dni == dni_profesor).first()
-        nombre_profesor = nombre_profesor.to_json()['Nombre']#+ ' ' + nombre_profesor.to_json()['Apellidos']
+        nombre_profesor = nombre_profesor = nombre_profesor.nombre + ' ' + nombre_profesor.apellidos
         mail = db.session.query(UsuariosModel).filter(dni == UsuariosModel.dni).first()
         mail = mail.to_json()['Email']
-        #sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=plan, nombre_profesor=nombre_profesor)
+        sendMail([mail], "Se ha creado una planificacion para usted", "planificacion", plan=plan, nombre_profesor=nombre_profesor)
         db.session.add(plan)
         db.session.commit()
         return plan.to_json(), 201
