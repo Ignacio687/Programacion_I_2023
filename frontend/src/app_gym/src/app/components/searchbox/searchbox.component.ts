@@ -44,7 +44,11 @@ export class SearchboxComponent {
   }
   buscar(keyword: string): void {
     this.stringSearch = keyword;
-    if (this.parentPage === 'profesores' || this.parentPage === 'alumnos') {
+    if  (this.parentPage === 'alumnos'){
+      this.alumnoService.setStringSearch(keyword);
+      this.alumnoService.setFiltroAplicado(this.filtroAplicado);
+    }
+    if (this.parentPage === 'profesores') {
       this.profesorService.setStringSearch(keyword);
       this.profesorService.setFiltroAplicado(this.filtroAplicado);
     } if (this.parentPage === 'inscripto' || this.parentPage === 'disponibles') {

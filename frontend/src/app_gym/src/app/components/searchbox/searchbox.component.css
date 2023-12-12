@@ -37,10 +37,12 @@ label, select ,option{
 }
 .dropdown-toggle{
     color: #8076b0 ;
+    border-bottom-left-radius: 6px !important;
+    border-top-left-radius: 6px !important;
 }
 .search-button{
   background-color: #d0fd3e;
   color: #1b232e;
   font-family: "Ubuntu";
-  border-radius: 10px;
+  border-radius: 0.375 rem;
 }

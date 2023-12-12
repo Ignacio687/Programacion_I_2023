@@ -111,6 +111,16 @@ class UsuariosAlumnos(Resource):
             alumnos = alumnos.order_by(asc(AlumnoModel.edad))
         if 'by_dni' in request.args.keys():
             alumnos = alumnos.order_by(desc(AlumnoModel.dni))
+        nombre_alumno = request.args.get("nombre")
+        if 'nombre' in request.args:
+            alumnos = alumnos.filter(\
+                or_(
+                    AlumnoModel.usuario.has(UsuariosModel.nombre.startswith(nombre_alumno)),
+                    AlumnoModel.usuario.has(UsuariosModel.nombre.contains(nombre_alumno)),
+                    AlumnoModel.usuario.has(UsuariosModel.apellidos.startswith(nombre_alumno)),
+                    AlumnoModel.usuario.has(UsuariosModel.apellidos.contains(nombre_alumno)),
+                )
+            )
         alumnos = alumnos.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
             "alumnos":[alumnos.to_json() for alumnos in alumnos],
