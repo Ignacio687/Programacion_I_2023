@@ -15,7 +15,7 @@ import { merge } from 'rxjs';
 })
 export class TabContentComponent {
 
-  per_page: number = 2
+  per_page: number = 5
 
   paginationParams: { [key: string]: {
     pageNumber: number;
@@ -60,7 +60,7 @@ export class TabContentComponent {
   planificacionesObj!: any;
   profesoresObj!: any;
   clasesDisponiblesObj!: any;
-  page_anterior = "inscripto";
+  page_anterior = this.router.url === "/clases-plan" ? "inscripto" : "profesores" ;
   
   constructor(
 	private router: Router,
@@ -94,6 +94,12 @@ export class TabContentComponent {
     this.clasesService.setFiltroAplicado$.subscribe(valor => {
       this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
     });
+    this.profesorService.setFiltroAplicado$.subscribe(valor => {
+      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
+    });
+    this.alumnoService.setFiltroAplicado$.subscribe(valor => {
+      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
+    });
     this.executeAsyncQueries(1, this.per_page)
   }
 
@@ -119,6 +125,7 @@ export class TabContentComponent {
     this.clasesService.setDiaSeleccionado('')
     this.clasesService.setOrdenarPorHora(false);
     this.clasesService.setTipoSeleccionado('')
+    this.profesorService.setStringSearch('')
   }
   
   definePageContent(page: string){
@@ -133,6 +140,7 @@ export class TabContentComponent {
   }
 
   definePaginationConditionalAction(page: string, pageNumber: number, per_page: number) {
+    console.log(page)
     const functions: { [key: string]: {
       useFunction: Function
     }; } = {

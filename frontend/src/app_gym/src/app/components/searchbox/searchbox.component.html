@@ -1,4 +1,4 @@
-<div *ngIf="parentPage === 'inscripto' || parentPage === 'disponibles'">
+<div *ngIf="parentPage === 'inscripto' || parentPage === 'disponibles' || parentPage === 'profesores' || parentPage === 'alumnos'">
 	<div class="d-flex justify-content-center align-items-start">
 		<div class="input-group me-1">
 			<input [(ngModel)]="stringSearch" type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar Inscripto">
@@ -6,7 +6,7 @@
 		  <button class="btn search-button" (click)="buscar(stringSearch)">
 			Buscar
 		  </button>
-		<button class="btn dropdown-toggle" type="checkbox" aria-expanded="false" (click)="mostrarBtnGroup = !mostrarBtnGroup">
+		<button *ngIf="parentPage === 'inscripto' || parentPage === 'disponibles'" class="btn dropdown-toggle" type="checkbox" aria-expanded="false" (click)="mostrarBtnGroup = !mostrarBtnGroup" >
 			<span class="material-symbols-outlined">
 				filter_list
 			</span>
@@ -23,7 +23,7 @@
 				<a class="dropdown-item" (click)="seleccionarDia(dia)">{{ dia === diaSeleccionado ? "✓ "+dia:dia }}</a>
 			</li>
 		</ul>
-		<button class="btn dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown"
+		<button class="btn dropdown-toggle me-2" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown"
 			aria-expanded="false">
 			{{ tipoSeleccionado }}
 		</button>

@@ -4,7 +4,7 @@ from .. import db
 from main.models import UsuariosModel, ProfesorModel, AlumnoModel
 import regex
 from datetime import datetime
-from sqlalchemy import func, desc, asc
+from sqlalchemy import func, desc, asc, or_
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from ..auth.decorators import role_required
 from werkzeug.security import generate_password_hash
@@ -111,6 +111,16 @@ class UsuariosAlumnos(Resource):
             alumnos = alumnos.order_by(asc(AlumnoModel.edad))
         if 'by_dni' in request.args.keys():
             alumnos = alumnos.order_by(desc(AlumnoModel.dni))
+        nombre_alumno = request.args.get("nombre")
+        if 'nombre' in request.args:
+            alumnos = alumnos.filter(\
+                or_(
+                    AlumnoModel.usuario.has(UsuariosModel.nombre.startswith(nombre_alumno)),
+                    AlumnoModel.usuario.has(UsuariosModel.nombre.contains(nombre_alumno)),
+                    AlumnoModel.usuario.has(UsuariosModel.apellidos.startswith(nombre_alumno)),
+                    AlumnoModel.usuario.has(UsuariosModel.apellidos.contains(nombre_alumno)),
+                )
+            )
         alumnos = alumnos.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
             "alumnos":[alumnos.to_json() for alumnos in alumnos],
@@ -168,6 +178,16 @@ class UsuarioProfesores(Resource):
             profesor = profesor.order_by(asc(ProfesorModel.especialidad))
         if 'by_dni' in request.args.keys():
             profesor = profesor.order_by(desc(ProfesorModel.dni))
+        nombre_profesor = request.args.get("nombre")
+        if 'nombre' in request.args:
+            profesor = profesor.filter(\
+                or_(
+                    ProfesorModel.usuario.has(UsuariosModel.nombre.startswith(nombre_profesor)),
+                    ProfesorModel.usuario.has(UsuariosModel.nombre.contains(nombre_profesor)),
+                    ProfesorModel.usuario.has(UsuariosModel.apellidos.startswith(nombre_profesor)),
+                    ProfesorModel.usuario.has(UsuariosModel.apellidos.contains(nombre_profesor)),
+                )
+            )
         profesor = profesor.paginate(page=page, per_page=per_page, error_out=True, max_per_page=20)
         return jsonify({
             "profesores":[profesor.to_json() for profesor in profesor],

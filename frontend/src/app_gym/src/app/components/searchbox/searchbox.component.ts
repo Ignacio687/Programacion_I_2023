@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ClasesService } from 'src/app/services/clases/clases.service';
+import { ProfesorService } from 'src/app/services/user/profesor.service';
+import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -8,7 +10,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./searchbox.component.css']
 })
 export class SearchboxComponent {
-  constructor(private clasesService: ClasesService, private formBuilder: FormBuilder) {
+  constructor(private clasesService: ClasesService, private formBuilder: FormBuilder, private profesorService: ProfesorService, private alumnoService: AlumnoService) {
     this.form = this.formBuilder.group({
       startHour: new FormControl(0),
       endHour: new FormControl(24),
@@ -16,8 +18,8 @@ export class SearchboxComponent {
     this.parentPage = ""
   }
   selectedOption: string = "Cualquier dia"
-  dias: string[] = ['Cualquier dia','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-  tipos: string[] = ['Cualquier tipo','Cardio', 'Estiramiento', 'Crossfit', 'Running'];
+  dias: string[] = ['Cualquier dia', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  tipos: string[] = ['Cualquier tipo', 'Cardio', 'Estiramiento', 'Crossfit', 'Running'];
   diaSeleccionado: string = 'Cualquier dia';
   tipoSeleccionado: string = 'Cualquier tipo';
   stringSearch: string = '';
@@ -25,7 +27,7 @@ export class SearchboxComponent {
   mostrarBtnGroup: boolean = false;
   ordenarPorHora = false;
   filtroAplicado: boolean = true;
-  
+
   @Input() parentPage: string;
 
   onSwitchChange(event: Event) {
@@ -34,27 +36,30 @@ export class SearchboxComponent {
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
 
-  // Función para manejar la selección del día
   seleccionarDia(dia: string): void {
     this.diaSeleccionado = dia;
-    if ( dia == 'Cualquier dia' ){ dia='' }
-      this.clasesService.setDiaSeleccionado(dia);
+    if (dia == 'Cualquier dia') { dia = '' }
+    this.clasesService.setDiaSeleccionado(dia);
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
   buscar(keyword: string): void {
     this.stringSearch = keyword;
-    if (this.parentPage === 'planificaciones'){
-      
-    }else{
+    if  (this.parentPage === 'alumnos'){
+      this.alumnoService.setStringSearch(keyword);
+      this.alumnoService.setFiltroAplicado(this.filtroAplicado);
+    }
+    if (this.parentPage === 'profesores') {
+      this.profesorService.setStringSearch(keyword);
+      this.profesorService.setFiltroAplicado(this.filtroAplicado);
+    } if (this.parentPage === 'inscripto' || this.parentPage === 'disponibles') {
       this.clasesService.setStringSearch(keyword);
       this.clasesService.setFiltroAplicado(this.filtroAplicado);
     }
   }
 
-  // Función para manejar la selección del tipo
   seleccionarTipo(tipo: string): void {
     this.tipoSeleccionado = tipo;
-    if ( tipo == 'Cualquier tipo'){ tipo=''}
+    if (tipo == 'Cualquier tipo') { tipo = '' }
     this.clasesService.setTipoSeleccionado(tipo);
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
