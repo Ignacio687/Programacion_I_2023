@@ -10,12 +10,6 @@ export class PlanificacionService {
   constructor(
     private httpClient: HttpClient,
   ) { }
-  private filtroAplicado = new BehaviorSubject<boolean>(false);
-  setFiltroAplicado$ = this.filtroAplicado.asObservable();
-
-  private diaSeleccionadoSubject = new BehaviorSubject<string>('');
-  private stringSearchSubject = new BehaviorSubject<string>('');
-
   
   getPlanificacionById(id: number): Observable<any>{
     let auth_token = localStorage.getItem('token')

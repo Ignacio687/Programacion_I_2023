@@ -95,6 +95,9 @@ export class TabContentComponent {
     this.clasesService.setFiltroAplicado$.subscribe(valor => {
       this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
     });
+    this.profesorService.setFiltroAplicado$.subscribe(valor => {
+      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
+    });
     this.executeAsyncQueries(1, this.per_page)
   }
 
@@ -120,6 +123,7 @@ export class TabContentComponent {
     this.clasesService.setDiaSeleccionado('')
     this.clasesService.setOrdenarPorHora(false);
     this.clasesService.setTipoSeleccionado('')
+    this.profesorService.setStringSearch('')
   }
   
   definePageContent(page: string){
