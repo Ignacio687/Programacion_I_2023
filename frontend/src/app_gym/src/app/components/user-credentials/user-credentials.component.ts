@@ -14,7 +14,7 @@ import { UsuarioService } from 'src/app/services/user/usuario.service';
 })
 export class UserCredentialsComponent {
 	samePasswordCondition: boolean = true;
-	commitAttempted:boolean = false;
+	commitAttempted: boolean = false;
 
 	loginForm!: FormGroup;
 	registerForm!: FormGroup;
@@ -55,8 +55,8 @@ export class UserCredentialsComponent {
 			email: ['', [Validators.email, Validators.required]]
 		})
 		this.recoverPassDataForm = this.formBuilder.group({
-			password1: ['', [Validators.maxLength(32), Validators.required]],
-			password2: ['', [Validators.maxLength(32), Validators.required]]
+			password0: ['', [Validators.maxLength(32), Validators.required]],
+			password1: ['', [Validators.maxLength(32), Validators.required]]
 		})
 	}
 
@@ -89,7 +89,7 @@ export class UserCredentialsComponent {
 	getFormValue(index: number): any {
 		if (index === 0) {
 			if (this.getCurrentRoute()=== "/recover-pass-form") {
-				return this.getFormGroup().get('password')
+				return this.getFormGroup().get(`password${index}`)
 			} else {
 				return this.getFormGroup().get('email');
 			}
@@ -124,11 +124,11 @@ export class UserCredentialsComponent {
 					},
 				})
 			} else if (this.getCurrentRoute() === '/recover-pass-form'){
-				if (this.getFormValue(1).value === this.getFormValue(2).value) {
+				if (this.getFormValue(0).value === this.getFormValue(1).value) {
 					const userToken: string = String(this.route.snapshot.paramMap.get('token'))
 					const userTokenPayload: any = jwt_decode(userToken)
 					const userDNI = userTokenPayload.DNI
-					this.registerService.changePassword(userToken, userDNI, {password: this.getFormValue(1).value}).subscribe({
+					this.registerService.changePassword(userToken, userDNI, {password: this.getFormValue(0).value}).subscribe({
 						next: (rta: any) => {
 							alert('Se ha cambiado la contraseña')
 							this.router.navigateByUrl('/login')

@@ -68,7 +68,7 @@ export class FormContentComponent {
       ],
       formOptionsContent: [
         {
-          label: "Seleccion su genero",
+          label: "Selecciona una opción",
           formControlName: "sexo",
           optionsList: ['Masculino', 'Femenino']
         }
@@ -115,7 +115,7 @@ export class FormContentComponent {
     },
     "/plan-form": {
       formLabel: this.urlParameterID? "Mofidicar Planificación":"Crear una planificación",
-      submitButtonLabel: "Crear",
+      submitButtonLabel: this.urlParameterID? "Modificar": "Crear",
       backButtonURL: "/clases-plan",
       formContentLabels: [
         {
@@ -139,7 +139,7 @@ export class FormContentComponent {
     },
     "/clases-form": {
       formLabel: this.urlParameterID? "Mofidicar la Clase":"Crear una Clase",
-      submitButtonLabel: "Crear",
+      submitButtonLabel: this.urlParameterID? "Modificar": "Crear",
       backButtonURL: "/clases-plan",
       formContentLabels: [
         {
@@ -270,9 +270,9 @@ export class FormContentComponent {
       detalle: ['', [Validators.required]],
     })
     this.clasesForm = this.formBuilder.group({
-      nombreClase: ['', [Validators.maxLength(20), Validators.required]],
+      nombreClase: ['', [Validators.maxLength(50), Validators.required]],
       horario: ['', [Validators.required]],
-      tipoClase: ['', [Validators.maxLength(10), Validators.required]],
+      tipoClase: ['', [Validators.maxLength(50), Validators.required]],
       dia: ['', [Validators.required]],
     })
     this.changeUserInfoForm = this.formBuilder.group({
@@ -348,6 +348,7 @@ export class FormContentComponent {
   getClaseDetalle(claseID: number){
     this.claseService.getClaseById(claseID).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.clasesForm.patchValue({
           nombreClase: data.Nombre,
           horario: data.Horario,
@@ -393,6 +394,7 @@ export class FormContentComponent {
   }
 
   submit() { 
+    console.log("alo?")
     const functions: { [key:string]: any } = {
       "/register-form": () => this.register(),
       "/register-form/prof": () => this.register(),
@@ -532,7 +534,9 @@ export class FormContentComponent {
   }
 
   submitClases() {
+    console.log("Hola?")
     if (this.clasesForm.valid) {
+      console.log("chau!")
       let dniProfe = this.isTokenDNI
         if (this.isTokenRol==="admin") {
           dniProfe = this.clasesForm.get("profesorDNI")?.value
@@ -548,15 +552,27 @@ export class FormContentComponent {
       }
 
       let claseSet = this.claseService.postClase(clasesData)
-      
+
       if (this.urlParameterID) {
         claseSet = this.claseService.putClase(clasesData, this.urlParameterID)
+        this.claseService.getClaseById(this.urlParameterID).subscribe({
+            next: (data: any) => {
+              data.Profesores.forEach((profesor: any) => {
+                this.claseService.deleteClaseProfesor(this.urlParameterID, profesor.Usuario.DNI).subscribe({
+                  next: (rta: any) => { },
+                })
+              });
+            },
+            error: (error: any) => {
+              alert("Error con los datos del Profesor")
+              console.log(error);
+            }
+        }) 
       }
       claseSet.subscribe({
         next: (rta: any) => {
           clasesProfes ["claseID"] = rta.Clase_id
-          let clasesProfeService = this.claseService.postClaseProfesor(clasesProfes)
-          clasesProfeService.subscribe({
+          this.claseService.postClaseProfesor(clasesProfes).subscribe({
             next: (rta: any) => {
               this.router.navigateByUrl("/clases-plan")
             },

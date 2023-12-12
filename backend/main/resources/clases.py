@@ -32,6 +32,13 @@ class Clase(Resource):
     @role_required(roles = ["admin"])
     def delete(self, id):
         clase = db.session.query(ClaseModel).get_or_404(id)
+
+        for alumno in clase.alumnos:
+            alumno.clases.remove(clase)
+
+        for profesor in clase.profesores:
+            profesor.clases.remove(clase)
+
         db.session.delete(clase)
         db.session.commit()
         return '', 204
