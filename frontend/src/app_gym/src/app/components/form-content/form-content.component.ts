@@ -9,6 +9,7 @@ import { PlanificacionService } from 'src/app/services/planificacion/planificaci
 import { ClasesService } from 'src/app/services/clases/clases.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { UsuarioService } from 'src/app/services/user/usuario.service';
+import { ProfesorService } from 'src/app/services/user/profesor.service';
 
 
 @Component({
@@ -70,6 +71,45 @@ export class FormContentComponent {
           label: "Seleccion su genero",
           formControlName: "sexo",
           optionsList: ['Masculino', 'Femenino']
+        }
+      ]
+    },
+    "/register-form/prof": {
+      formLabel: "Contanos un poco sobre vos",
+      submitButtonLabel: "Registrarme",
+      backButtonURL: "/register",
+      formContentLabels: [
+        {
+          label: "DNI",
+          type: "number",
+          formControlName: "dni"
+        },
+        {
+          label: "Nombre",
+          type: "text",
+          formControlName: "nombre"
+        },
+        {
+          label: "Apellido",
+          type: "text",
+          formControlName: "apellido"
+        },
+        {
+          label: "Teléfono",
+          type: "number",
+          formControlName: "telefono"
+        },
+        {
+          label: "Especialidad",
+          type: "text",
+          formControlName: "especialidad"
+        },
+      ],
+      formOptionsContent: [
+        {
+          label: "Seleccione el perfil de permisos",
+          formControlName: "rol",
+          optionsList: ['admin', 'profesor']
         }
       ]
     },
@@ -153,7 +193,7 @@ export class FormContentComponent {
       ],
       formOptionsContent: [
         {
-          label: "Selecciona un rol",
+          label: "Seleccione el perfil de permisos",
           formControlName: "rol",
           optionsList: ['admin', 'alumno', 'profesor']
         }
@@ -162,9 +202,11 @@ export class FormContentComponent {
   }
 
   registerForm!: FormGroup;
+  registerFormProf!: FormGroup;
   planForm!: FormGroup;
   clasesForm!: FormGroup;
   changeUserInfoForm!: FormGroup;
+  commitAttempted:boolean = false;
 
   get isTokenRol() { 
     return localStorage.getItem('token_rol');
@@ -176,7 +218,11 @@ export class FormContentComponent {
 
   get currentRoute() {
     const urlSections = this.router.url.split('/')
-    return `/${urlSections[1]}`
+    if (this.router.url === "/register-form/prof") {
+      return this.router.url
+    } else {
+      return `/${urlSections[1]}`
+    }
   }
 
   get urlParameterDNI() {
@@ -192,6 +238,7 @@ export class FormContentComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private alumnoService: AlumnoService,
+    private profesorService: ProfesorService,
     private registerService: RegisterService,
     private planificacionService: PlanificacionService,
     private claseService: ClasesService,
@@ -208,6 +255,14 @@ export class FormContentComponent {
       telefono: ['', [Validators.maxLength(10), Validators.required]],
       edad: ['', [Validators.required]],
       sexo: ['', [Validators.required]]
+    })
+    this.registerFormProf = this.formBuilder.group({
+      dni: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      telefono: ['', [Validators.maxLength(10), Validators.required]],
+      especialidad: ['', [Validators.required]],
+      rol: ['', [Validators.required]],
     })
     this.planForm = this.formBuilder.group({
       alumnoDNI: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
@@ -246,11 +301,12 @@ export class FormContentComponent {
   formGroupSelector() {
     const conditionalArray: {[key:string]: any} = {
       "/register-form": this.registerForm,
+      "/register-form/prof": this.registerFormProf,
       "/plan-form": this.planForm,
       "/clases-form": this.clasesForm,
       "/change-user-info": this.changeUserInfoForm
     }
-    return conditionalArray[this.currentRoute]
+      return conditionalArray[this.currentRoute]
   }
 
   ngOnInit() {
@@ -339,6 +395,7 @@ export class FormContentComponent {
   submit() { 
     const functions: { [key:string]: any } = {
       "/register-form": () => this.register(),
+      "/register-form/prof": () => this.register(),
       "/plan-form": () => this.submitPlanificacion(),
       "/clases-form": () => this.submitClases(),
       "/change-user-info": () => this.updateUserInfo(),
@@ -347,29 +404,54 @@ export class FormContentComponent {
   }
 
   register(){
-    if (this.registerForm.valid) {
+    const formGroup = this.formGroupSelector()
+    if (formGroup.valid) {
       let credentials = this.dataManagerService.getUserCredentials()
+      let rol = formGroup.get("rol")?.value
+      if (rol === null) {
+        rol = ""
+      }
       let registerData = {
-        "DNI": Number(this.registerForm.get("dni")?.value),
-        "Nombre": this.registerForm.get("nombre")?.value,
-        "Apelidos": this.registerForm.get("apellido")?.value,
-        "Telefono": Number(this.registerForm.get("telefono")?.value),
+        "DNI": Number(formGroup.get("dni")?.value),
+        "Nombre": formGroup.get("nombre")?.value,
+        "Apellidos": formGroup.get("apellido")?.value,
+        "Telefono": Number(formGroup.get("telefono")?.value),
         "Email": credentials.email,
         "Password": credentials.password,
-        "Rol": "",
+        "Rol": rol,
       }
-      let userSex = true
-      if (this.registerForm.get("sexo")?.value === "Masculino") {
-        userSex = false
-      }
-      let alumnoData = {
-        "DNI": Number(this.registerForm.get("dni")?.value),
-        "Edad": Number(this.registerForm.get("edad")?.value),
-        "Sexo": userSex
+      let userData = {}
+      if(this.currentRoute === "/register-form") {
+        let userSex = true
+        if (formGroup.get("sexo")?.value === "Masculino") {
+          userSex = false
+        }
+        userData = {
+          "DNI": Number(formGroup.get("dni")?.value),
+          "Edad": Number(formGroup.get("edad")?.value),
+          "Sexo": userSex
+        }
+      } else {
+        const fechaActual = new Date();
+        const dia = fechaActual.getDate();
+        const mes = fechaActual.getMonth() + 1;
+        const año = fechaActual.getFullYear();
+        const diaFormateado = dia.toString().padStart(2, '0');
+        const mesFormateado = mes.toString().padStart(2, '0');
+        const fechaFormateada = `${diaFormateado}/${mesFormateado}/${año}`;
+        userData = {
+          "DNI": Number(this.registerFormProf.get("dni")?.value),
+          "Especialidad": this.registerFormProf.get("especialidad")?.value,
+          "Inicio_actividad": fechaFormateada
+        }
       }
       this.registerService.register(registerData).subscribe({
         next: (rta: any) => {
-          this.alumnoService.postAlumno(alumnoData).subscribe({
+          let service = this.alumnoService.postAlumno(userData)
+          if (this.currentRoute === "/register-form/prof") {
+            service = this.profesorService.postProfe(userData)
+          }
+          service.subscribe({
             next: (rta: any) => {
               alert("Registro Exitoso")
               this.router.navigateByUrl('/home');
@@ -385,6 +467,8 @@ export class FormContentComponent {
           alert('Error al registrar')
         },
       })
+    }	else {
+			this.commitAttempted = true
     }
   }
 
@@ -441,7 +525,8 @@ export class FormContentComponent {
       }).catch((err) => {
         console.log(err);
       })
-    } else {
+    }	else {
+			this.commitAttempted = true
       return null;
     }
   }
@@ -486,6 +571,8 @@ export class FormContentComponent {
           console.log(error);
         }
       })
+    }	else {
+			this.commitAttempted = true
     }
   }
 
@@ -503,8 +590,9 @@ export class FormContentComponent {
         alert("Error al actualizar los datos")
         console.log(err);
       })
-    } else {
-      return false;
+    }	else {
+			this.commitAttempted = true
+      return null;
     }
   }
 }

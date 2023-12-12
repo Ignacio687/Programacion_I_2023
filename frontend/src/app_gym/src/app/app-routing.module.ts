@@ -27,8 +27,7 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent}, 
   { path: 'horarios', component: HorariosDireccionComponent},
   { path: 'recover-pass', component: RecoverPassComponent},
-  { path: 'recover-pass-form', component: RecoverPassFormComponent},
-  { path: 'recover-pass-form/:token', component: RecoverPassFormComponent}, // canActivate:[recoverPassGuard]}
+  { path: 'recover-pass-form/:token', component: RecoverPassFormComponent, canActivate:[recoverPassGuard]},
   { path: 'login', component: UserLoginComponent},
   { path: 'clases-form', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
   { path: 'clases-form/:id/editar', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
@@ -36,6 +35,7 @@ const routes: Routes = [
   { path: 'plan-form', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
   { path: 'plan-form/:id/:dia/editar', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
   { path: 'register-form', component: RegisterFormComponent},
+  { path: 'register-form/prof', component: RegisterFormComponent, canActivate:[adminSessionGuard]},
   { path: 'register', component: UserRegisterComponent},
   { path: 'error404', component: PageNotFoundComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full'},

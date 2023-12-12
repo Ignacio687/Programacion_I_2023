@@ -44,8 +44,6 @@ def login():
 @jwt_required(optional=True)
 def register():
     usuario = UsuariosModel.from_json(request.get_json())
-    # if ("admin" not in get_jwt().get("rol") if get_jwt() else False) and usuario.rol != "":
-    #     return f'Solo administradores pueden habilitar cuentas', 403
     existsMail = db.session.query(UsuariosModel).filter(UsuariosModel.email == usuario.email).scalar() is not None
     existsDNI = db.session.query(UsuariosModel).filter(UsuariosModel.dni == usuario.dni).scalar() is not None
     if existsMail:

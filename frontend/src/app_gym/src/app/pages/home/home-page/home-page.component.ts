@@ -62,7 +62,6 @@ export class HomePageComponent {
     },
   ];
 
-
   getProfesores() {
     return this.profesores
   }

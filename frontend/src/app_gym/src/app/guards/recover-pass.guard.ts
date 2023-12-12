@@ -3,9 +3,12 @@ import { inject } from '@angular/core';
 import jwt_decode from "jwt-decode";
 
 export const recoverPassGuard: CanActivateFn = (route, state) => {
+
+
   const router: Router = inject(Router);
-  const token = localStorage.getItem('token')
-  const tokenRol = localStorage.getItem('token_rol')
+  const token: string = String(route.paramMap.get('token'))
+  const tokenPayload: any = jwt_decode(token)
+  const tokenRol = tokenPayload.rol
 
   if (token && tokenRol && tokenRol.includes('recover-pass')) {
     return true

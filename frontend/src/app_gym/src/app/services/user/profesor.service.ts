@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, first } from 'rxjs';
+import { Observable, first, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,15 @@ export class ProfesorService {
   constructor(
     private httpClient: HttpClient,
   ) { }
+
+  postProfe(dataProf: any): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(this.url + '/profs', dataProf, {headers: headers}).pipe(take(1))
+  }
 
   getProfeByDni(dni: number): Observable<any> {
     let auth_token = localStorage.getItem('token')

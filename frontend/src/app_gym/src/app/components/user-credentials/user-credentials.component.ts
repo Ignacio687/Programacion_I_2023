@@ -25,6 +25,10 @@ export class UserCredentialsComponent {
 		return Number(localStorage.getItem('token_DNI'));
 	  }
 
+	get isTokenRol() {
+		return String(localStorage.getItem('token_rol'));
+	  }
+
 	constructor(
 		private loginService: LoginService,
 		private router: Router,
@@ -101,7 +105,11 @@ export class UserCredentialsComponent {
 			} else if (this.getCurrentRoute() === '/register') {
 				if (this.getFormValue(1).value === this.getFormValue(2).value) {
 					this.dataManagerService.setUserCredentials(this.getFormValue(0).value, this.getFormValue(1).value)
-					this.router.navigateByUrl("/register-form")
+					if (this.isTokenRol === 'admin') {
+						this.router.navigateByUrl("/register-form/prof")
+					} else {
+						this.router.navigateByUrl("/register-form")
+					}
 				} else {
 					this.samePasswordCondition = false
 				}
