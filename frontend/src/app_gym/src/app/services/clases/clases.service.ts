@@ -83,7 +83,6 @@ export class ClasesService {
     if (!this.ordenarPorHora) {
       params = params.delete("orby_hora");
     }
-    
     return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
   }
 

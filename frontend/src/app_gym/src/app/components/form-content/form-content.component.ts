@@ -195,7 +195,7 @@ export class FormContentComponent {
         {
           label: "Seleccione el perfil de permisos",
           formControlName: "rol",
-          optionsList: ['admin', 'alumno', 'profesor']
+          optionsList: ['admin', 'alumno', 'profesor', 'sin permisos']
         }
       ]
     },
@@ -348,7 +348,6 @@ export class FormContentComponent {
   getClaseDetalle(claseID: number){
     this.claseService.getClaseById(claseID).subscribe({
       next: (data: any) => {
-        console.log(data)
         this.clasesForm.patchValue({
           nombreClase: data.Nombre,
           horario: data.Horario,
@@ -394,7 +393,6 @@ export class FormContentComponent {
   }
 
   submit() { 
-    console.log("alo?")
     const functions: { [key:string]: any } = {
       "/register-form": () => this.register(),
       "/register-form/prof": () => this.register(),
@@ -534,9 +532,7 @@ export class FormContentComponent {
   }
 
   submitClases() {
-    console.log("Hola?")
     if (this.clasesForm.valid) {
-      console.log("chau!")
       let dniProfe = this.isTokenDNI
         if (this.isTokenRol==="admin") {
           dniProfe = this.clasesForm.get("profesorDNI")?.value
@@ -593,11 +589,15 @@ export class FormContentComponent {
   }
 
   updateUserInfo() {
+    let rol = this.changeUserInfoForm.get("rol")?.value
+    if (rol === 'sin permisos') {
+      rol = ''
+    }
     const userData = {
       "Nombre": this.changeUserInfoForm.get("nombre")?.value,
       "Apellidos": this.changeUserInfoForm.get("apellido")?.value,
       "Telefono": Number(this.changeUserInfoForm.get("telefono")?.value),
-      "Rol": this.changeUserInfoForm.get("rol")?.value
+      "Rol": rol
     }
     if (this.changeUserInfoForm.valid) {
       return firstValueFrom(this.usuarioService.updateUserInfo(Number(this.route.snapshot.paramMap.get('dni')), userData)).then((data: any) => {
