@@ -50,7 +50,6 @@ export class TabContentComponent {
   }
   
   @Input() parentPageTitles: string[];
-  // @Input() 
   currentRoute: string;
   dia: string = "";
   items: any[] = [];

@@ -1,9 +1,7 @@
 import { Component} from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { LoginService } from 'src/app/services/auth/login.service';
-import { AlumnoService } from'src/app/services/user/alumno.service';
-import { ProfesorService } from 'src/app/services/user/profesor.service';
 import { UsuarioService } from 'src/app/services/user/usuario.service';
 
 @Component({
@@ -13,6 +11,10 @@ import { UsuarioService } from 'src/app/services/user/usuario.service';
 })
 
 export class NavVarComponent{
+
+  get isDNI() {
+    return Number(localStorage.getItem('token_DNI'));
+  }
 
   pagesUrlsArray = [
     {
@@ -69,10 +71,6 @@ export class NavVarComponent{
 
   get isToken(){
     return localStorage.getItem('token');
-  }
-
-  get isDNI() {
-    return Number(localStorage.getItem('token_DNI'));
   }
 
   ngDoCheck() {

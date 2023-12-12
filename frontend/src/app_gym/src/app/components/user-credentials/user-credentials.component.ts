@@ -134,6 +134,7 @@ export class UserCredentialsComponent {
 							this.router.navigateByUrl('/login')
 						},
 						error: (error: any) => {
+							alert('El tiempo para cambiar la contraseña a expirado, vuelva a intentar')
 							console.log(error);
 						},
 					})

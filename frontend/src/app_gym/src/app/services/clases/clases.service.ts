@@ -104,6 +104,7 @@ export class ClasesService {
     let params = new HttpParams().appendAll({
       "per_page": per_page,
       "page": page,
+      "nombre" : this.stringSearchSubject.value,
       "dia" : this.diaSeleccionadoSubject.value,
       "tipo" : this.tipoSeleccionadoSubject.value,
       "orby_hora":""
@@ -112,7 +113,6 @@ export class ClasesService {
     if (!this.ordenarPorHora) {
       params = params.delete("orby_hora");
     }
-    
     return this.httpClient.get(`${this.url}/clases/${dispoInscFlag === true ? "disponible" : "inscripto"}/${Number(localStorage.getItem('token_DNI'))}`, {headers: headers, params: params}).pipe(first())
   }
 

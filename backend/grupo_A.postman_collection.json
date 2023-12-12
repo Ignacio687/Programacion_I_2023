@@ -4,7 +4,7 @@
 		"name": "grupo_A",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26654415",
-		"_collection_link": "https://gold-meadow-277833.postman.co/workspace/Programacion_I~e5a8bcb4-0d38-4909-bee1-89b6b3d05ca6/collection/26654350-3a2b3a3e-c392-4d43-a832-211b045dc33d?action=share&creator=26654415&source=collection_link"
+		"_collection_link": "https://gold-meadow-277833.postman.co/workspace/Programacion_I~e5a8bcb4-0d38-4909-bee1-89b6b3d05ca6/collection/26654350-3a2b3a3e-c392-4d43-a832-211b045dc33d?action=share&source=collection_link&creator=26654415"
 	},
 	"item": [
 		{
@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"francosales@gmail.com\",\r\n    \"password\": \"adjaiodjiwjis\"\r\n}",
+							"raw": "{\r\n    \"email\": \"matiasboldrini@gmail.com\",\r\n    \"password\": \"ujshu110945-\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -49,13 +49,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NTc4MTMxMywianRpIjoiYzVkZDlhODgtNWRlMC00NjJkLWJmMTMtMDYwNWJkYjZlOTBkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NTc4MTMxMywiZXhwIjoxNjg1Nzg0OTEzLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0._vOc9_aZH5KjW0wGD85S1hdsL9ybDZ_KjtgQl-GUstc",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"DNI\": 48988794,\r\n    \"Nombre\": \"Cristian\",\r\n    \"Apelidos\": \"Coria\",\r\n    \"Telefono\": \"2614347800\",\r\n    \"Email\": \"cristiancoria@gmail.com\",\r\n    \"Password\": \"45sdkaj1i28f*\",\r\n    \"Rol\": \"profesor\"\r\n}",
+							"raw": "{\r\n    \"DNI\": 54879154,\r\n    \"Nombre\": \"Ignacio\",\r\n    \"Apelidos\": \"Jofre\",\r\n    \"Telefono\": \"2614301580\",\r\n    \"Email\": \"i.chaves@alumno.um.edu.ar\",\r\n    \"Password\": \"45sdkaj1i28f*\",\r\n    \"Rol\": \"alumno\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,42 +75,6 @@
 							"path": [
 								"auth",
 								"register"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Login",
-			"item": [
-				{
-					"name": "login/post",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"DNI\": 38774369, \r\n    \"contraseña\": \"#$sdadwj4541\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:7500/login",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "7500",
-							"path": [
-								"login"
 							]
 						}
 					},
@@ -317,13 +281,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODU1NjMxNywianRpIjoiZWY5Y2JkMzUtYTkwZC00YTgyLWE0ODQtY2ZkM2RjNDE4N2YyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODU1NjMxNywiZXhwIjoxNjk4OTE2MzE3LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.wmO17G2nTKZauVjXctiyCNc02ePqbPylLMxTIuN0bkw",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"planificacion_id\": 4 ,\n    \"dia\": \"Martes\",\n    \"detalle\": \"Cardio y bicicleta\"\n}",
+									"raw": "{\n    \"planificacion_id\": 2,\n    \"dia\": \"Jueves\",\n    \"detalle\": \"Espalda y Bíceps\\n\\nDominadas o Pull-ups: 3-4 series de 6-8 repeticiones.\\nPeso muerto: 3 series de 6-8 repeticiones.\\nPull-ups en máquina asistida: 3 series de 8-10 repeticiones (si es necesario).\\nCurl de bíceps con barra: 3-4 series de 6-8 repeticiones.\\nCurl de martillo con mancuernas: 3 series de 8-10 repeticiones.\\nCurl de bíceps en polea baja: 3 series de 10-12 repeticiones.\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -356,12 +320,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTUwMzk3NiwianRpIjoiYzkxZjk5YTItM2Y2Zi00OTdhLTlhMTMtMWU5Y2U2YjNkMjViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTUwMzk3NiwiZXhwIjoxNjk5NTExMTc2LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.EofiVJZBqr8YktBQrd3TsCaQdPzwUb7xWRu0ny1Nm7A",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/plan_alumno/84931657",
+							"raw": "http://127.0.0.1:7500/plan_alumno/48706597",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -372,7 +336,7 @@
 							"port": "7500",
 							"path": [
 								"plan_alumno",
-								"84931657"
+								"48706597"
 							]
 						}
 					},
@@ -385,12 +349,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTQ4OTIwNywianRpIjoiYmU1NzA0NjMtYmQ0MC00ZGEzLTk1YmYtNWY3MGQ3ZGZlODU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTQ4OTIwNywiZXhwIjoxNjk5NDkyODA3LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.1ydJQG6PW5HMeYN11r4Ry6SXAEOo-brTHvPdohmqeYI",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/plan_prof/54602048?",
+							"raw": "http://127.0.0.1:7500/plan_prof/48988794",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -401,13 +365,7 @@
 							"port": "7500",
 							"path": [
 								"plan_prof",
-								"54602048"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null
-								}
+								"48988794"
 							]
 						}
 					},
@@ -420,7 +378,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODU1NjMxNywianRpIjoiZWY5Y2JkMzUtYTkwZC00YTgyLWE0ODQtY2ZkM2RjNDE4N2YyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODU1NjMxNywiZXhwIjoxNjk4OTE2MzE3LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.wmO17G2nTKZauVjXctiyCNc02ePqbPylLMxTIuN0bkw",
 								"type": "text"
 							}
 						],
@@ -480,13 +438,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODU1NjMxNywianRpIjoiZWY5Y2JkMzUtYTkwZC00YTgyLWE0ODQtY2ZkM2RjNDE4N2YyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODU1NjMxNywiZXhwIjoxNjk4OTE2MzE3LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.wmO17G2nTKZauVjXctiyCNc02ePqbPylLMxTIuN0bkw",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"profesor_DNI\": 54602048,\r\n    \"alumno_DNI\":  78912049,\r\n    \"estado\": false,\r\n    \"creation_date\": \"20/05/2019\"\r\n}",
+							"raw": "{\r\n    \"profesor_DNI\": 54602048,\r\n    \"alumno_DNI\":  48706597,\r\n    \"estado\": true,\r\n    \"creation_date\": \"20/05/2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -517,12 +475,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYxNTU0OSwianRpIjoiNTA5NmYzYTMtZTc1ZC00ZTY4LThlNWItNjcyYTQ2OWE0ZjFjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYxNTU0OSwiZXhwIjoxNjk4OTc1NTQ5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.U8R_DO_KsY6gs-9eFj7GL2Rt-fKWACXr4VPiItFXKKY",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/plan/3?",
+							"raw": "http://127.0.0.1:7500/plan/2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -533,13 +491,7 @@
 							"port": "7500",
 							"path": [
 								"plan",
-								"3"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null
-								}
+								"2"
 							]
 						}
 					},
@@ -552,13 +504,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYxNTU0OSwianRpIjoiNTA5NmYzYTMtZTc1ZC00ZTY4LThlNWItNjcyYTQ2OWE0ZjFjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYxNTU0OSwiZXhwIjoxNjk4OTc1NTQ5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.U8R_DO_KsY6gs-9eFj7GL2Rt-fKWACXr4VPiItFXKKY",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"profesor_DNI\": 48791548,\r\n    \"alumno_DNI\": 84931657,\r\n    \"estado\": true,\r\n    \"creation_date\": \"20/05/2002\"\r\n}",
+							"raw": "{\r\n    \"profesor_DNI\": 48987653,\r\n    \"alumno_DNI\": 48706597,\r\n    \"estado\": true,\r\n    \"creation_date\": \"20/05/2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -566,7 +518,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:7500/plan/1",
+							"raw": "http://127.0.0.1:7500/plan/2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -577,7 +529,7 @@
 							"port": "7500",
 							"path": [
 								"plan",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -627,12 +579,12 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTQ5ODQxMSwianRpIjoiODdmOGQwOTgtYzhiMC00ODNmLWJmYjEtYWFlNGIzYjY3ZWMxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTQ5ODQxMSwiZXhwIjoxNjk5NTA1NjExLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.4I41EWy4zW4daG-5vkw_PVGtle6yYYU9vzizV6fAGi4",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "http://127.0.0.1:7500/alumno/78912049",
+									"raw": "http://127.0.0.1:7500/alumno/48706597",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -643,7 +595,7 @@
 									"port": "7500",
 									"path": [
 										"alumno",
-										"78912049"
+										"48706597"
 									]
 								}
 							},
@@ -694,7 +646,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5MjU5OSwianRpIjoiMmZhNjZmZTYtZmQ5My00NWU5LThiOWUtOWQ5ZTMyZWZmZTJiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJETkkiOjQzNzUyNDQ2LCJOb21icmUiOiJTb2ZpIiwiQXBlbGlkb3MiOiJTYWxlcyIsIlRlbGVmb25vIjoiMjYxNDM0ODY0MSIsIkVtYWlsIjoiZnVmaXNhbGVzQGdtYWlsLmNvbSIsIlJvbCI6ImFkbWluIn0sIm5iZiI6MTY4NDg5MjU5OSwiZXhwIjoxNjg0ODk2MTk5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDM3NTI0NDYsImVtYWlsIjoiZnVmaXNhbGVzQGdtYWlsLmNvbSJ9.PVbAfQmnJZw7YvsJq309tPZDPpovj6kJ_-HqmeAo9Ac",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODU1NjMxNywianRpIjoiZWY5Y2JkMzUtYTkwZC00YTgyLWE0ODQtY2ZkM2RjNDE4N2YyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODU1NjMxNywiZXhwIjoxNjk4OTE2MzE3LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.wmO17G2nTKZauVjXctiyCNc02ePqbPylLMxTIuN0bkw",
 										"type": "text"
 									}
 								],
@@ -783,9 +735,15 @@
 							"name": "profe/get/<dni>",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTUwMzk3NiwianRpIjoiYzkxZjk5YTItM2Y2Zi00OTdhLTlhMTMtMWU5Y2U2YjNkMjViIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTUwMzk3NiwiZXhwIjoxNjk5NTExMTc2LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.EofiVJZBqr8YktBQrd3TsCaQdPzwUb7xWRu0ny1Nm7A",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "http://127.0.0.1:7500/profe/54602048",
+									"raw": "http://127.0.0.1:7500/profe/48987653",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -796,7 +754,7 @@
 									"port": "7500",
 									"path": [
 										"profe",
-										"54602048"
+										"48987653"
 									]
 								}
 							},
@@ -884,13 +842,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYyNzc4MiwianRpIjoiOGIyZTQ3ZmQtMTM3Yy00NDE4LTk0ODctNzBmNmYwMjJiZWM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYyNzc4MiwiZXhwIjoxNjk4OTg3NzgyLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.yTzBVTFAZEFoIGKAWiR5ppNYz2AEhlVcSvYeD7XhvUg",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"DNI\": 48988794,\n    \"Especialidad\": \"cardio\",\n    \"Inicio_actividad\": \"20/12/2017\"\n}",
+									"raw": "{\n    \"DNI\": 48987653,\n    \"Especialidad\": \"fitnes y powerlifting\",\n    \"Inicio_actividad\": \"20/12/2023\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -928,7 +886,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/usuario/487879",
+							"raw": "http://127.0.0.1:7500/usuario/48988794",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -939,7 +897,7 @@
 							"port": "7500",
 							"path": [
 								"usuario",
-								"487879"
+								"48988794"
 							]
 						}
 					},
@@ -990,12 +948,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYxNTU0OSwianRpIjoiNTA5NmYzYTMtZTc1ZC00ZTY4LThlNWItNjcyYTQ2OWE0ZjFjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYxNTU0OSwiZXhwIjoxNjk4OTc1NTQ5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.U8R_DO_KsY6gs-9eFj7GL2Rt-fKWACXr4VPiItFXKKY",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/usuario/48987947",
+							"raw": "http://127.0.0.1:7500/usuario/57894560",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1006,7 +964,7 @@
 							"port": "7500",
 							"path": [
 								"usuario",
-								"48987947"
+								"57894560"
 							]
 						}
 					},
@@ -1015,11 +973,51 @@
 				{
 					"name": "usuarios/get",
 					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYxNTU0OSwianRpIjoiNTA5NmYzYTMtZTc1ZC00ZTY4LThlNWItNjcyYTQ2OWE0ZjFjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYxNTU0OSwiZXhwIjoxNjk4OTc1NTQ5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.U8R_DO_KsY6gs-9eFj7GL2Rt-fKWACXr4VPiItFXKKY",
 								"type": "text"
 							}
 						],
@@ -1071,10 +1069,16 @@
 					"name": "usuarios/post",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYyNzc4MiwianRpIjoiOGIyZTQ3ZmQtMTM3Yy00NDE4LTk0ODctNzBmNmYwMjJiZWM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYyNzc4MiwiZXhwIjoxNjk4OTg3NzgyLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.yTzBVTFAZEFoIGKAWiR5ppNYz2AEhlVcSvYeD7XhvUg",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"DNI\": 48987487,\r\n    \"Nombre\": \"Cristian\",\r\n    \"Apelidos\": \"Coria\",\r\n    \"Telefono\": \"2614347800\",\r\n    \"Email\": \"cristiancoria@gmail.com\",\r\n    \"Password\": \"45sdkaj1i28f*\",\r\n    \"Rol\": \"profesor\"\r\n}",
+							"raw": "{\r\n    \"DNI\": 48987653,\r\n    \"Nombre\": \"Gonzalo\",\r\n    \"Apelidos\": \"Ruiz\",\r\n    \"Telefono\": \"2614346642\",\r\n    \"Email\": \"gonzaloruiz@gmail.com\",\r\n    \"Password\": \"45skuqy^%#.5665s\",\r\n    \"Rol\": \"profesor\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1110,7 +1114,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTQ5ODQxMSwianRpIjoiODdmOGQwOTgtYzhiMC00ODNmLWJmYjEtYWFlNGIzYjY3ZWMxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTQ5ODQxMSwiZXhwIjoxNjk5NTA1NjExLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.4I41EWy4zW4daG-5vkw_PVGtle6yYYU9vzizV6fAGi4",
 								"type": "text"
 							}
 						],
@@ -1169,6 +1173,66 @@
 					"response": []
 				},
 				{
+					"name": "clases/disponibles/get<dni>",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTQ5ODQxMSwianRpIjoiODdmOGQwOTgtYzhiMC00ODNmLWJmYjEtYWFlNGIzYjY3ZWMxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTQ5ODQxMSwiZXhwIjoxNjk5NTA1NjExLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.4I41EWy4zW4daG-5vkw_PVGtle6yYYU9vzizV6fAGi4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:7500/clases/disponible/48706597",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clases",
+								"disponible",
+								"48706597"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/clases/inscripto/get<dni>",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTQ5NzA0OSwianRpIjoiNTgzOWYzODctNjIxNC00ZmU5LTgxMTItZjVkYjQxMTE4MTMzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTQ5NzA0OSwiZXhwIjoxNjk5NTA0MjQ5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.Usoh_9kwsA79w222gByMARyrIypg4EPwdpNNfmX1xRo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:7500/clases/inscripto/48706597",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"clases",
+								"inscripto",
+								"48706597"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "clases/post",
 					"request": {
 						"method": "POST",
@@ -1212,7 +1276,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTQ5ODQxMSwianRpIjoiODdmOGQwOTgtYzhiMC00ODNmLWJmYjEtYWFlNGIzYjY3ZWMxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5OTQ5ODQxMSwiZXhwIjoxNjk5NTA1NjExLCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.4I41EWy4zW4daG-5vkw_PVGtle6yYYU9vzizV6fAGi4",
 								"type": "text"
 							}
 						],
@@ -1315,12 +1379,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYyNDM0NSwianRpIjoiYjU1ODNhNDQtYTc0ZS00NjE5LWExNGEtNjMwZGIyNzIyMzIxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg3MDY1OTcsIm5iZiI6MTY5ODYyNDM0NSwiZXhwIjoxNjk4OTg0MzQ1LCJyb2wiOiJhbHVtbm8iLCJETkkiOjQ4NzA2NTk3LCJlbWFpbCI6Imp1YW5nb21lekBnbWFpbC5jb20ifQ.Zida9LFAkb-9vra4TeUIs0P6YoY_F0Ka450cxd2JPOU",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/alum_clas/2/489721048",
+							"raw": "http://127.0.0.1:7500/alum_clas/1/48706597",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1331,8 +1395,8 @@
 							"port": "7500",
 							"path": [
 								"alum_clas",
-								"2",
-								"489721048"
+								"1",
+								"48706597"
 							]
 						}
 					},
@@ -1345,12 +1409,66 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDg5NDI3NCwianRpIjoiY2QyMzNjNGEtMWU3Yi00MWQ5LWEyYWEtZjRlNzcxYTUxMmUwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY4NDg5NDI3NCwiZXhwIjoxNjg0ODk3ODc0LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.zZJnsK-dcgJvBrjEMbjZ72_NXCCQjtiCZNc_1v2hsw8",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYxNTU0OSwianRpIjoiNTA5NmYzYTMtZTc1ZC00ZTY4LThlNWItNjcyYTQ2OWE0ZjFjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg5MDE1NDgsIm5iZiI6MTY5ODYxNTU0OSwiZXhwIjoxNjk4OTc1NTQ5LCJyb2wiOiJhZG1pbiIsIkROSSI6NDg5MDE1NDgsImVtYWlsIjoibWF0aWFzYm9sZHJpbmlAZ21haWwuY29tIn0.U8R_DO_KsY6gs-9eFj7GL2Rt-fKWACXr4VPiItFXKKY",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:7500/prof_clas/1/48988794",
+							"raw": "http://127.0.0.1:7500/prof_clas/3/48987653",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"prof_clas",
+								"3",
+								"48987653"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alum_clas/del/<id>/<dni>",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYyNDM0NSwianRpIjoiYjU1ODNhNDQtYTc0ZS00NjE5LWExNGEtNjMwZGIyNzIyMzIxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NDg3MDY1OTcsIm5iZiI6MTY5ODYyNDM0NSwiZXhwIjoxNjk4OTg0MzQ1LCJyb2wiOiJhbHVtbm8iLCJETkkiOjQ4NzA2NTk3LCJlbWFpbCI6Imp1YW5nb21lekBnbWFpbC5jb20ifQ.Zida9LFAkb-9vra4TeUIs0P6YoY_F0Ka450cxd2JPOU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:7500/alum_clas/1/48706597",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7500",
+							"path": [
+								"alum_clas",
+								"1",
+								"48706597"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prof_clas/del/<id>/<dni>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7500/prof_clas/1/48706597",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1362,7 +1480,7 @@
 							"path": [
 								"prof_clas",
 								"1",
-								"48988794"
+								"48706597"
 							]
 						}
 					},

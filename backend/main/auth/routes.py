@@ -16,7 +16,7 @@ def recoverPass():
     if not usuario:
         return 'Mail no registrado', 409
     usuario.rol = "recover-pass"
-    access_token = create_access_token(identity=usuario, fresh=datetime.timedelta(minutes=10))
+    access_token = create_access_token(identity=usuario, expires_delta=datetime.timedelta(minutes=10))
     if existsMail:
         result = sendMail([email], "Recupera tu contraseña", "recover_pass", usuario=usuario, token=access_token)
         if result:
