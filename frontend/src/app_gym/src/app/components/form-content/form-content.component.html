@@ -8,7 +8,11 @@
                 <div *ngFor="let field of inputFields[currentRoute].formContentLabels" class="mb-3">
                     <!-- Input Fields -->
                     <label class="form-label">{{field.label}}</label>
-                    <input *ngIf="field.type!=='textarea'; else textAreaBlock" type="{{field.type}}" class="form-control " formControlName="{{field.formControlName}}">
+                    <input type="{{ field.type }}" 
+                        (keypress)="field.type === 'text' && validarEntrada($event)" 
+                        class="form-control" 
+                        formControlName="{{ field.formControlName }}" 
+                        #input>
                     <ng-template #textAreaBlock>
                         <textarea class="form-control" formControlName="{{field.formControlName}}" appAutoResize></textarea>
                     </ng-template>
