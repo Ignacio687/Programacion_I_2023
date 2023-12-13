@@ -22,7 +22,7 @@ export class SearchboxComponent {
 
     this.searchTerms
     .pipe(
-      filter((term: string) => term.length >= 3 || term.length == 0), // Filtrar solo términos con 3 o más caracteres
+      //  filter((term: string) => term.length >= 3 || term.length == 0)
       debounceTime(1000) // Retraso de 300ms después de la última entrada
     ).subscribe(() => {
       this.buscar();

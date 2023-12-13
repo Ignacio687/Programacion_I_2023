@@ -10,7 +10,6 @@
                     <label class="form-label">{{field.label}}</label>
                     <input *ngIf="field.type!=='textarea'; else textAreaBlock"
                         type="{{ field.type }}" 
-                        (keypress)="validarEntrada($event, field.type)" 
                         class="form-control" 
                         formControlName="{{ field.formControlName }}" 
                         #input>

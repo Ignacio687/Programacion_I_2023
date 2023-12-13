@@ -11,7 +11,7 @@ export class AuthService {
 
   ) { setInterval(() => {
     this.checkTokenExpiration();
-  }, 30000);
+  }, 5000);
  }
 
   // Función para verificar si el token ha expirado
@@ -23,6 +23,7 @@ export class AuthService {
 
       if (tokenExpiration < currentTimestamp) {
         // Si el token ha expirado, cierra la sesión
+        alert("Se ha cerrado tu sesion. Inicia sesion nuavamente")
         this.loginService.logout();
       }
     }

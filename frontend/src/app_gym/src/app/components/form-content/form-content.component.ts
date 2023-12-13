@@ -290,6 +290,8 @@ export class FormContentComponent {
     private usuarioService: UsuarioService
     ) { }
 
+/*  HTML: (keypress)="validarEntrada($event, field.type)"    
+
     validarEntrada(event: KeyboardEvent, type: string) {
       const input = event.key;
       const regex = /^[A-Za-z]+$/; // Expresión regular para letras
@@ -299,7 +301,7 @@ export class FormContentComponent {
       } else if (!regex.test(input)) {
         event.preventDefault(); // Evitar que se escriban caracteres no válidos
       }
-    }
+    } */
 
   formGenerator() {
     this.registerForm = this.formBuilder.group({
