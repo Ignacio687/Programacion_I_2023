@@ -140,7 +140,6 @@ export class TabContentComponent {
   }
 
   definePaginationConditionalAction(page: string, pageNumber: number, per_page: number) {
-    console.log(page)
     const functions: { [key: string]: {
       useFunction: Function
     }; } = {
