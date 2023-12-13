@@ -11,6 +11,20 @@ import { UsuarioService } from 'src/app/services/user/usuario.service';
 })
 
 export class NavVarComponent{
+  
+  ngOnInit() {
+    window.addEventListener('actualizarNavBar', () => {
+      this.pagesUrlsArray[1].url= `/change-user-info/prof/${this.isDNI}/editar`
+    })
+  }
+
+  get isTokenRol() {
+    return localStorage.getItem("token_rol")
+  }
+
+  get isToken(){
+    return localStorage.getItem('token');
+  }
 
   get isDNI() {
     return Number(localStorage.getItem('token_DNI'));
@@ -25,7 +39,7 @@ export class NavVarComponent{
     },
     {
       sectionTitle: 'Editar Perfil',
-      url: `/change-user-info/${this.isDNI}/editar` ,
+      url: `/change-user-info/prof/${this.isDNI}/editar` ,
       iconPath: ['M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z'],
       permission: ['admin']
     },
@@ -65,13 +79,6 @@ export class NavVarComponent{
     ) {
   }
 
-  get isTokenRol() {
-    return localStorage.getItem("token_rol")
-  }
-
-  get isToken(){
-    return localStorage.getItem('token');
-  }
 
   ngDoCheck() {
     if (this.tokenStatus !== this.isToken) {

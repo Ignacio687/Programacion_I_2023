@@ -52,4 +52,14 @@ export class ProfesorService {
     });
     return this.httpClient.get(`${this.url}/profs`, {headers: headers, params: params})
   }
+
+  putProfesores(dni: number, userData: any): Observable<any> {
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    console.log(userData)
+    return this.httpClient.put(`${this.url}/profe/${dni}`, userData, {headers: headers}).pipe(first())
+  }
 }

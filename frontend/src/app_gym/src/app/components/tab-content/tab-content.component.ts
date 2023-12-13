@@ -140,7 +140,6 @@ export class TabContentComponent {
   }
 
   definePaginationConditionalAction(page: string, pageNumber: number, per_page: number) {
-    console.log(page)
     const functions: { [key: string]: {
       useFunction: Function
     }; } = {
@@ -289,7 +288,7 @@ export class TabContentComponent {
       },
       "/admin-page":
       {
-      "profesores": ['Editar', "change-user-info/"],
+      "profesores": ['Editar', "change-user-info/prof/"],
       "alumnos": ['Editar', "change-user-info/"]
       }
     };

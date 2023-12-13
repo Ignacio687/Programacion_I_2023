@@ -81,7 +81,9 @@ export class UserCredentialsComponent {
 				localStorage.removeItem('token');
 			},
 			complete: () => {
-				console.log('Completado');
+				console.log('Completado')
+				const evento = new Event('actualizarNavBar');
+				window.dispatchEvent(evento);
 			}
 		})
 	}

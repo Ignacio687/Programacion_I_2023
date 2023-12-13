@@ -114,7 +114,7 @@ export class FormContentComponent {
       ]
     },
     "/plan-form": {
-      formLabel: this.urlParameterID? "Mofidicar Planificación":"Crear una planificación",
+      formLabel: this.urlParameterID? "Modificar Planificación":"Crear una planificación",
       submitButtonLabel: this.urlParameterID? "Modificar": "Crear",
       backButtonURL: "/clases-plan",
       formContentLabels: [
@@ -138,7 +138,7 @@ export class FormContentComponent {
       ]
     },
     "/clases-form": {
-      formLabel: this.urlParameterID? "Mofidicar la Clase":"Crear una Clase",
+      formLabel: this.urlParameterID? "Modificar la Clase":"Crear una Clase",
       submitButtonLabel: this.urlParameterID? "Modificar": "Crear",
       backButtonURL: "/clases-plan",
       formContentLabels: [
@@ -163,10 +163,11 @@ export class FormContentComponent {
           label: "Seleccione un dia",
           formControlName: "dia",
           optionsList: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-      }]
+        },
+      ]
     },
     "/change-user-info": {
-      formLabel: "Editar la información personal del usuario",
+      formLabel: "Editar la información personal del Alumno",
       submitButtonLabel: "Actualizar",
       backButtonURL: "/admin-page",
       formContentLabels: [
@@ -195,7 +196,46 @@ export class FormContentComponent {
         {
           label: "Seleccione el perfil de permisos",
           formControlName: "rol",
-          optionsList: ['admin', 'alumno', 'profesor', 'sin permisos']
+          optionsList: ['alumno', 'sin permisos']
+        }
+      ],
+    },
+    "/change-user-info/prof": {
+      formLabel: "Editar perfil",
+      submitButtonLabel: "Actualizar",
+      backButtonURL: "/admin-page",
+      formContentLabels: [
+        {
+          label: "DNI",
+          type: "number",
+          formControlName: "dni"
+        },
+        {
+          label: "Nombre",
+          type: "text",
+          formControlName: "nombre"
+        },
+        {
+          label: "Apellido",
+          type: "text",
+          formControlName: "apellido"
+        },
+        {
+          label: "Teléfono",
+          type: "number",
+          formControlName: "telefono"
+        },
+        {
+          label: "Especialidad",
+          type: "text",
+          formControlName: "especialidad"
+        },
+      ],
+      formOptionsContent: [
+        {
+          label: "Seleccione el perfil de permisos",
+          formControlName: "rol",
+          optionsList: ['admin', 'profesor', 'sin permisos']
         }
       ]
     },
@@ -206,6 +246,7 @@ export class FormContentComponent {
   planForm!: FormGroup;
   clasesForm!: FormGroup;
   changeUserInfoForm!: FormGroup;
+  changeProfInfoForm!: FormGroup;
   commitAttempted:boolean = false;
 
   get isTokenRol() { 
@@ -220,6 +261,8 @@ export class FormContentComponent {
     const urlSections = this.router.url.split('/')
     if (this.router.url === "/register-form/prof") {
       return this.router.url
+    } else if (`/${urlSections[2]}` === "/prof") {
+      return "/change-user-info/prof"
     } else {
       return `/${urlSections[1]}`
     }
@@ -282,6 +325,14 @@ export class FormContentComponent {
       telefono: ['', [Validators.maxLength(10), Validators.required]],
       rol: ['', [Validators.required]],
     })
+    this.changeProfInfoForm = this.formBuilder.group({
+      dni: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      telefono: ['', [Validators.maxLength(10), Validators.required]],
+      especialidad: ['', [Validators.required]],
+      rol: ['', [Validators.required]],
+    })
     if (this.isTokenRol==="admin") {
       this.planForm.addControl("profesorDNI", this.formBuilder.control('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]))
       this.inputFields["/plan-form"].formContentLabels.splice(1, 0 ,{
@@ -304,7 +355,8 @@ export class FormContentComponent {
       "/register-form/prof": this.registerFormProf,
       "/plan-form": this.planForm,
       "/clases-form": this.clasesForm,
-      "/change-user-info": this.changeUserInfoForm
+      "/change-user-info": this.changeUserInfoForm,
+      "/change-user-info/prof": this.changeProfInfoForm
     }
       return conditionalArray[this.currentRoute]
   }
@@ -318,7 +370,7 @@ export class FormContentComponent {
       else if (this.currentRoute === '/plan-form') {
         this.getPlanDetalle(this.urlParameterID)
       } 
-    } else if (this.route.snapshot.paramMap.get('dni')) {
+    } else if (this.urlParameterDNI) {
       this.getUserInfo(this.urlParameterDNI)
     }
   }
@@ -326,7 +378,6 @@ export class FormContentComponent {
   getPlanDetalle(planID: number) {
     this.planificacionService.getPlanificacionById(planID).subscribe({
       next: (data: any) => {
-        console.log(data)
         const dia = data.detalles_dia.find((detalle: any) => detalle.dia === this.route.snapshot.paramMap.get('dia'))
         this.planForm.patchValue({
           alumnoDNI: data.Alumno.Usuario.DNI,
@@ -368,13 +419,29 @@ export class FormContentComponent {
 
   getUserInfo(dni: number) {
     return firstValueFrom(this.usuarioService.getUserByDni(dni)).then((data: any) => {
-      this.changeUserInfoForm.patchValue({
-        dni: data.DNI,
-        nombre: data.Nombre,
-        apellido: data.Apellidos,
-        telefono: data.Telefono,
-        rol: data.Rol
-      });
+      if (this.currentRoute == "/change-user-info/prof") {
+        this.profesorService.getProfeByDni(dni).subscribe({
+          next: (prof: any) => {
+            console.log(prof)
+            this.changeProfInfoForm.patchValue({
+              dni: data.DNI,
+              nombre: data.Nombre,
+              apellido: data.Apellidos,
+              telefono: data.Telefono,
+              especialidad: prof.Especialidad,
+              rol: data.Rol
+            })
+          }
+        })
+      } else {
+        this.changeUserInfoForm.patchValue({
+          dni: data.DNI,
+          nombre: data.Nombre,
+          apellido: data.Apellidos,
+          telefono: data.Telefono,
+          rol: data.Rol
+        });
+      }
     }).catch((err) => {
       console.log(err);
     })
@@ -399,6 +466,7 @@ export class FormContentComponent {
       "/plan-form": () => this.submitPlanificacion(),
       "/clases-form": () => this.submitClases(),
       "/change-user-info": () => this.updateUserInfo(),
+      "/change-user-info/prof": () => this.updateProfInfo()
     }
     functions[this.currentRoute]()
   }
@@ -587,7 +655,7 @@ export class FormContentComponent {
 			this.commitAttempted = true
     }
   }
-
+  
   updateUserInfo() {
     let rol = this.changeUserInfoForm.get("rol")?.value
     if (rol === 'sin permisos') {
@@ -600,10 +668,42 @@ export class FormContentComponent {
       "Rol": rol
     }
     if (this.changeUserInfoForm.valid) {
-      return firstValueFrom(this.usuarioService.updateUserInfo(Number(this.route.snapshot.paramMap.get('dni')), userData)).then((data: any) => {
+      return firstValueFrom(this.usuarioService.updateUserInfo(this.urlParameterDNI, userData)).then((data: any) => {
         this.router.navigateByUrl("/admin-page")
       }).catch((err) => {
         alert("Error al actualizar los datos")
+        console.log(err);
+      })
+    }	else {
+      this.commitAttempted = true
+      return null;
+    }
+  }
+
+  updateProfInfo() {
+    console.log("Entre!")
+    const UsarData = {
+      "Nombre": this.changeProfInfoForm.get("nombre")?.value,
+      "Apellidos": this.changeProfInfoForm.get("apellido")?.value,
+      "Telefono": Number(this.changeProfInfoForm.get("telefono")?.value),
+      "Rol": this.changeProfInfoForm.get("rol")?.value
+    }
+    const ProfeData = {
+      "Especialidad": this.changeProfInfoForm.get("especialidad")?.value
+    }
+    if (this.changeProfInfoForm.valid) {
+      return firstValueFrom(this.usuarioService.updateUserInfo(this.urlParameterDNI, UsarData)).then((data: any) => {
+        this.profesorService.putProfesores(this.urlParameterDNI, ProfeData).subscribe({
+          next: (rta: any) => {
+            this.router.navigateByUrl("/admin-page")
+          },
+          error: (error: any) => {
+            alert("Error al actualizar profesor")
+            console.log(error);
+          }
+        })
+      }).catch((err) => {
+        alert("Error al actualizar usuario")
         console.log(err);
       })
     }	else {
