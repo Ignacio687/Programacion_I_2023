@@ -422,7 +422,6 @@ export class FormContentComponent {
       if (this.currentRoute == "/change-user-info/prof") {
         this.profesorService.getProfeByDni(dni).subscribe({
           next: (prof: any) => {
-            console.log(prof)
             this.changeProfInfoForm.patchValue({
               dni: data.DNI,
               nombre: data.Nombre,
@@ -453,7 +452,7 @@ export class FormContentComponent {
           this.router.navigateByUrl("/clases-plan")
         },
         error: (error: any) => {
-          alert("Error al elimnar la clase")
+          alert("Error al eliminar la clase")
           console.log(error);
         }
     }) 
