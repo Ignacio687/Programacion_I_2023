@@ -5,7 +5,6 @@ import { ClasesService } from 'src/app/services/clases/clases.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
 import { firstValueFrom } from 'rxjs';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
-import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-tab-content',
