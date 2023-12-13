@@ -1,9 +1,9 @@
-<div *ngIf="parentPage === 'inscripto' || parentPage === 'disponibles' || parentPage === 'profesores' || parentPage === 'alumnos'">
+<div *ngIf="parentPage !== 'planificaciones'">
 	<div class="d-flex justify-content-center align-items-start">
 		<div class="input-group me-1">
-			<input [(ngModel)]="stringSearch" type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar Inscripto">
+			<input type="text" [(ngModel)]="stringSearch" (input)="AutoSearch()" class="form-control" placeholder="Buscar..." aria-label="Buscar Inscripto">
 		  </div>
-		  <button class="btn search-button" (click)="buscar(stringSearch)">
+		  <button class="btn search-button" (click)="buscar()">
 			Buscar
 		  </button>
 		<button *ngIf="parentPage === 'inscripto' || parentPage === 'disponibles'" class="btn dropdown-toggle" type="checkbox" aria-expanded="false" (click)="mostrarBtnGroup = !mostrarBtnGroup" >

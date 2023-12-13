@@ -29,6 +29,8 @@ import { FormContentComponent } from './components/form-content/form-content.com
 import { AutoResizeDirective } from './directives/auto-resize.directive';
 import { RecoverPassFormComponent } from './pages/login/recover-pass-form/recover-pass-form.component';
 
+import { AuthService } from './services/auth/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +65,9 @@ import { RecoverPassFormComponent } from './pages/login/recover-pass-form/recove
     FormsModule, 
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

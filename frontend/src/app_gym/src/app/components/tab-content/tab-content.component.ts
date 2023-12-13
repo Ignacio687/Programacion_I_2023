@@ -288,7 +288,7 @@ export class TabContentComponent {
       },
       "/admin-page":
       {
-      "profesores": ['Editar', "change-user-info/"],
+      "profesores": ['Editar', "change-user-info/prof/"],
       "alumnos": ['Editar', "change-user-info/"]
       }
     };

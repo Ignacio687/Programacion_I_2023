@@ -3,20 +3,34 @@ import { ClasesService } from 'src/app/services/clases/clases.service';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
 import { AlumnoService } from 'src/app/services/user/alumno.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { debounceTime,  } from 'rxjs/operators';
+import { filter } from 'rxjs/operators'; 
 
 @Component({
   selector: 'app-searchbox',
   templateUrl: './searchbox.component.html',
   styleUrls: ['./searchbox.component.css']
 })
+
 export class SearchboxComponent {
   constructor(private clasesService: ClasesService, private formBuilder: FormBuilder, private profesorService: ProfesorService, private alumnoService: AlumnoService) {
     this.form = this.formBuilder.group({
       startHour: new FormControl(0),
       endHour: new FormControl(24),
     });
+
+    this.searchTerms
+    .pipe(
+      //  filter((term: string) => term.length >= 3 || term.length == 0)
+      debounceTime(1000) // Retraso de 300ms después de la última entrada
+    ).subscribe(() => {
+      this.buscar();
+    });
+
     this.parentPage = ""
   }
+
   selectedOption: string = "Cualquier dia"
   dias: string[] = ['Cualquier dia', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
   tipos: string[] = ['Cualquier tipo', 'Cardio', 'Estiramiento', 'Crossfit', 'Running'];
@@ -27,6 +41,7 @@ export class SearchboxComponent {
   mostrarBtnGroup: boolean = false;
   ordenarPorHora = false;
   filtroAplicado: boolean = true;
+  private searchTerms = new Subject<string>();
 
   @Input() parentPage: string;
 
@@ -42,17 +57,21 @@ export class SearchboxComponent {
     this.clasesService.setDiaSeleccionado(dia);
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
-  buscar(keyword: string): void {
-    this.stringSearch = keyword;
+
+  AutoSearch (){
+    this.searchTerms.next(this.stringSearch);
+  }
+
+  buscar(): void {
     if  (this.parentPage === 'alumnos'){
-      this.alumnoService.setStringSearch(keyword);
+      this.alumnoService.setStringSearch(this.stringSearch);
       this.alumnoService.setFiltroAplicado(this.filtroAplicado);
     }
     if (this.parentPage === 'profesores') {
-      this.profesorService.setStringSearch(keyword);
+      this.profesorService.setStringSearch(this.stringSearch);
       this.profesorService.setFiltroAplicado(this.filtroAplicado);
     } if (this.parentPage === 'inscripto' || this.parentPage === 'disponibles') {
-      this.clasesService.setStringSearch(keyword);
+      this.clasesService.setStringSearch(this.stringSearch);
       this.clasesService.setFiltroAplicado(this.filtroAplicado);
     }
   }
