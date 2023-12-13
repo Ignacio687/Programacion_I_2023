@@ -42,17 +42,23 @@ export class SearchboxComponent {
     this.clasesService.setDiaSeleccionado(dia);
     this.clasesService.setFiltroAplicado(this.filtroAplicado);
   }
-  buscar(keyword: string): void {
-    this.stringSearch = keyword;
+
+  AutoSearch (){
+    if (this.stringSearch.length % 3 === 0) {
+      this.buscar()
+    }
+  }
+
+  buscar(): void {
     if  (this.parentPage === 'alumnos'){
-      this.alumnoService.setStringSearch(keyword);
+      this.alumnoService.setStringSearch(this.stringSearch);
       this.alumnoService.setFiltroAplicado(this.filtroAplicado);
     }
     if (this.parentPage === 'profesores') {
-      this.profesorService.setStringSearch(keyword);
+      this.profesorService.setStringSearch(this.stringSearch);
       this.profesorService.setFiltroAplicado(this.filtroAplicado);
     } if (this.parentPage === 'inscripto' || this.parentPage === 'disponibles') {
-      this.clasesService.setStringSearch(keyword);
+      this.clasesService.setStringSearch(this.stringSearch);
       this.clasesService.setFiltroAplicado(this.filtroAplicado);
     }
   }
