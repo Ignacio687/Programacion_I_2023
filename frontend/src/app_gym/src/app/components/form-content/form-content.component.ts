@@ -290,11 +290,13 @@ export class FormContentComponent {
     private usuarioService: UsuarioService
     ) { }
 
-    validarEntrada(event: KeyboardEvent) {
+    validarEntrada(event: KeyboardEvent, type: string) {
       const input = event.key;
       const regex = /^[A-Za-z]+$/; // Expresión regular para letras
-    
-      if (!regex.test(input)) {
+      
+      if (type !== "text") {
+        event.NONE
+      } else if (!regex.test(input)) {
         event.preventDefault(); // Evitar que se escriban caracteres no válidos
       }
     }
