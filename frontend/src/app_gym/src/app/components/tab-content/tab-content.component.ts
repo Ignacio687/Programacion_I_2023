@@ -60,7 +60,7 @@ export class TabContentComponent {
   planificacionesObj!: any;
   profesoresObj!: any;
   clasesDisponiblesObj!: any;
-  page_anterior = this.router.url === "/clases-plan" ? "inscripto" : "profesores" ;
+  page_anterior = ["/clases-plan", "/alum-clases"].includes(this.router.url) ? "inscripto" : "profesores" ;
   
   constructor(
 	private router: Router,
@@ -92,15 +92,12 @@ export class TabContentComponent {
 
   ngOnInit(): void {
     this.set_default_filter_values()
-    this.clasesService.setFiltroAplicado$.subscribe(valor => {
-      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
-    });
-    this.profesorService.setFiltroAplicado$.subscribe(valor => {
-      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
-    });
-    this.alumnoService.setFiltroAplicado$.subscribe(valor => {
-      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
-    });
+    for (let service of [this.clasesService, this.profesorService, this.alumnoService]) {
+      service.setFiltroAplicado$.subscribe(valor => {
+        this.paginationParams[this.page_anterior].pageNumber = 1
+        this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
+      });
+    }
     this.executeAsyncQueries(1, this.per_page)
   }
 
@@ -120,33 +117,10 @@ export class TabContentComponent {
       this.getClases(pageNumber, per_page)
     }
   }
-  
-
 
   setCollapseButton(id:number) {
     this.collapseButton[id] = !this.collapseButton[id]
   }
-
-  // setCollapseButton(id:string) {
-  //   console.log(this.counter)
-  //   console.log(id)
-  //   console.log(this.collapseButton)
-  //   if(this.collapseButton === id){
-  //     this.counter = 1
-  //     this.collapseButton = ""
-  //   } else {
-  //     if ((this.counter  % 2) === 0){
-  //       this.counter = 1
-  //       this.collapseButton = ""
-  //     } else {
-  //       this.collapseButton = id
-  //       console.log("tocaste por primera vez")  
-  //     }
-  //   }
-  //   console.log(id)
-  //   console.log(this.collapseButton)
-  //   console.log(this.counter)
-  // }
 
   set_default_filter_values(){
     this.clasesService.setStringSearch('')
@@ -183,7 +157,7 @@ export class TabContentComponent {
         useFunction: () => this.isTokenRol!=="admin"? this.getPlanDetalle(pageNumber, this.paginationParams[page].per_page): this.getPlanificaciones(pageNumber, this.paginationParams[page].per_page)
       },
       "profesores": {
-        useFunction: () => this.getProfesores(pageNumber, this.paginationParams[page].per_page)
+        useFunction: () => this.getProfesores(pageNumber, this.paginationParams[page].per_page),
       },
       "alumnos": {
         useFunction: () => this.getAlumnos(pageNumber, this.paginationParams[page].per_page)
@@ -283,6 +257,7 @@ export class TabContentComponent {
 	  this.clasesService.inscribirseAlumno(clase_id, this.isDNI).subscribe({
       next: (data: any) => {
         this.executeAsyncQueries(1, this.per_page)
+        this.collapseButton = Array(this.per_page).fill(true)
       },
       error: (err: any) => {
         console.log(err);

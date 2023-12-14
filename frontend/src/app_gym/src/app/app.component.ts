@@ -17,8 +17,8 @@ export class AppComponent {
     console.log(
       {
         Admin: {email: 'i.chaves@alumno.um.edu.ar', password: '45sdkaj1i28f*'},
-        Profesor: {email: 'gonzaloruiz@gmail.com', password: '45skuqy^%#.5665s'},
-        Alumno: {email: 'pepeGarcia@gmail.com', password: 'adsd4848*awd92'}
+        Profesor: {email: 'francopisso@gmai.com', password: 'a4d5sad45as'},
+        Alumno: {email: 'camelCase@snakeCase.com', password: '1234'}
       }
       )
     const testAuthService = this.AuthServices;
