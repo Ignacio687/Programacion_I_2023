@@ -14,7 +14,7 @@
                                 [attr.aria-controls]="(page === 'planificaciones')? 'planifiDetalleDesp': 'optionButton'"
                                 (click)="setCollapseButton((page === 'planificaciones')? cardDetalleNumber: cardNumber)">
                                 <div class="d-flex flex-column ms-3">
-                                    <h5 class="card-title">
+                                    <h5 class="card-title" style="text-align: left">
                                         <div *ngIf="page === 'planificaciones'; then thenBlock else elseBlock"></div>
                                         <ng-template #thenBlock>
                                             <div *ngIf="currentRoute === '/clases-plan'; else elseBlockPlan">
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 text-end" style="margin-right: 8%;">
-                                    <div *ngIf="collapseButton[(page === 'planificaciones')? cardDetalleNumber: cardNumber] || (page === 'planificaciones' && currentRoute === '/alum-clases') || (page === 'inscripto' && currentRoute === '/clases-plan')">
+                                    <div *ngIf="collapseButton[(page === 'planificaciones')? cardDetalleNumber: cardNumber] || (page === 'planificaciones' && currentRoute === '/alum-clases') || (page === 'inscripto' && currentRoute === '/clases-plan') || (!isToken)">
                                         <span *ngIf="currentRoute !== '/admin-page'"
                                             class="activity-text align-items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
