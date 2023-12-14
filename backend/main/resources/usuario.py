@@ -165,7 +165,7 @@ class UsuarioProfesor(Resource):
         return profesor.to_json() , 201
 
 class UsuarioProfesores(Resource):
-    @role_required(roles = ["admin"])
+    @jwt_required(optional=True)
     def get(self):
         page=1
         per_page=10

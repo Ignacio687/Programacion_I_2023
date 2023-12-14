@@ -50,6 +50,9 @@ export class ProfesorService {
       "page": page,
       "nombre": this.stringSearchSubject.value,
     });
+    if (auth_token === null) {
+      return this.httpClient.get(`${this.url}/profs`, {params: params})
+    }
     return this.httpClient.get(`${this.url}/profs`, {headers: headers, params: params})
   }
 
