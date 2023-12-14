@@ -35,7 +35,6 @@ export class UsuarioService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`
     })
-    console.log(userData)
     return this.httpClient.put(`${this.url}/usuario/${dni}`, userData, {headers: headers}).pipe(first())
   }
 }

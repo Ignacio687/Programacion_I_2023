@@ -3,9 +3,6 @@
 		<div class="input-group me-1">
 			<input type="text" [(ngModel)]="stringSearch" (input)="AutoSearch()" class="form-control" placeholder="Buscar..." aria-label="Buscar Inscripto">
 		  </div>
-		  <button class="btn search-button" (click)="buscar()">
-			Buscar
-		  </button>
 		<button *ngIf="parentPage === 'inscripto' || parentPage === 'disponibles'" class="btn dropdown-toggle" type="checkbox" aria-expanded="false" (click)="mostrarBtnGroup = !mostrarBtnGroup" >
 			<span class="material-symbols-outlined">
 				filter_list

@@ -18,7 +18,7 @@
     border-radius: 10px;
     color: white;
     transition: background 2s ease, opacity 2s step-start;
-    transform: scale(1); /* Estado inicial (sin hover) */
+    /* transform: scale(1);  */
     transition: transform 0.5s ease;
   }
   .card {

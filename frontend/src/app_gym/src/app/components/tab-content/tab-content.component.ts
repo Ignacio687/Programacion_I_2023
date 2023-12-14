@@ -5,7 +5,6 @@ import { ClasesService } from 'src/app/services/clases/clases.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
 import { firstValueFrom } from 'rxjs';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
-import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-tab-content',
@@ -53,7 +52,8 @@ export class TabContentComponent {
   currentRoute: string;
   dia: string = "";
   items: any[] = [];
- 
+  counter: number;
+  collapseButton : boolean[] = Array(this.per_page).fill(true);
 
   alumnosObj!: any;
   clasesObj!: any;
@@ -68,6 +68,7 @@ export class TabContentComponent {
   private planificacionService: PlanificacionService,
   private clasesService: ClasesService,
   private profesorService: ProfesorService) {
+    this.counter = 0
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
     this.clasesService.onPillChange().subscribe(page => {
@@ -119,6 +120,33 @@ export class TabContentComponent {
       this.getClases(pageNumber, per_page)
     }
   }
+  
+
+
+  setCollapseButton(id:number) {
+    this.collapseButton[id] = !this.collapseButton[id]
+  }
+
+  // setCollapseButton(id:string) {
+  //   console.log(this.counter)
+  //   console.log(id)
+  //   console.log(this.collapseButton)
+  //   if(this.collapseButton === id){
+  //     this.counter = 1
+  //     this.collapseButton = ""
+  //   } else {
+  //     if ((this.counter  % 2) === 0){
+  //       this.counter = 1
+  //       this.collapseButton = ""
+  //     } else {
+  //       this.collapseButton = id
+  //       console.log("tocaste por primera vez")  
+  //     }
+  //   }
+  //   console.log(id)
+  //   console.log(this.collapseButton)
+  //   console.log(this.counter)
+  // }
 
   set_default_filter_values(){
     this.clasesService.setStringSearch('')
@@ -126,6 +154,7 @@ export class TabContentComponent {
     this.clasesService.setOrdenarPorHora(false);
     this.clasesService.setTipoSeleccionado('')
     this.profesorService.setStringSearch('')
+    this.collapseButton = Array(this.per_page).fill(true)
   }
   
   definePageContent(page: string){
@@ -140,6 +169,7 @@ export class TabContentComponent {
   }
 
   definePaginationConditionalAction(page: string, pageNumber: number, per_page: number) {
+    this.collapseButton = Array(this.per_page).fill(true)
     const functions: { [key: string]: {
       useFunction: Function
     }; } = {
@@ -211,12 +241,14 @@ export class TabContentComponent {
       this.paginationParams["planificaciones"].pageNumber = data.page;
       this.paginationParams["planificaciones"].collectionSize = data.pages*10;
       this.planificacionesObj = []
-      for (let plan of data.Planificaciones) {
-        firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
-          this.planificacionesObj.push(data);
-        }).catch((err: any) => {
-          console.log(err)
-        })
+      if (data.Planificaciones.length = 1) {
+        for (let plan of data.Planificaciones) {
+          firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
+            this.planificacionesObj.push(data);
+          }).catch((err: any) => {
+            console.log(err)
+          })
+        }
       }
     }).catch((err: any) => {
       console.log(err)

@@ -488,7 +488,7 @@ export class FormContentComponent {
     if (formGroup.valid) {
       let credentials = this.dataManagerService.getUserCredentials()
       let rol = formGroup.get("rol")?.value
-      if (rol === null) {
+      if (rol === undefined) {
         rol = ""
       }
       let registerData = {
@@ -693,7 +693,6 @@ export class FormContentComponent {
   }
 
   updateProfInfo() {
-    console.log("Entre!")
     const UsarData = {
       "Nombre": this.changeProfInfoForm.get("nombre")?.value,
       "Apellidos": this.changeProfInfoForm.get("apellido")?.value,

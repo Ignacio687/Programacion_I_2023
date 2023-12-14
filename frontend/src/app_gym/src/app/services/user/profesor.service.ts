@@ -59,7 +59,6 @@ export class ProfesorService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`
     })
-    console.log(userData)
     return this.httpClient.put(`${this.url}/profe/${dni}`, userData, {headers: headers}).pipe(first())
   }
 }
