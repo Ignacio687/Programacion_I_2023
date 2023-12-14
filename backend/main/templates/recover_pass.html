@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #001d62;
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #3680f2;
+            border-radius: 2px;
+            border: 1px solid #3680f2;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Hola {{usuario.nombre}} {{usuario.apellidos}}</h1>
+        <p>Haz click en el siguiente enlace para recuperar tu contraseña:</p>
+        <a class="button" href="http://localhost:4200/recover-pass-form/{{token}}">Recuperar Contraseña</a>
+    </div>
+</body>
+
+</html>

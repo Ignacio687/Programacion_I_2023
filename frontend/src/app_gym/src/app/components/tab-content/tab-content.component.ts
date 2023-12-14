@@ -5,7 +5,6 @@ import { ClasesService } from 'src/app/services/clases/clases.service';
 import { PlanificacionService } from 'src/app/services/planificacion/planificacion.service';
 import { firstValueFrom } from 'rxjs';
 import { ProfesorService } from 'src/app/services/user/profesor.service';
-import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-tab-content',
@@ -15,7 +14,7 @@ import { merge } from 'rxjs';
 })
 export class TabContentComponent {
 
-  per_page: number = 2
+  per_page: number = 5
 
   paginationParams: { [key: string]: {
     pageNumber: number;
@@ -50,18 +49,18 @@ export class TabContentComponent {
   }
   
   @Input() parentPageTitles: string[];
-  // @Input() 
   currentRoute: string;
   dia: string = "";
   items: any[] = [];
- 
+  counter: number;
+  collapseButton : boolean[] = Array(this.per_page).fill(true);
 
   alumnosObj!: any;
   clasesObj!: any;
   planificacionesObj!: any;
   profesoresObj!: any;
   clasesDisponiblesObj!: any;
-  page_anterior = "inscripto";
+  page_anterior = ["/clases-plan", "/alum-clases"].includes(this.router.url) ? "inscripto" : "profesores" ;
   
   constructor(
 	private router: Router,
@@ -69,6 +68,7 @@ export class TabContentComponent {
   private planificacionService: PlanificacionService,
   private clasesService: ClasesService,
   private profesorService: ProfesorService) {
+    this.counter = 0
     this.parentPageTitles = [];
     this.currentRoute = this.router.url;
     this.clasesService.onPillChange().subscribe(page => {
@@ -92,9 +92,12 @@ export class TabContentComponent {
 
   ngOnInit(): void {
     this.set_default_filter_values()
-    this.clasesService.setFiltroAplicado$.subscribe(valor => {
-      this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
-    });
+    for (let service of [this.clasesService, this.profesorService, this.alumnoService]) {
+      service.setFiltroAplicado$.subscribe(valor => {
+        this.paginationParams[this.page_anterior].pageNumber = 1
+        this.definePaginationConditionalAction(this.page_anterior, this.paginationParams[this.page_anterior].pageNumber, this.paginationParams[this.page_anterior].per_page)
+      });
+    }
     this.executeAsyncQueries(1, this.per_page)
   }
 
@@ -115,10 +118,17 @@ export class TabContentComponent {
     }
   }
 
+  setCollapseButton(id:number) {
+    this.collapseButton[id] = !this.collapseButton[id]
+  }
+
   set_default_filter_values(){
+    this.clasesService.setStringSearch('')
     this.clasesService.setDiaSeleccionado('')
     this.clasesService.setOrdenarPorHora(false);
     this.clasesService.setTipoSeleccionado('')
+    this.profesorService.setStringSearch('')
+    this.collapseButton = Array(this.per_page).fill(true)
   }
   
   definePageContent(page: string){
@@ -133,6 +143,7 @@ export class TabContentComponent {
   }
 
   definePaginationConditionalAction(page: string, pageNumber: number, per_page: number) {
+    this.collapseButton = Array(this.per_page).fill(true)
     const functions: { [key: string]: {
       useFunction: Function
     }; } = {
@@ -146,7 +157,7 @@ export class TabContentComponent {
         useFunction: () => this.isTokenRol!=="admin"? this.getPlanDetalle(pageNumber, this.paginationParams[page].per_page): this.getPlanificaciones(pageNumber, this.paginationParams[page].per_page)
       },
       "profesores": {
-        useFunction: () => this.getProfesores(pageNumber, this.paginationParams[page].per_page)
+        useFunction: () => this.getProfesores(pageNumber, this.paginationParams[page].per_page),
       },
       "alumnos": {
         useFunction: () => this.getAlumnos(pageNumber, this.paginationParams[page].per_page)
@@ -204,12 +215,14 @@ export class TabContentComponent {
       this.paginationParams["planificaciones"].pageNumber = data.page;
       this.paginationParams["planificaciones"].collectionSize = data.pages*10;
       this.planificacionesObj = []
-      for (let plan of data.Planificaciones) {
-        firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
-          this.planificacionesObj.push(data);
-        }).catch((err: any) => {
-          console.log(err)
-        })
+      if (data.Planificaciones.length = 1) {
+        for (let plan of data.Planificaciones) {
+          firstValueFrom(this.planificacionService.getPlanificacionById(plan.planificacion_id)).then((data: any) => {
+            this.planificacionesObj.push(data);
+          }).catch((err: any) => {
+            console.log(err)
+          })
+        }
       }
     }).catch((err: any) => {
       console.log(err)
@@ -244,6 +257,7 @@ export class TabContentComponent {
 	  this.clasesService.inscribirseAlumno(clase_id, this.isDNI).subscribe({
       next: (data: any) => {
         this.executeAsyncQueries(1, this.per_page)
+        this.collapseButton = Array(this.per_page).fill(true)
       },
       error: (err: any) => {
         console.log(err);
@@ -276,11 +290,12 @@ export class TabContentComponent {
       "/clases-plan":
       {
       "disponibles": ['Editar', "clases-form/"],
-      "planificaciones": ['Editar', "plan-form/"]
+      "planificaciones": ['Editar', "plan-form/"],
+      "inscripto": ['Editar', "clases-form/"],
       },
       "/admin-page":
       {
-      "profesores": ['Editar', "change-user-info/"],
+      "profesores": ['Editar', "change-user-info/prof/"],
       "alumnos": ['Editar', "change-user-info/"]
       }
     };

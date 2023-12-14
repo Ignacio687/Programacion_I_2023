@@ -25,6 +25,7 @@ export class FormSelectorButtonComponent {
     let routerDict: { [key: string]: string } = {
       "inscripto": '/clases-form',
       "planificaciones": '/plan-form',
+      "profesores": '/register'
     }
     this.router.navigateByUrl(routerDict[this.parentPage])
   }

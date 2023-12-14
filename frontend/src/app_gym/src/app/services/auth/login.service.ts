@@ -12,9 +12,11 @@ export class LoginService {
     private httpClient: HttpClient,
     private router: Router
     ) { }
+    
   login(dataLogin: any): Observable<any>{
     return this.httpClient.post(this.url + '/auth/login', dataLogin).pipe(take(1))
   }
+  
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('token_rol');

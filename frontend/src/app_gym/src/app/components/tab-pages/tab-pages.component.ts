@@ -15,7 +15,7 @@ export class TabPagesComponent {
     "admin-page": ["profesores", "alumnos"],
     "clases-plan": ["inscripto", "planificaciones"]
   };
-  
+    
   currentRoute: string;
   onPillClick(page: string) {
     this.clasesService.emitPillChange(page);

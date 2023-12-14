@@ -67,4 +67,12 @@ body {
   border-radius: 100px;
   border: 1px solid var(--background-color-focus);
 }
+.navbar-toggler{
+    background-color: rgba(94, 109, 131, 0.1);
+    backdrop-filter: blur(5px);
+    min-width: auto;
+}
+.navbar-toggler-icon{
+  filter: contrast(200%);
+}
   /* <a class="nav-link active spetial_button" aria-current="page" routerLink="/home"> */

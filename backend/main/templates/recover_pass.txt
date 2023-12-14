@@ -1,0 +1,4 @@
+Bienvenido {{usuario.nombre}} {{usuario.apellidos}}!
+
+Haz click "aca" para recuperar tu contraseña:
+http://localhost:4200/recover-pass-form/{{token}}

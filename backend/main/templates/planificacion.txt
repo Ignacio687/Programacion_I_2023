@@ -1,0 +1,2 @@
+Tu profesor {{nombre_profesor}} ha creado una nueva planificacion para el dia {{plan.dia}}:
+{{plan.detalle}}

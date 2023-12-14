@@ -30,6 +30,7 @@ export class ClasesService {
   setFiltroAplicado$ = this.filtroAplicado.asObservable();
 
   private diaSeleccionadoSubject = new BehaviorSubject<string>('');
+  private stringSearchSubject = new BehaviorSubject<string>('');
 
   private tipoSeleccionadoSubject = new BehaviorSubject<string>('');
   
@@ -55,6 +56,10 @@ export class ClasesService {
     this.diaSeleccionadoSubject.next(dia);
   }
 
+  setStringSearch(dia: string): void {
+    this.stringSearchSubject.next(dia);
+  }
+
   setTipoSeleccionado(tipo: string): void {
     this.tipoSeleccionadoSubject.next(tipo);
   }
@@ -70,6 +75,7 @@ export class ClasesService {
     let params = new HttpParams().appendAll({
       "per_page": per_page,
       "page": page,
+      "nombre" : this.stringSearchSubject.value,
       "dia" : this.diaSeleccionadoSubject.value,
       "tipo" : this.tipoSeleccionadoSubject.value,
       "orby_hora":""
@@ -77,8 +83,16 @@ export class ClasesService {
     if (!this.ordenarPorHora) {
       params = params.delete("orby_hora");
     }
-    
     return this.httpClient.get(`${this.url}/clases`, {headers: headers, params: params}).pipe(first())
+  }
+
+  getClaseById(id: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.get(`${this.url}/clase/${id}`, {headers: headers}).pipe(first())
   }
 
   getClasesDisponibles(dispoInscFlag: boolean, page: number, per_page: number): Observable<any>{
@@ -90,6 +104,7 @@ export class ClasesService {
     let params = new HttpParams().appendAll({
       "per_page": per_page,
       "page": page,
+      "nombre" : this.stringSearchSubject.value,
       "dia" : this.diaSeleccionadoSubject.value,
       "tipo" : this.tipoSeleccionadoSubject.value,
       "orby_hora":""
@@ -98,8 +113,53 @@ export class ClasesService {
     if (!this.ordenarPorHora) {
       params = params.delete("orby_hora");
     }
-    
     return this.httpClient.get(`${this.url}/clases/${dispoInscFlag === true ? "disponible" : "inscripto"}/${Number(localStorage.getItem('token_DNI'))}`, {headers: headers, params: params}).pipe(first())
+  }
+
+  postClase(data: any): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(`${this.url}/clases`, data, {headers: headers}).pipe(first())
+  }
+
+  
+  putClase(data: any, claseID: Number): Observable<any> {
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.put(`${this.url}/clase/${claseID}`, data, {headers: headers}).pipe(first())
+  }
+
+  deleteClase(claseID: number): Observable<any> {
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.delete(`${this.url}/clase/${claseID}`, {headers: headers})
+  }
+  
+  postClaseProfesor(data: any): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.post(`${this.url}/prof_clas/${data.claseID}/${data.profeDNI}`, null, {headers: headers}).pipe(first())
+  }
+
+  deleteClaseProfesor(claseID: number, profeDNI: number): Observable<any>{
+    let auth_token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.httpClient.delete(`${this.url}/prof_clas/${claseID}/${profeDNI}`, {headers: headers}).pipe(first())
   }
 
   inscribirseAlumno(claseID: number, userDNI: number): Observable<any>{

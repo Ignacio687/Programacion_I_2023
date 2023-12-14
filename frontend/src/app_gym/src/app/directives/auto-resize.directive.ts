@@ -21,5 +21,4 @@ export class AutoResizeDirective {
     textArea.style.height = 'auto';
     textArea.style.height = textArea.scrollHeight + 'px';
   }
-
 }

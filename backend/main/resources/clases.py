@@ -4,7 +4,7 @@ from .. import db, sa
 from main.models import ClaseModel, AlumnoModel, ProfesorModel, UsuariosModel
 from datetime import datetime
 import regex
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, or_
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from ..auth.decorators import role_required
 
@@ -32,6 +32,13 @@ class Clase(Resource):
     @role_required(roles = ["admin"])
     def delete(self, id):
         clase = db.session.query(ClaseModel).get_or_404(id)
+
+        for alumno in clase.alumnos:
+            alumno.clases.remove(clase)
+
+        for profesor in clase.profesores:
+            profesor.clases.remove(clase)
+
         db.session.delete(clase)
         db.session.commit()
         return '', 204
@@ -51,6 +58,13 @@ class Clases(Resource):
             clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
         if request.args.get("hora"):
             clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("hora"), "%H:%M")))
+        if request.args.get("nombre"):
+            clases = clases.filter(
+                or_(
+                    ClaseModel.nombre.startswith(request.args.get("nombre").strip()),
+                    ClaseModel.nombre.contains(request.args.get("nombre").strip())
+                )
+            )
         if "orby_hora" in request.args.keys():
             clases = clases.order_by(ClaseModel.horario.asc())
         if request.args.get("nr_alumnos"):
@@ -62,6 +76,17 @@ class Clases(Resource):
             "total": clases.total,
             "pages": clases.pages,
             "page": page})
+
+    @role_required(roles = ["admin", "profesor"])
+    def post(self):
+        clase = ClaseModel.from_json(request.get_json())
+        print(clase)
+        try:
+            db.session.add(clase)
+            db.session.commit()
+        except Exception as e:
+            return f"Ocurrió un error: {type(e).__name__} - {str(e)}", 400
+        return clase.to_json(), 201
     
 class ClasesDisponibles(Resource):
     @jwt_required()
@@ -80,6 +105,13 @@ class ClasesDisponibles(Resource):
             clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
         if request.args.get("hora"):
             clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("hora"), "%H:%M")))
+        if request.args.get("nombre"):
+            clases = clases.filter(
+                or_(
+                    ClaseModel.nombre.startswith(request.args.get("nombre").strip()),
+                    ClaseModel.nombre.contains(request.args.get("nombre").strip())
+                )
+            )
         if "orby_hora" in request.args.keys():
             clases = clases.order_by(ClaseModel.horario.asc())
         if request.args.get("nr_alumnos"):
@@ -92,7 +124,6 @@ class ClasesDisponibles(Resource):
             "pages": clases.pages,
             "page": page})
 
-#ARreglar y combinar con la claes de arriba
 class ClasesInscripto(Resource):
     @jwt_required()
     def get(self, dni):
@@ -110,6 +141,13 @@ class ClasesInscripto(Resource):
             clases = clases.filter(ClaseModel.dia.like(request.args.get("dia")))
         if request.args.get("hora"):
             clases = clases.filter(ClaseModel.horario.like(datetime.strptime(request.args.get("hora"), "%H:%M")))
+        if request.args.get("nombre"):
+            clases = clases.filter(
+                or_(
+                    ClaseModel.nombre.startswith(request.args.get("nombre").strip()),
+                    ClaseModel.nombre.contains(request.args.get("nombre").strip())
+                )
+            )
         if "orby_hora" in request.args.keys():
             clases = clases.order_by(ClaseModel.horario.asc())
         if request.args.get("nr_alumnos"):

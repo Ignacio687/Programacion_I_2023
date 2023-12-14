@@ -8,13 +8,8 @@ export const adminSessionGuard: CanActivateFn = (route, state) => {
   const token = localStorage.getItem('token')
   const tokenRol = localStorage.getItem('token_rol')
 
-  if (token && tokenRol) {
-    if (tokenRol.includes('admin')) {
-      return true
-    } else {
-      router.navigateByUrl('/home')
-      return false
-    }
+  if (token && tokenRol && tokenRol.includes('admin')) {
+    return true
   } else {
     router.navigateByUrl('/home')
     return false

@@ -53,7 +53,7 @@ class Usuarios(db.Model):
             usuario_json = {
                 "DNI": self.dni,
                 "Nombre": str(self.nombre),
-                "Apelidos": str(self.apellidos),
+                "Apellidos": str(self.apellidos),
                 "Telefono": str(self.telefono),
                 "Email": str(self.email),
                 "Rol": str(self.rol),
@@ -70,7 +70,7 @@ class Usuarios(db.Model):
         return Usuarios(
             dni = usuario_json.get("DNI"),
             nombre = usuario_json.get("Nombre"),
-            apellidos = usuario_json.get("Apelidos"),
+            apellidos = usuario_json.get("Apellidos"),
             telefono = usuario_json.get("Telefono"),
             email = usuario_json.get("Email"),
             plain_password = usuario_json.get("Password"),

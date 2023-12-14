@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ProfesorService } from 'src/app/services/user/profesor.service';
 
 @Component({
   selector: 'app-home-page',
@@ -6,73 +8,38 @@ import { Component } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent {
+  profesores: any[] = [];
+  rutaBaseImagenes = '/assets/profes';
 
-  // 'profesoresImg' va a estar en algun servicio de el front donde esten las imagenes
-  profesoresImg = [
-    {
-      dni: 48987810,
-      img: 'assets/profe 21.png',
-    },
-    {
-      dni: 48988794,
-      img: 'assets/profe 25.png',
-    },
-    {
-      dni: 48984898,
-      img: 'assets/profe 24.png',
-    },
-  ];
+  constructor (
+    private profesorService: ProfesorService,
+    private http: HttpClient,
+  ) {}
 
-  profesores = [
-    {
-      "Especialidad": "PowerLifting",
-      "Inicio_actividad": "12/12/2012",
-      "Usuario": {
-        "DNI": 48987810,
-        "Nombre": "Cristian",
-        "Apellidos": "Coria",  // IMPORTANTE en la base de datos esta como Apelidos le falta una l arreglar
-        "Telefono": "2614347800",
-        "Email": "cristiancoria@gmail.com",
-        "Rol": "profesor"
-      },
-    },
-    {
-      "Especialidad": "cardio",
-      "Inicio_actividad": "20/12/2017",
-      "Usuario": {
-        "DNI": 48988794,
-        "Nombre": "Ana",
-        "Apellidos": "Gonzales",  // IMPORTANTE en la base de datos esta como Apelidos le falta una l arreglar
-        "Telefono": "2614347800",
-        "Email": "cristiancoria@gmail.com",
-        "Rol": "profesor"
-      },
-    },
-    {
-      "Especialidad": "Crossfit",
-      "Inicio_actividad": "20/09/2022",
-      "Usuario": {
-        "DNI": 48984898,
-        "Nombre": "Daniela",
-        "Apellidos": "Lopez",  // IMPORTANTE en la base de datos esta como Apelidos le falta una l arreglar
-        "Telefono": "2614347800",
-        "Email": "cristiancoria@gmail.com",
-        "Rol": "profesor"
-      },
-    },
-  ];
-
-
-  getProfesores() {
-    return this.profesores
+  ngOnInit(): void {
+    this.getProfesores();
   }
-  getProfesorImgAddr(dni: number) {
-    for (let profe of this.profesoresImg) {
-      if (profe.dni === dni) {
-        return profe.img
+
+  getProfesores(): void {
+    this.profesorService.getProfesores(1, 4).subscribe({
+      next: (profes: any) => {
+        this.profesores = profes.profesores;
+        this.asignarImagenesAleatorias();
+      },
+      error: (error: any) => {
+        console.log(error);
       }
-    } return '';
+    });
   }
-  constructor() {}
 
+  asignarImagenesAleatorias(): void {
+    let imagenes = ["profe-1.png", "profe-2.png", "profe-3.png", "profe-4.png"]
+    
+    this.profesores.forEach((profesor: any) => {
+      let indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+      profesor.imagenAleatoria = `${this.rutaBaseImagenes}/${imagenes[indiceAleatorio]}`;
+      imagenes.splice(indiceAleatorio, 1);
+
+    });
+  }
 }

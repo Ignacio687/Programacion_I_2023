@@ -6,6 +6,7 @@ import { ChangeUserInfoComponent } from './pages/home/change-user-info/change-us
 import { HomePageComponent } from './pages/home/home-page/home-page.component';
 import { HorariosDireccionComponent } from './pages/home/horarios-direccion/horarios-direccion.component';
 import { RecoverPassComponent } from './pages/login/recover-pass/recover-pass.component';
+import { RecoverPassFormComponent } from './pages/login/recover-pass-form/recover-pass-form.component';
 import { UserLoginComponent } from './pages/login/user-login/user-login.component';
 import { ClasesFormComponent } from './pages/profesor/clases-form/clases-form.component';
 import { ClasesPlanComponent } from './pages/profesor/clases-plan/clases-plan.component';
@@ -16,23 +17,25 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { authSessionGuard } from './guards/auth-session.guard'
 import { profesorSessionGuard } from './guards/profesor-session.guard';
 import { adminSessionGuard } from './guards/admin-session.guard';
-
+import { recoverPassGuard } from './guards/recover-pass.guard';
 
 const routes: Routes = [
   { path: 'admin-page', component: AlumProfAdmComponent, canActivate:[adminSessionGuard]},
   { path: 'alum-clases', component: ClasesComponent},
-  { path: 'change-user-info', component: ChangeUserInfoComponent, canActivate:[adminSessionGuard]},
   { path: 'change-user-info/:dni/editar', component: ChangeUserInfoComponent, canActivate:[adminSessionGuard]},
-  { path: 'home', component: HomePageComponent},
+  { path: 'change-user-info/prof/:dni/editar', component: ChangeUserInfoComponent, canActivate:[adminSessionGuard]},
+  { path: 'home', component: HomePageComponent}, 
   { path: 'horarios', component: HorariosDireccionComponent},
   { path: 'recover-pass', component: RecoverPassComponent},
+  { path: 'recover-pass-form/:token', component: RecoverPassFormComponent, canActivate:[recoverPassGuard]},
   { path: 'login', component: UserLoginComponent},
   { path: 'clases-form', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
   { path: 'clases-form/:id/editar', component: ClasesFormComponent, canActivate:[adminSessionGuard]},
   { path: 'clases-plan', component: ClasesPlanComponent, canActivate:[profesorSessionGuard]},
   { path: 'plan-form', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
   { path: 'plan-form/:id/:dia/editar', component: PlanFormComponent, canActivate:[profesorSessionGuard]},
-  { path: 'register-form', component: RegisterFormComponent, },
+  { path: 'register-form', component: RegisterFormComponent},
+  { path: 'register-form/prof', component: RegisterFormComponent, canActivate:[adminSessionGuard]},
   { path: 'register', component: UserRegisterComponent},
   { path: 'error404', component: PageNotFoundComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full'},

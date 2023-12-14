@@ -27,3 +27,30 @@
     background-color: var(--background-color-focus);
     outline: none;
 }
+
+.box {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-delete-button {
+    background-color: transparent;
+    border: 2px solid red;
+    color: red;
+    display: flex;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 20px;
+}
+
+.custom-delete-button:hover {
+    background-color: red;
+    color: white;
+}
+
+.custom-delete-button svg {
+    margin-right: 5px; /* Ajusta el margen entre el ícono y el texto según sea necesario */
+}
