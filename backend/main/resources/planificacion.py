@@ -1,4 +1,3 @@
-import re
 from flask_restful import Resource
 from flask import request, jsonify
 from main.models import PlanificacionModel, DetalleModel

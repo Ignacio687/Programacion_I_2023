@@ -38,8 +38,6 @@ export class HomePageComponent {
     this.profesores.forEach((profesor: any) => {
       let indiceAleatorio = Math.floor(Math.random() * imagenes.length);
       profesor.imagenAleatoria = `${this.rutaBaseImagenes}/${imagenes[indiceAleatorio]}`;
-      imagenes.splice(indiceAleatorio, 1);
-
     });
   }
 }

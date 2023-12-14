@@ -41,7 +41,7 @@ export class SearchboxComponent {
   mostrarBtnGroup: boolean = false;
   ordenarPorHora = false;
   filtroAplicado: boolean = true;
-  searchTerms = new Subject<string>();
+  private searchTerms = new Subject<string>();
 
   @Input() parentPage: string;
 
